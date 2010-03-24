@@ -1,0 +1,1 @@
+insert into invoice (id,customer_id,description,issue_date,amount) values('PR....214',9737,'','2010-11-18',102.23);
