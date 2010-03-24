@@ -9,7 +9,7 @@
 
 	<jdbc:embedded-database id="dataSource" type="H2">
 		<jdbc:script location="classpath:/create-tables.sql"/>
-		<jdbc:script location="classpath:/input/insert-data.sql" />
+<!--		<jdbc:script location="classpath:/input/insert-data.sql" />-->
 	</jdbc:embedded-database>
 
 	<bean id="transactionManager"

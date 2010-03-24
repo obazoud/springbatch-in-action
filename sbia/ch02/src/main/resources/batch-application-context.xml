@@ -6,15 +6,22 @@
 		http://www.springframework.org/schema/batch http://www.springframework.org/schema/batch/spring-batch-2.1.xsd">
 
 	<job id="importInvoices" xmlns="http://www.springframework.org/schema/batch">
+		<validator ref="jobParametersValidator" />
 		<step id="decompress" next="readWriteInvoices">
 			<tasklet ref="decompressTasklet" />
 		</step>
 		<step id="readWriteInvoices">
 			<tasklet>
-				<chunk reader="reader" writer="writer" commit-interval="10" />
-			</tasklet>
+				<chunk reader="reader" writer="writer" commit-interval="3" skip-limit="5">
+					<skippable-exception-classes>
+						<batch:include class="org.springframework.batch.item.file.FlatFileParseException"/>
+					</skippable-exception-classes>
+				</chunk>				
+			</tasklet>			
 		</step>
 	</job>
+	
+	<bean id="jobParametersValidator" class="com.manning.sbia.ch02.batch.ImportInvoicesJobParametersValidator" />
 	
 	<bean id="decompressTasklet" class="com.manning.sbia.ch02.batch.DecompressTasklet" scope="step">
 		<property name="inputResource" value="#{jobParameters['inputResource']}" />
