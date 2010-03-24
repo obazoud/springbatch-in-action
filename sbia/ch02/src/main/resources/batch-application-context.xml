@@ -6,6 +6,9 @@
 		http://www.springframework.org/schema/batch http://www.springframework.org/schema/batch/spring-batch-2.1.xsd">
 
 	<job id="importInvoices" xmlns="http://www.springframework.org/schema/batch">
+		<step id="decompress" next="readWriteInvoices">
+			<tasklet ref="decompressTasklet" />
+		</step>
 		<step id="readWriteInvoices">
 			<tasklet>
 				<chunk reader="reader" writer="writer" commit-interval="10" />
@@ -13,8 +16,14 @@
 		</step>
 	</job>
 	
-	<bean id="reader" class="org.springframework.batch.item.file.FlatFileItemReader">
-		<property name="resource" value="classpath:/input/invoices.txt" />
+	<bean id="decompressTasklet" class="com.manning.sbia.ch02.batch.DecompressTasklet" scope="step">
+		<property name="inputResource" value="#{jobParameters['inputResource']}" />
+		<property name="targetDirectory" value="#{jobParameters['targetDirectory']}" />
+		<property name="targetFile" value="#{jobParameters['targetFile']}" />
+	</bean>
+	
+	<bean id="reader" class="org.springframework.batch.item.file.FlatFileItemReader" scope="step">
+		<property name="resource" value="file:#{jobParameters['targetDirectory']+jobParameters['targetFile']}" />
 		<property name="linesToSkip" value="1" />
 		<property name="lineMapper">
 			<bean class="org.springframework.batch.item.file.mapping.DefaultLineMapper">

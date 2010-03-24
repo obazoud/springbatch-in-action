@@ -10,6 +10,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.batch.core.Job;
 import org.springframework.batch.core.JobParameters;
+import org.springframework.batch.core.JobParametersBuilder;
 import org.springframework.batch.core.launch.JobLauncher;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.simple.SimpleJdbcTemplate;
@@ -40,7 +41,13 @@ public class ImportInvoicesIntegrationTest {
 	@Test public void importInvoices() throws Exception {
 		System.out.println(jdbcTemplate.queryForList("select * from invoice"));
 		int initial = jdbcTemplate.queryForInt("select count(1) from invoice");
-		jobLauncher.run(job, new JobParameters());
+		
+		jobLauncher.run(job, new JobParametersBuilder()
+			.addString("inputResource", "classpath:/input/invoices.zip")
+			.addString("targetDirectory", "./target/importinvoicesbatch/")
+			.addString("targetFile","invoices.txt")
+			.toJobParameters()
+		);
 		
 		System.out.println(jdbcTemplate.queryForList("select * from invoice"));
 		
