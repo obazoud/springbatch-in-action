@@ -14,7 +14,7 @@ public class Invoice {
 
 	private String id;
 	
-	private String customerId;
+	private Long customerId;
 	
 	private String description;
 	
@@ -36,13 +36,13 @@ public class Invoice {
 
 	public void setId(String id) {
 		this.id = id;
-	}
+	}	
 
-	public String getCustomerId() {
+	public Long getCustomerId() {
 		return customerId;
 	}
 
-	public void setCustomerId(String customerId) {
+	public void setCustomerId(Long customerId) {
 		this.customerId = customerId;
 	}
 

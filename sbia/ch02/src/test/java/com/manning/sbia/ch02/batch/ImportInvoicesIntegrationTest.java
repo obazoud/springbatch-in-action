@@ -3,6 +3,8 @@
  */
 package com.manning.sbia.ch02.batch;
 
+import java.util.Calendar;
+
 import javax.sql.DataSource;
 
 import org.junit.Assert;
@@ -40,42 +42,47 @@ public class ImportInvoicesIntegrationTest {
 	}
 	
 	@Before
-	public void setUp() {
+	public void setUp() throws Exception {
+		jdbcTemplate.update("drop table if exists invoice");
+		jdbcTemplate.update("CREATE TABLE invoice (" +
+				"id character(9) NOT NULL,"+
+				"customer_id integer NOT NULL,"+
+				"description character varying(50),"+
+				"issue_date date,"+
+				"amount float,"+
+				"CONSTRAINT invoice_pkey PRIMARY KEY (id))"
+		);
 		jdbcTemplate.update("delete from invoice");
 		jdbcTemplate.update(
 			"insert into invoice (id,customer_id,description,issue_date,amount) values(?,?,?,?,?)",
-			"PR....214",9737,"","2010-11-18",102.23	
+			"PR....214",9737,"",Calendar.getInstance().getTime(),102.23	
 		);
 	}
 
 	@Test public void importInvoices() throws Exception {
-		System.out.println(jdbcTemplate.queryForList("select * from invoice"));
 		int initial = jdbcTemplate.queryForInt("select count(1) from invoice");
 		
 		jobLauncher.run(job, new JobParametersBuilder()
 			.addString("inputResource", "classpath:/input/invoices.zip")
 			.addString("targetDirectory", "./target/importinvoicesbatch/")
 			.addString("targetFile","invoices.txt")
+			.addLong("timestamp", System.currentTimeMillis())
 			.toJobParameters()
 		);
-		
-		System.out.println(jdbcTemplate.queryForList("select * from invoice"));
 		
 		Assert.assertEquals(initial+7,jdbcTemplate.queryForInt("select count(1) from invoice"));
 	}
 	
 	@Test public void importInvoicesWithErrors() throws Exception {
-		System.out.println(jdbcTemplate.queryForList("select * from invoice"));
 		int initial = jdbcTemplate.queryForInt("select count(1) from invoice");
 		
 		jobLauncher.run(job, new JobParametersBuilder()
 			.addString("inputResource", "classpath:/input/invoices_with_errors.zip")
 			.addString("targetDirectory", "./target/importinvoicesbatch/")
 			.addString("targetFile","invoices.txt")
+			.addLong("timestamp", System.currentTimeMillis())
 			.toJobParameters()
 		);
-		
-		System.out.println(jdbcTemplate.queryForList("select * from invoice"));
 		
 		Assert.assertEquals(initial+6,jdbcTemplate.queryForInt("select count(1) from invoice"));
 	}

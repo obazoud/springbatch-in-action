@@ -104,6 +104,12 @@
 		</dependency>
 
 		<dependency>
+			<groupId>postgresql</groupId>
+			<artifactId>postgresql</artifactId>
+			<version>8.4-701.jdbc4</version>
+		</dependency>
+
+		<dependency>
 			<groupId>commons-io</groupId>
 			<artifactId>commons-io</artifactId>
 			<version>1.4</version>
