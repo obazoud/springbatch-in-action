@@ -2,8 +2,10 @@
 <beans xmlns="http://www.springframework.org/schema/beans"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xmlns:batch="http://www.springframework.org/schema/batch"
-	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
-		http://www.springframework.org/schema/batch http://www.springframework.org/schema/batch/spring-batch-2.1.xsd">
+	xsi:schemaLocation="http://www.springframework.org/schema/beans 
+	http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+	http://www.springframework.org/schema/batch 
+	http://www.springframework.org/schema/batch/spring-batch-2.1.xsd">
 
 	<job id="importInvoices" xmlns="http://www.springframework.org/schema/batch">
 		<validator ref="jobParametersValidator" />
@@ -14,7 +16,7 @@
 			<tasklet>
 				<chunk reader="reader" writer="writer" commit-interval="3" skip-limit="5">
 					<skippable-exception-classes>
-						<batch:include class="org.springframework.batch.item.file.FlatFileParseException"/>
+						<include class="org.springframework.batch.item.file.FlatFileParseException"/>
 					</skippable-exception-classes>
 				</chunk>				
 			</tasklet>			

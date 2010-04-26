@@ -4,8 +4,6 @@
 package com.manning.sbia.ch02.batch;
 
 import java.io.File;
-import java.util.ArrayList;
-import java.util.List;
 
 import org.apache.commons.io.FileUtils;
 import org.junit.Assert;
