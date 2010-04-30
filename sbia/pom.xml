@@ -137,6 +137,12 @@
 
 	</dependencies>
 
+	<modules>
+		<module>ch01</module>
+		<module>ch02</module>
+		<module>ch03</module>
+	</modules>
+
 	<properties>
 		<spring.batch.version>2.1.1.RELEASE</spring.batch.version>
 		<spring.version>3.0.2.RELEASE</spring.version>
@@ -185,9 +191,6 @@
 			<url>http://repository.springsource.com/maven/bundles/external</url>
 		</repository>
 	</repositories>
-	<modules>
-		<module>ch01</module>
-		<module>ch02</module>
-	</modules>
+
 
 </project>

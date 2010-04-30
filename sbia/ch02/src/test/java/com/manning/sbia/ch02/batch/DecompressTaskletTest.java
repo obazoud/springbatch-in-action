@@ -47,4 +47,22 @@ public class DecompressTaskletTest {
 		
 	}
 	
+	@Test public void corruptedArchive() throws Exception {
+		DecompressTasklet tasklet = new DecompressTasklet();
+		tasklet.setInputResource(new ClassPathResource("/input/invoices_corrupted.zip"));
+		File outputDir = new File("./target/decompresstasklet");
+		if(outputDir.exists()) {
+			FileUtils.deleteDirectory(outputDir);
+		}
+		tasklet.setTargetDirectory(outputDir.getAbsolutePath());
+		tasklet.setTargetFile("invoices.txt");
+		
+		try {
+			tasklet.execute(null, null);
+			Assert.fail("corrupted archive, the tasklet should have thrown an exception");
+		} catch (Exception e) {
+			// OK
+		}
+	}
+	
 }

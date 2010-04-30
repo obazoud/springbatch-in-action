@@ -1,9 +1,11 @@
-CREATE TABLE invoice
+drop table if exists invoice;
+
+create table invoice
 (
-  id character(9) NOT NULL,
-  customer_id integer NOT NULL,
+  id character(9) not null,
+  customer_id integer not null,
   description character varying(50),
   issue_date date,
   amount float,
-  CONSTRAINT invoice_pkey PRIMARY KEY (id)
+  constraint invoice_pkey primary key (id)
 );
