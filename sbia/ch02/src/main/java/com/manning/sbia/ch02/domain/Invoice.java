@@ -12,6 +12,14 @@ import java.util.Date;
  */
 public class Invoice {
 
+	public Invoice(String id) {
+		super();
+		this.id = id;
+	}
+	
+	public Invoice() {
+	}
+
 	private String id;
 	
 	private Long customerId;

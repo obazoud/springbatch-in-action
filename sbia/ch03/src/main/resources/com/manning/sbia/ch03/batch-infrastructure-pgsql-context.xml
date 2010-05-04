@@ -18,7 +18,10 @@
 		<property name="dataSource" ref="dataSource" />
 	</bean>
 	
-	<batch:job-repository id="jobRepository" />
+	<batch:job-repository id="jobRepository"
+	  data-source="dataSource" 
+	  transaction-manager="transactionManager" 
+	  />
 	
 	<bean id="jobLauncher"
 		class="org.springframework.batch.core.launch.support.SimpleJobLauncher">
