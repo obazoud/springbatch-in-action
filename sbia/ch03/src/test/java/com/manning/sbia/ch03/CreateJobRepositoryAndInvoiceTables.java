@@ -11,7 +11,7 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
  * @author acogoluegnes
  *
  */
-public class CreateJobRepositoryTables {
+public class CreateJobRepositoryAndInvoiceTables {
 	
 	
 	
