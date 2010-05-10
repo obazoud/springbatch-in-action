@@ -11,7 +11,7 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 /**
  * Launches the import invoices job.
- * WARNING: the job repository is deleted first!
+ * WARNING: the job repository is emptied first!
  * @author acogoluegnes
  *
  */
@@ -33,7 +33,7 @@ public class LaunchImportInvoicesJob {
 			.addString("inputResource", "file:./invoices.zip")
 			.addString("targetDirectory", "./importinvoicesbatch/")
 			.addString("targetFile","invoices.txt")
-			.addString("date", "2010-05-05")
+			.addString("date", "2010-05-04")
 			.toJobParameters()
 		);
 
