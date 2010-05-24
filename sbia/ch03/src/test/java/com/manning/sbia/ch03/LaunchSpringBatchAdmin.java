@@ -29,7 +29,7 @@ public class LaunchSpringBatchAdmin {
 
         WebAppContext wac = new WebAppContext();
         wac.setContextPath("/springbatchadmin");
-        wac.setWar("./spring-batch-admin-sample-1.0.0.RC1.war");
+        wac.setWar("./spring-batch-admin-sample-1.0.0.RELEASE.war");
         server.setHandler(wac);
         server.setStopAtShutdown(true);
 
