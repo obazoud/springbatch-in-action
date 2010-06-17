@@ -87,13 +87,13 @@
 
 		<dependency>
 			<groupId>org.slf4j</groupId>
-			<artifactId>com.springsource.slf4j.api</artifactId>
+    		<artifactId>slf4j-api</artifactId>
 			<version>${slf4j.version}</version>
 		</dependency>
 
 		<dependency>
 			<groupId>org.slf4j</groupId>
-			<artifactId>com.springsource.slf4j.org.apache.commons.logging</artifactId>
+    		<artifactId>jcl-over-slf4j</artifactId>
 			<version>${slf4j.version}</version>
 		</dependency>
 
@@ -116,9 +116,9 @@
 		</dependency>
 
 		<dependency>
-			<groupId>ch.qos.logback</groupId>
-			<artifactId>com.springsource.ch.qos.logback.classic</artifactId>
-			<version>0.9.15</version>
+		    <groupId>ch.qos.logback</groupId>
+		    <artifactId>logback-classic</artifactId>
+		    <version>0.9.21</version>
 		</dependency>
 
 		<dependency>
@@ -145,9 +145,10 @@
 
 	<properties>
 		<spring.batch.version>2.1.1.RELEASE</spring.batch.version>
-		<spring.version>3.0.2.RELEASE</spring.version>
-		<slf4j.version>1.5.10</slf4j.version>
-		<h2.version>1.2.132</h2.version>
+		<spring.version>3.0.3.RELEASE</spring.version>
+		<slf4j.version>1.6.0</slf4j.version>
+		<h2.version>1.2.137</h2.version>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 	</properties>
 
 	<build>
