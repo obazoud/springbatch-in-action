@@ -15,7 +15,7 @@
  		<property name="jobRepository" ref="jobRepository" />
  	</bean>
  	
- 	<job id="importInvoicesJob" xmlns="http://www.springframework.org/schema/batch">
+ 	<job id="importProductsJob" xmlns="http://www.springframework.org/schema/batch">
  		<step id="decompress" next="readWrite">
  			<tasklet ref="decompressTasklet" />
  		</step>

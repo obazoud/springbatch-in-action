@@ -33,7 +33,7 @@ public class GeneratesJobMetaData {
 	
 	public static void main(String[] args) throws Exception {
 		ApplicationContext ctx = new ClassPathXmlApplicationContext(
-			"/import-invoices-job-context.xml",
+			"/import-products-job-context.xml",
 			"/com/manning/sbia/ch03/batch-infrastructure-pgsql-context.xml"
 		);
 		
@@ -63,7 +63,7 @@ public class GeneratesJobMetaData {
 		initRepoDir();
 		initTargetDir();
 		
-		copyInputFileToRepoDir("invoices.zip");
+		copyInputFileToRepoDir("products.zip");
 		
 		launchJob(jobLauncher, job, calendar);		
 	}
@@ -72,7 +72,7 @@ public class GeneratesJobMetaData {
 		initRepoDir();
 		initTargetDir();
 		
-		copyInputFileToRepoDir("invoices_corrupted.zip");
+		copyInputFileToRepoDir("products_corrupted.zip");
 		
 		launchJob(jobLauncher, job, calendar);
 		
@@ -82,8 +82,8 @@ public class GeneratesJobMetaData {
 	private static final void launchJob(JobLauncher jobLauncher,Job job,Calendar calendar) throws Exception {
 		DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH);
 		jobLauncher.run(job, new JobParametersBuilder()
-			.addString("inputResource", "file:"+repoDir+"/invoices.zip")
-			.addString("targetDirectory", targetDir+"/importinvoicesbatch/")
+			.addString("inputResource", "file:"+repoDir+"/products.zip")
+			.addString("targetDirectory", targetDir+"/importproductsbatch/")
 			.addString("targetFile","invoices.txt")
 			.addString("date", dateFormat.format(calendar.getTime()))
 			.toJobParameters()
@@ -91,7 +91,7 @@ public class GeneratesJobMetaData {
 	}
 	
 	private static void copyInputFileToRepoDir(String file) throws Exception {
-		FileUtils.copyFile(new File("./input",file), new File(repoDir,"invoices.zip"));
+		FileUtils.copyFile(new File("./input",file), new File(repoDir,"products.zip"));
 	}
 	
 	private static void initRepoDir() throws Exception {

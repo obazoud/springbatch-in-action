@@ -11,7 +11,7 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
  * @author acogoluegnes
  *
  */
-public class CreateJobRepositoryAndInvoiceTables {
+public class CreateJobRepositoryAndProductsTables {
 	
 	
 	
@@ -19,9 +19,7 @@ public class CreateJobRepositoryAndInvoiceTables {
 		new ClassPathXmlApplicationContext(
 			"/initialize-job-repository-context.xml",
 			"/com/manning/sbia/ch03/batch-infrastructure-pgsql-context.xml"
-		);		
-		
-		
+		);				
 	}	
 	
 

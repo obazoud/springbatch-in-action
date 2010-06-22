@@ -8,22 +8,22 @@ import java.util.List;
 
 import org.springframework.batch.item.ItemWriter;
 
-import com.manning.sbia.ch02.domain.Invoice;
+import com.manning.sbia.ch02.domain.Product;
 
 /**
  * @author acogoluegnes
  *
  */
-public class DummyItemWriter implements ItemWriter<Invoice> {
+public class DummyItemWriter implements ItemWriter<Product> {
 	
-	public List<Invoice> invoices = new ArrayList<Invoice>();
+	public List<Product> products = new ArrayList<Product>();
 
 	/* (non-Javadoc)
 	 * @see org.springframework.batch.item.ItemWriter#write(java.util.List)
 	 */
 	@Override
-	public void write(List<? extends Invoice> items) throws Exception {
-		invoices.addAll(items);
+	public void write(List<? extends Product> items) throws Exception {
+		products.addAll(items);
 	}
 
 }
