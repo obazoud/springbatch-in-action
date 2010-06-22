@@ -17,30 +17,30 @@ import org.springframework.core.io.ClassPathResource;
 public class DecompressTaskletTest {
 	
 	private static final String[] EXPECTED_CONTENT = new String [] {
-		"INVOICE_ID,CUSTOMER_ID,DESCRIPTION,ISSUE_DATE,AMOUNT",
-		"PR....210,9834,,2010-09-15,124.60",
-		"PR....211,9834,,2010-10-25,139.45",
-		"PR....212,6765,,2010-08-26,97.80",
-		"PR....213,4525,,2010-12-19,166.20",
-		"PR....214,9737,,2010-11-18,145.50",
-		"PR....215,7362,,2010-06-10,190.70",
-		"PR....216,3580,,2010-10-22,289.20",
-		"PR....217,8736,,2010-07-15,13.70"
+		"PRODUCT_ID,NAME,DESCRIPTION,PRICE",
+		"PR....210,BlackBerry 8100 Pearl,,124.60",
+		"PR....211,Sony Ericsson W810i,,139.45",
+		"PR....212,Samsung MM-A900M Ace,,97.80",
+		"PR....213,Toshiba M285-E 14,,166.20",
+		"PR....214,Nokia 2610 Phone,,145.50",
+		"PR....215,CN Clogs Beach/Garden Clog,,190.70",
+		"PR....216,AT&T 8525 PDA,,289.20",
+		"PR....217,Canon Digital Rebel XT 8MP Digital SLR Camera,,13.70",
 	};
 
 	@Test public void execute() throws Exception {
 		DecompressTasklet tasklet = new DecompressTasklet();
-		tasklet.setInputResource(new ClassPathResource("/input/invoices.zip"));
+		tasklet.setInputResource(new ClassPathResource("/input/products.zip"));
 		File outputDir = new File("./target/decompresstasklet");
 		if(outputDir.exists()) {
 			FileUtils.deleteDirectory(outputDir);
 		}
 		tasklet.setTargetDirectory(outputDir.getAbsolutePath());
-		tasklet.setTargetFile("invoices.txt");
+		tasklet.setTargetFile("products.txt");
 		
 		tasklet.execute(null, null);
 		
-		File output = new File(outputDir,"invoices.txt");
+		File output = new File(outputDir,"products.txt");
 		Assert.assertTrue(output.exists());
 		
 		Assert.assertArrayEquals(EXPECTED_CONTENT, FileUtils.readLines(output).toArray());
@@ -49,13 +49,13 @@ public class DecompressTaskletTest {
 	
 	@Test public void corruptedArchive() throws Exception {
 		DecompressTasklet tasklet = new DecompressTasklet();
-		tasklet.setInputResource(new ClassPathResource("/input/invoices_corrupted.zip"));
+		tasklet.setInputResource(new ClassPathResource("/input/products_corrupted.zip"));
 		File outputDir = new File("./target/decompresstasklet");
 		if(outputDir.exists()) {
 			FileUtils.deleteDirectory(outputDir);
 		}
 		tasklet.setTargetDirectory(outputDir.getAbsolutePath());
-		tasklet.setTargetFile("invoices.txt");
+		tasklet.setTargetFile("products.txt");
 		
 		try {
 			tasklet.execute(null, null);

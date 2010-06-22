@@ -1,1 +1,1 @@
-insert into invoice (id,customer_id,description,issue_date,amount) values('PR....214',9737,'','2010-11-18',102.23);
+insert into product (id,name,description,price) values('PR....214','Nokia 2610 Phone','',102.23);
