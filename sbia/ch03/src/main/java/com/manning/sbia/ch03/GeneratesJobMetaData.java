@@ -84,7 +84,7 @@ public class GeneratesJobMetaData {
 		jobLauncher.run(job, new JobParametersBuilder()
 			.addString("inputResource", "file:"+repoDir+"/products.zip")
 			.addString("targetDirectory", targetDir+"/importproductsbatch/")
-			.addString("targetFile","invoices.txt")
+			.addString("targetFile","products.txt")
 			.addString("date", dateFormat.format(calendar.getTime()))
 			.toJobParameters()
 		);
