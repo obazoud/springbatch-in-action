@@ -38,14 +38,14 @@
 	    <property name="queryProvider">
 	        <bean class="org.springframework.batch.item.database.support.SqlPagingQueryProviderFactoryBean">
 	        	<property name="dataSource" ref="dataSource" />
-	            <property name="selectClause" value="select id,customer_id,description,issue_date,amount"/>
-	            <property name="fromClause" value="from invoice"/>
+	            <property name="selectClause" value="select id,name,description,price"/>
+	            <property name="fromClause" value="from product"/>
 	            <property name="sortKey" value="id"/>
 	        </bean>
 	    </property>    
 	    <property name="pageSize" value="3"/>
 	    <property name="rowMapper">
-	    	<bean class="com.manning.sbia.ch01.chunk.InvoiceRowMapper" />
+	    	<bean class="com.manning.sbia.ch01.chunk.ProductRowMapper" />
 	    </property>
 	</bean>
 	

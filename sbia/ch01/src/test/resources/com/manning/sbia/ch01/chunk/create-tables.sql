@@ -1,9 +1,8 @@
-CREATE TABLE invoice
+create table product
 (
-  id character(9) NOT NULL,
-  customer_id integer NOT NULL,
-  description character varying(50),
-  issue_date date,
-  amount float,
-  CONSTRAINT invoice_pkey PRIMARY KEY (id)
+  id character(9) not null,
+  name character varying(50),
+  description character varying(255),
+  price float,
+  constraint product_pkey primary key (id)
 );

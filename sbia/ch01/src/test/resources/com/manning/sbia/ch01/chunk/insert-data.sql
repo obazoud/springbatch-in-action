@@ -1,9 +1,9 @@
-insert into invoice (id,customer_id,description,issue_date,amount) values('PR....214',9737,'','2010-11-18',102.23);
-insert into invoice (id,customer_id,description,issue_date,amount) values('PR....215',9737,'','2010-11-18',102.23);
-insert into invoice (id,customer_id,description,issue_date,amount) values('PR....216',9737,'','2010-11-18',102.23);
-insert into invoice (id,customer_id,description,issue_date,amount) values('PR....217',9737,'','2010-11-18',102.23);
-insert into invoice (id,customer_id,description,issue_date,amount) values('PR....218',9737,'','2010-11-18',102.23);
-insert into invoice (id,customer_id,description,issue_date,amount) values('PR....219',9737,'','2010-11-18',102.23);
-insert into invoice (id,customer_id,description,issue_date,amount) values('PR....220',9737,'','2010-11-18',102.23);
-insert into invoice (id,customer_id,description,issue_date,amount) values('PR....221',9737,'','2010-11-18',102.23);
-insert into invoice (id,customer_id,description,issue_date,amount) values('PR....222',9737,'','2010-11-18',102.23);
+insert into product (id,name,description,price) values('PR....214','Nokia 2610 Phone','A cell phone',102.23);
+insert into product (id,name,description,price) values('PR....215','Nokia 2610 Phone','',102.23);
+insert into product (id,name,description,price) values('PR....216','Nokia 2610 Phone','',102.23);
+insert into product (id,name,description,price) values('PR....217','Nokia 2610 Phone','',102.23);
+insert into product (id,name,description,price) values('PR....218','Nokia 2610 Phone','',102.23);
+insert into product (id,name,description,price) values('PR....219','Nokia 2610 Phone','',102.23);
+insert into product (id,name,description,price) values('PR....220','Nokia 2610 Phone','',102.23);
+insert into product (id,name,description,price) values('PR....221','Nokia 2610 Phone','',102.23);
+insert into product (id,name,description,price) values('PR....222','Nokia 2610 Phone','',102.23);
