@@ -1,1 +1,0 @@
-insert into product (id,name,description,price) values('PR....214','Nokia 2610 Phone','',102.23);

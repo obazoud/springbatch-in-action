@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>com.manning.sbia</groupId>
 	<artifactId>sbia-parent</artifactId>
@@ -141,7 +140,8 @@
 		<module>ch01</module>
 		<module>ch02</module>
 		<module>ch03</module>
-	</modules>
+    <module>ch08</module>
+  </modules>
 
 	<properties>
 		<spring.batch.version>2.1.1.RELEASE</spring.batch.version>
