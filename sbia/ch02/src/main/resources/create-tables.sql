@@ -6,5 +6,6 @@ create table product
   name character varying(50),
   description character varying(255),
   price float,
+  update_timestamp timestamp,
   constraint product_pkey primary key (id)
 );

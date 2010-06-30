@@ -27,7 +27,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
  */
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration
-public class ChangingStateProcessingTest {
+public class TransformingProcessingTest {
 	
 	@Autowired
 	private JobLauncher jobLauncher;
@@ -49,30 +49,22 @@ public class ChangingStateProcessingTest {
 
 	@Test public void changingState() throws Exception {
 		JobExecution exec = jobLauncher.run(jobWithItemProcessor, new JobParametersBuilder()
-			.addString("inputFile", "classpath:/products.txt")
+			.addString("inputFile", "classpath:/partner-products.txt")
 			.toJobParameters()
 		);
 		Assert.assertEquals(ExitStatus.COMPLETED, exec.getExitStatus());
 		List<Map<String,Object>> rows = jdbcTemplate.queryForList("select * from product");
 		Assert.assertEquals(8,rows.size());
-		for(Map<String,Object> row : rows) {
-			Assert.assertTrue(row.get("ID").toString().startsWith("PR"));
-			Assert.assertTrue(row.get("NAME").toString().endsWith("(P1)"));
-		}
 	}
 	
 	@Test public void changingStateWithAdapter() throws Exception {
 		JobExecution exec = jobLauncher.run(jobWithAdapter, new JobParametersBuilder()
-			.addString("inputFile", "classpath:/products.txt")
+			.addString("inputFile", "classpath:/partner-products.txt")
 			.toJobParameters()
 		);
 		Assert.assertEquals(ExitStatus.COMPLETED, exec.getExitStatus());
 		List<Map<String,Object>> rows = jdbcTemplate.queryForList("select * from product");
 		Assert.assertEquals(8,rows.size());
-		for(Map<String,Object> row : rows) {
-			Assert.assertTrue(row.get("ID").toString().startsWith("PR"));
-			Assert.assertTrue(row.get("NAME").toString().endsWith("(P1)"));
-		}
 	}
 	
 }
