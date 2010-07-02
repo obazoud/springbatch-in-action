@@ -4,9 +4,6 @@
 package com.manning.sbia.ch08;
 
 import java.util.Calendar;
-import java.util.List;
-import java.util.Locale;
-import java.util.Map;
 
 import org.apache.commons.io.FileUtils;
 import org.junit.Assert;
@@ -19,7 +16,6 @@ import org.springframework.batch.core.JobExecution;
 import org.springframework.batch.core.JobParametersBuilder;
 import org.springframework.batch.core.launch.JobLauncher;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.ResourceLoader;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -57,7 +53,7 @@ public class DrivingQueryTest {
 	}
 	
 	
-	@Test public void changingState() throws Exception {
+	@Test public void drivingQuery() throws Exception {
 		Assert.assertEquals(9, jdbcTemplate.queryForInt("select count(1) from product"));		
 		Calendar updateTimestampBound = Calendar.getInstance();
 		updateTimestampBound.set(2010, Calendar.JUNE, 30, 12, 00);
