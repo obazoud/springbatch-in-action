@@ -45,13 +45,15 @@
 			<constructor-arg ref="jobLauncher" />
 		</bean>
 	</int:service-activator>
-	<int:channel id="job-executions" />
-	<int-stream:stdout-channel-adapter channel="job-executions"/>
 	
 	<int:channel id="job-requests-as-string" />
 	<int:service-activator input-channel="job-requests-as-string" output-channel="job-requests">
 		<bean class="com.manning.sbia.ch11.integration.StringToJobLaunchRequestAdapter" />
 	</int:service-activator>
+	
+	<int:channel id="job-executions">
+		<int:queue capacity="10"/>
+	</int:channel>
 	
 
 </beans>

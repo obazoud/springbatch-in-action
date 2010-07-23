@@ -11,11 +11,6 @@
 		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
 		http://www.springframework.org/schema/batch http://www.springframework.org/schema/batch/spring-batch-2.1.xsd">
 
-	<int-http:inbound-channel-adapter channel="job-requests-as-string"
-		name="/job-requests" 
-		/>
-	
-	
 	<bean id="transactionManager"
 		class="org.springframework.batch.support.transaction.ResourcelessTransactionManager" />
 
@@ -50,8 +45,11 @@
 			<constructor-arg ref="jobLauncher" />
 		</bean>
 	</int:service-activator>
-	<int:channel id="job-executions" />
-	<int-stream:stdout-channel-adapter channel="job-executions"/>
+	
+<!--	<int-stream:stdout-channel-adapter channel="job-executions"/>-->
+	<int:channel id="job-executions">
+		<int:queue capacity="10" />
+	</int:channel>
 	
 	<int:channel id="job-requests-as-string" />
 	<int:service-activator input-channel="job-requests-as-string" output-channel="job-requests">
