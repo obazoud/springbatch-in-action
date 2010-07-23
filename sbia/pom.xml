@@ -141,6 +141,7 @@
 		<module>ch02</module>
 		<module>ch03</module>
     <module>ch08</module>
+    <module>ch11</module>
   </modules>
 
 	<properties>
