@@ -14,18 +14,12 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 import org.springframework.batch.core.JobExecution;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.integration.channel.PollableChannel;
 import org.springframework.integration.core.Message;
-import org.springframework.integration.file.FileReadingMessageSource;
 import org.springframework.integration.selector.MessageSelector;
-import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 /**
  * @author acogoluegnes
