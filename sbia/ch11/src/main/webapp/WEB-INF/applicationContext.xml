@@ -17,19 +17,9 @@
 		http://www.springframework.org/schema/batch http://www.springframework.org/schema/batch/spring-batch-2.1.xsd
 		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-3.0.xsd">
 
-	<bean id="transactionManager"
-		class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
-		<constructor-arg ref="dataSource" />
-	</bean>
-	
-	<tx:annotation-driven />
-
-	<batch:job-repository />
-
-	<bean id="jobLauncher"
-		class="org.springframework.batch.core.launch.support.SimpleJobLauncher">
-		<property name="jobRepository" ref="jobRepository" />
-	</bean>
+	<import resource="classpath:/com/manning/sbia/ch11/enterprise-integration-infrastructure.xml" />
+	<import resource="classpath:/com/manning/sbia/ch11/batch-infrastructure.xml" />
+	<import resource="classpath:/com/manning/sbia/ch11/integration-job-launching.xml" />
 	
 	<batch:job id="simpleJob">
 		<batch:step id="simpleStep">
@@ -39,39 +29,13 @@
 	
 	<bean id="simpleTasklet" class="com.manning.sbia.ch11.integration.JobLaunchingMessageHandlerTest.SimpleTasklet" />
 	
-	<bean id="jobRegistry" class="org.springframework.batch.core.configuration.support.MapJobRegistry" />
-	
-	<bean class="org.springframework.batch.core.configuration.support.JobRegistryBeanPostProcessor">
-		<property name="jobRegistry" ref="jobRegistry" />
- 	</bean>
-	
-	<int:channel id="job-requests" />
-	<int:service-activator input-channel="job-requests" output-channel="job-executions">
-		<bean class="com.manning.sbia.ch11.integration.JobLaunchingMessageHandler">
-			<constructor-arg ref="jobRegistry" />
-			<constructor-arg ref="jobLauncher" />
-		</bean>
-	</int:service-activator>
-	
-<!--	<int-stream:stdout-channel-adapter channel="job-executions"/>-->
 	<int:channel id="job-executions">
 		<int:queue capacity="10" />
 	</int:channel>
 	
-	<int:channel id="job-requests-as-string" />
-	<int:service-activator input-channel="job-requests-as-string" output-channel="job-requests">
-		<bean class="com.manning.sbia.ch11.integration.StringToJobLaunchRequestAdapter" />
-	</int:service-activator>
-	
 	<bean class="com.manning.sbia.ch11.repository.jdbc.JdbcProductImportRepository">
 		<constructor-arg ref="dataSource" />
 	</bean>
-	
-	<jdbc:embedded-database id="dataSource" type="H2">
-		<jdbc:script location="classpath:/org/springframework/batch/core/schema-h2.sql"/>
-		<jdbc:script location="classpath:/create-tables.sql" />
-		<jdbc:script location="classpath:/create-tables-integration.sql" />
-	</jdbc:embedded-database>
 	
 	<int:gateway id="productImportGateway" 
 		service-interface="com.manning.sbia.ch11.integration.ProductImportGateway" 
@@ -96,7 +60,6 @@
  	
  	<int:channel id="product-imports" />
  	
- 	<int-stream:stdout-channel-adapter channel="product-imports"/>
-	
+ 	<int-stream:stdout-channel-adapter channel="product-imports"/>	
 
 </beans>

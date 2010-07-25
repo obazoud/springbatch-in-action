@@ -11,18 +11,9 @@
 		http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-3.0.xsd
 		http://www.springframework.org/schema/batch http://www.springframework.org/schema/batch/spring-batch-2.1.xsd">
 
-	<bean id="transactionManager"
-		class="org.springframework.batch.support.transaction.ResourcelessTransactionManager" />
-
-	<bean id="jobRepository"
-		class="org.springframework.batch.core.repository.support.MapJobRepositoryFactoryBean">
-		<property name="transactionManager" ref="transactionManager" />
-	</bean>
-
-	<bean id="jobLauncher"
-		class="org.springframework.batch.core.launch.support.SimpleJobLauncher">
-		<property name="jobRepository" ref="jobRepository" />
-	</bean>
+	<import resource="classpath:/com/manning/sbia/ch11/integration/batch-infrastructure-test.xml" />
+	
+	<import resource="classpath:/com/manning/sbia/ch11/integration-job-launching.xml" />
 	
 	<batch:job id="simpleJob">
 		<batch:step id="simpleStep">
@@ -31,12 +22,6 @@
 	</batch:job>
 	
 	<bean id="simpleTasklet" class="com.manning.sbia.ch11.integration.JobLaunchingMessageHandlerTest.SimpleTasklet" />
-	
-	<bean id="jobRegistry" class="org.springframework.batch.core.configuration.support.MapJobRegistry" />
-	
-	<bean class="org.springframework.batch.core.configuration.support.JobRegistryBeanPostProcessor">
-		<property name="jobRegistry" ref="jobRegistry" />
- 	</bean>
  	
  	<int-file:inbound-channel-adapter directory="${java.io.tmpdir}/sbia" channel="file-job-requests"
  		auto-create-directory="true" filename-pattern=".*\.txt">
@@ -46,19 +31,6 @@
  	</int-file:inbound-channel-adapter>
  	
  	<int-file:file-to-string-transformer input-channel="file-job-requests" output-channel="job-requests-as-string"/>
-	
-	<int:channel id="job-requests" />
-	<int:service-activator input-channel="job-requests" output-channel="job-executions">
-		<bean class="com.manning.sbia.ch11.integration.JobLaunchingMessageHandler">
-			<constructor-arg ref="jobRegistry" />
-			<constructor-arg ref="jobLauncher" />
-		</bean>
-	</int:service-activator>
-	
-	<int:channel id="job-requests-as-string" />
-	<int:service-activator input-channel="job-requests-as-string" output-channel="job-requests">
-		<bean class="com.manning.sbia.ch11.integration.StringToJobLaunchRequestAdapter" />
-	</int:service-activator>
 	
 	<int:channel id="job-executions">
 		<int:queue capacity="10"/>

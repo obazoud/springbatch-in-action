@@ -5,6 +5,7 @@ package com.manning.sbia.ch11;
 
 import java.io.File;
 
+import org.apache.commons.io.FileUtils;
 import org.mortbay.jetty.Connector;
 import org.mortbay.jetty.Server;
 import org.mortbay.jetty.nio.SelectChannelConnector;
@@ -12,7 +13,6 @@ import org.mortbay.jetty.webapp.WebAppContext;
 
 /**
  * @author acogoluegnes
- * @todo empty directory on startup
  */
 public class LaunchEnterpriseIntegrationServer {
 	
@@ -20,6 +20,10 @@ public class LaunchEnterpriseIntegrationServer {
 		+File.separator+"sbia";
 	
 	public static void main(String[] args) throws Exception {
+		File pickUpDir = new File(PICKUP_DIR);
+		if(pickUpDir.exists()) {
+			FileUtils.cleanDirectory(pickUpDir);
+		}
 		System.setProperty("product.import.pickup.dir", PICKUP_DIR);
 		Server server = new Server();
 		Connector connector = new SelectChannelConnector();
