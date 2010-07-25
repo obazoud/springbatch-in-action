@@ -58,8 +58,8 @@
  		</int:poller>
  	</int-file:inbound-channel-adapter>
  	
- 	<int:channel id="product-imports" />
- 	
- 	<int-stream:stdout-channel-adapter channel="product-imports"/>	
+ 	<int:channel id="product-imports">
+ 		<int:queue capacity="10"/>
+ 	</int:channel>
 
 </beans>

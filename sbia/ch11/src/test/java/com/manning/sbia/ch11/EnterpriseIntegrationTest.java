@@ -18,6 +18,8 @@ import org.mortbay.jetty.Server;
 import org.mortbay.jetty.nio.SelectChannelConnector;
 import org.mortbay.jetty.webapp.WebAppContext;
 import org.springframework.context.ApplicationContext;
+import org.springframework.integration.channel.PollableChannel;
+import org.springframework.integration.core.Message;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.context.support.WebApplicationContextUtils;
@@ -31,6 +33,8 @@ public class EnterpriseIntegrationTest {
 	private static final String BASE_URI = "http://localhost:8080/enterpriseintegration/";
 
 	private JdbcTemplate jdbcTemplate;
+	
+	private PollableChannel receiverChannel;
 
 	private Server server;
 
@@ -46,11 +50,21 @@ public class EnterpriseIntegrationTest {
 
 	@Test
 	public void enterpriseIntegration() throws Exception {
+		assertPreConditions();
 		RestTemplate restTemplate = new RestTemplate();
 		String importId = "partner1-1";
 		restTemplate.postForLocation(BASE_URI + "product-imports/{importId}",
 				loadProductFiles(importId), importId);
+		extractMessage(Object.class);
+		checkProductImportTableCount(1);
+	}
 
+	private void checkProductImportTableCount(int expected) {
+		Assert.assertEquals(expected, jdbcTemplate.queryForInt("select count(1) from product_import"));
+	}
+
+	private void assertPreConditions() {
+		checkProductImportTableCount(0);		
 	}
 
 	private String loadProductFiles(String importId) throws Exception {
@@ -63,14 +77,24 @@ public class EnterpriseIntegrationTest {
 	}
 
 	private DataSource getWebAppDataSource(WebAppContext wac) {
-		ApplicationContext webAppAppCtx = WebApplicationContextUtils
-				.getWebApplicationContext(wac.getServletContext());
+		ApplicationContext webAppAppCtx = getWebAppSpringContext(wac);
 		Assert.assertNotNull(webAppAppCtx);
 		return webAppAppCtx.getBean(DataSource.class);
 	}
 
+	private ApplicationContext getWebAppSpringContext(WebAppContext wac) {
+		ApplicationContext webAppAppCtx = WebApplicationContextUtils
+				.getWebApplicationContext(wac.getServletContext());
+		return webAppAppCtx;
+	}
+
 	private void setUpJdbcTemplate(WebAppContext wac) {
 		this.jdbcTemplate = new JdbcTemplate(getWebAppDataSource(wac));
+	}
+	
+	private void setUpReceiverChannel(WebAppContext wac) {
+		this.receiverChannel = getWebAppSpringContext(wac)
+			.getBean("product-imports", PollableChannel.class);
 	}
 
 	private void startWebContainer() throws Exception {
@@ -88,12 +112,20 @@ public class EnterpriseIntegrationTest {
 
 		server.start();
 		setUpJdbcTemplate(wac);
+		setUpReceiverChannel(wac);
 	}
 
 	private void stopServer() throws Exception {
 		if (server != null && server.isRunning()) {
 			server.stop();
 		}
+	}
+	
+	private <T> Message<T> extractMessage(Class<T> payloadClass) {
+		Message<?> message = receiverChannel.receive(1000L);
+		Assert.assertNotNull(message);
+		Assert.assertTrue(payloadClass.isAssignableFrom(message.getPayload().getClass()));
+		return (Message<T>) message;
 	}
 
 	@BeforeClass
