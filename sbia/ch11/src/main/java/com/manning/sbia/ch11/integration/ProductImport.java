@@ -12,6 +12,8 @@ public class ProductImport {
 	private String importId;
 	
 	private String state;
+	
+	public ProductImport() { }
 
 	public ProductImport(String importId, String state) {
 		super();
@@ -25,6 +27,14 @@ public class ProductImport {
 
 	public String getState() {
 		return state;
+	}
+	
+	public void setImportId(String importId) {
+		this.importId = importId;
+	}
+	
+	public void setState(String state) {
+		this.state = state;
 	}
 
 	@Override

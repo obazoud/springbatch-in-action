@@ -4,6 +4,8 @@
 package com.manning.sbia.ch11;
 
 import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.sql.DataSource;
 
@@ -17,14 +19,21 @@ import org.mortbay.jetty.Connector;
 import org.mortbay.jetty.Server;
 import org.mortbay.jetty.nio.SelectChannelConnector;
 import org.mortbay.jetty.webapp.WebAppContext;
-import org.springframework.batch.core.launch.JobOperator;
+import org.springframework.batch.core.BatchStatus;
 import org.springframework.context.ApplicationContext;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.converter.HttpMessageConverter;
+import org.springframework.http.converter.StringHttpMessageConverter;
+import org.springframework.http.converter.xml.MarshallingHttpMessageConverter;
 import org.springframework.integration.channel.PollableChannel;
 import org.springframework.integration.core.Message;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.oxm.Marshaller;
+import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.context.support.WebApplicationContextUtils;
 
+import com.manning.sbia.ch11.integration.ProductImport;
 import com.manning.sbia.ch11.repository.ProductImportRepository;
 
 /**
@@ -39,13 +48,14 @@ public class EnterpriseIntegrationTest {
 	
 	private PollableChannel receiverChannel;
 	
-	private ProductImportRepository productImportRepo;
+	private RestTemplate restTemplate;
 
 	private Server server;
 
 	@Before
 	public void setUp() throws Exception {
 		startWebContainer();
+		jdbcTemplate.update("delete from product");
 	}
 
 	@After
@@ -56,22 +66,66 @@ public class EnterpriseIntegrationTest {
 	@Test
 	public void enterpriseIntegration() throws Exception {
 		assertPreConditions();
-		RestTemplate restTemplate = new RestTemplate();
 		String importId = "partner1-1";
 		restTemplate.postForLocation(BASE_URI + "product-imports/{importId}",
 				loadProductFiles(importId), importId);
 		extractMessage(Object.class);
-		checkProductImportTableCount(1);
-		System.out.println(productImportRepo.get(importId));
-	}
-	
+		checkProductImportTableCount(1);		
+		checkProductTableCount(1);
+		ProductImport productImport = restTemplate.getForObject(BASE_URI + "product-imports/{importId}", ProductImport.class,importId);
+		Assert.assertEquals(importId, productImport.getImportId());
+		Assert.assertEquals(BatchStatus.COMPLETED.toString(), productImport.getState());
+		
+		importId = "partner1-2";
+		restTemplate.postForLocation(BASE_URI + "product-imports/{importId}",
+				loadProductFiles(importId), importId);
+		extractMessage(Object.class);
+		checkProductImportTableCount(2);
+		checkProductTableCount(5);
+		productImport = restTemplate.getForObject(BASE_URI + "product-imports/{importId}", ProductImport.class,importId);
+		Assert.assertEquals(importId, productImport.getImportId());
+		Assert.assertEquals(BatchStatus.COMPLETED.toString(), productImport.getState());
+		
+		importId = "partner1-3";
+		restTemplate.postForLocation(BASE_URI + "product-imports/{importId}",
+				loadProductFiles(importId), importId);
+		extractMessage(Object.class);
+		checkProductImportTableCount(3);
+		checkProductTableCount(8);
+		productImport = restTemplate.getForObject(BASE_URI + "product-imports/{importId}", ProductImport.class,importId);
+		Assert.assertEquals(importId, productImport.getImportId());
+		Assert.assertEquals(BatchStatus.COMPLETED.toString(), productImport.getState());
+		
+		// try to re-submit
+		try {
+			restTemplate.postForLocation(BASE_URI + "product-imports/{importId}",
+					loadProductFiles(importId), importId);
+		} catch (HttpClientErrorException e) {
+			Assert.assertEquals(HttpStatus.CONFLICT,e.getStatusCode());
+		}
+		
+		// try to access to non-existing import
+		try {
+			restTemplate.postForLocation(BASE_URI + "product-imports/{importId}",
+					loadProductFiles(importId), "does-not-exist");
+		} catch (HttpClientErrorException e) {
+			Assert.assertEquals(HttpStatus.NOT_FOUND,e.getStatusCode());
+		}
+		
+		
+	}	
 
 	private void checkProductImportTableCount(int expected) {
 		Assert.assertEquals(expected, jdbcTemplate.queryForInt("select count(1) from product_import"));
 	}
+	
+	private void checkProductTableCount(int expected) {
+		Assert.assertEquals(expected, jdbcTemplate.queryForInt("select count(1) from product"));
+	}
 
 	private void assertPreConditions() {
 		checkProductImportTableCount(0);		
+		checkProductTableCount(0);
 	}
 
 	private String loadProductFiles(String importId) throws Exception {
@@ -98,7 +152,18 @@ public class EnterpriseIntegrationTest {
 	private void setUpSpringBeans(WebAppContext wac) {
 		setUpJdbcTemplate(wac);
 		setUpReceiverChannel(wac);
-		this.productImportRepo = getWebAppSpringContext(wac).getBean(ProductImportRepository.class);
+		setUpRestTemplate(wac);
+	}
+	
+	private void setUpRestTemplate(WebAppContext wac) {
+		this.restTemplate = new RestTemplate();
+		List<HttpMessageConverter<?>> converters = new ArrayList<HttpMessageConverter<?>>();
+		converters.add(new StringHttpMessageConverter());
+		MarshallingHttpMessageConverter marshallingConverter = new MarshallingHttpMessageConverter(
+				getWebAppSpringContext(wac).getBean(Marshaller.class)
+		);
+		converters.add(marshallingConverter);
+		restTemplate.setMessageConverters(converters);
 	}
 	
 	private void setUpJdbcTemplate(WebAppContext wac) {
