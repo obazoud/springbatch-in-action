@@ -20,21 +20,16 @@
 	<import resource="classpath:/com/manning/sbia/ch11/enterprise-integration-infrastructure.xml" />
 	<import resource="classpath:/com/manning/sbia/ch11/batch-infrastructure.xml" />
 	<import resource="classpath:/com/manning/sbia/ch11/integration-job-launching.xml" />
+	<import resource="classpath:/com/manning/sbia/ch11/import-products-job.xml" />
 	
-	<batch:job id="simpleJob">
-		<batch:step id="simpleStep">
-			<batch:tasklet ref="simpleTasklet" />
-		</batch:step>
-	</batch:job>
-	
-	<bean id="simpleTasklet" class="com.manning.sbia.ch11.integration.JobLaunchingMessageHandlerTest.SimpleTasklet" />
-	
+		
 	<int:channel id="job-executions">
 		<int:queue capacity="10" />
 	</int:channel>
 	
-	<bean class="com.manning.sbia.ch11.repository.jdbc.JdbcProductImportRepository">
+	<bean id="productImportRepository" class="com.manning.sbia.ch11.repository.jdbc.JdbcProductImportRepository">
 		<constructor-arg ref="dataSource" />
+		<constructor-arg ref="jobExplorer" />
 	</bean>
 	
 	<int:gateway id="productImportGateway" 
@@ -42,7 +37,6 @@
 		default-request-channel="product-imports-as-string" />
 
 	<int:channel id="product-imports-as-string" />
-
 	
 	<int-file:outbound-channel-adapter directory="${product.import.pickup.dir}" auto-create-directory="true"
 		channel="product-imports-as-string"
@@ -58,8 +52,8 @@
  		</int:poller>
  	</int-file:inbound-channel-adapter>
  	
- 	<int:channel id="product-imports">
- 		<int:queue capacity="10"/>
- 	</int:channel>
+ 	<int:service-activator input-channel="product-imports" output-channel="job-requests">
+ 		<bean class="com.manning.sbia.ch11.integration.ProductImportToJobLaunchRequestAdapter" />
+ 	</int:service-activator>
 
 </beans>

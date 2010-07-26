@@ -17,12 +17,15 @@ import org.mortbay.jetty.Connector;
 import org.mortbay.jetty.Server;
 import org.mortbay.jetty.nio.SelectChannelConnector;
 import org.mortbay.jetty.webapp.WebAppContext;
+import org.springframework.batch.core.launch.JobOperator;
 import org.springframework.context.ApplicationContext;
 import org.springframework.integration.channel.PollableChannel;
 import org.springframework.integration.core.Message;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.context.support.WebApplicationContextUtils;
+
+import com.manning.sbia.ch11.repository.ProductImportRepository;
 
 /**
  * @author acogoluegnes
@@ -35,6 +38,8 @@ public class EnterpriseIntegrationTest {
 	private JdbcTemplate jdbcTemplate;
 	
 	private PollableChannel receiverChannel;
+	
+	private ProductImportRepository productImportRepo;
 
 	private Server server;
 
@@ -45,7 +50,7 @@ public class EnterpriseIntegrationTest {
 
 	@After
 	public void tearDown() throws Exception {
-		stopServer();
+		stopWebContainer();
 	}
 
 	@Test
@@ -57,7 +62,9 @@ public class EnterpriseIntegrationTest {
 				loadProductFiles(importId), importId);
 		extractMessage(Object.class);
 		checkProductImportTableCount(1);
+		System.out.println(productImportRepo.get(importId));
 	}
+	
 
 	private void checkProductImportTableCount(int expected) {
 		Assert.assertEquals(expected, jdbcTemplate.queryForInt("select count(1) from product_import"));
@@ -88,13 +95,19 @@ public class EnterpriseIntegrationTest {
 		return webAppAppCtx;
 	}
 
+	private void setUpSpringBeans(WebAppContext wac) {
+		setUpJdbcTemplate(wac);
+		setUpReceiverChannel(wac);
+		this.productImportRepo = getWebAppSpringContext(wac).getBean(ProductImportRepository.class);
+	}
+	
 	private void setUpJdbcTemplate(WebAppContext wac) {
 		this.jdbcTemplate = new JdbcTemplate(getWebAppDataSource(wac));
 	}
 	
 	private void setUpReceiverChannel(WebAppContext wac) {
 		this.receiverChannel = getWebAppSpringContext(wac)
-			.getBean("product-imports", PollableChannel.class);
+			.getBean("job-executions", PollableChannel.class);
 	}
 
 	private void startWebContainer() throws Exception {
@@ -111,11 +124,10 @@ public class EnterpriseIntegrationTest {
 		server.setStopAtShutdown(true);
 
 		server.start();
-		setUpJdbcTemplate(wac);
-		setUpReceiverChannel(wac);
+		setUpSpringBeans(wac);
 	}
 
-	private void stopServer() throws Exception {
+	private void stopWebContainer() throws Exception {
 		if (server != null && server.isRunning()) {
 			server.stop();
 		}

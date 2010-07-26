@@ -4,14 +4,22 @@
 package com.manning.sbia.ch11.repository.jdbc;
 
 import java.util.Date;
+import java.util.List;
 
 import javax.sql.DataSource;
 
+import org.springframework.batch.core.JobExecution;
+import org.springframework.batch.core.JobInstance;
+import org.springframework.batch.core.explore.JobExplorer;
+import org.springframework.batch.core.launch.NoSuchJobExecutionException;
+import org.springframework.batch.core.launch.NoSuchJobInstanceException;
 import org.springframework.dao.DuplicateKeyException;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.manning.sbia.ch11.integration.ProductImport;
 import com.manning.sbia.ch11.repository.ProductImportRepository;
 
 /**
@@ -24,8 +32,11 @@ public class JdbcProductImportRepository implements ProductImportRepository {
 	
 	private JdbcTemplate jdbcTemplate;
 	
-	public JdbcProductImportRepository(DataSource dataSource) {
+	private JobExplorer jobExplorer;
+	
+	public JdbcProductImportRepository(DataSource dataSource,JobExplorer jobExplorer) {
 		this.jdbcTemplate = new JdbcTemplate(dataSource);
+		this.jobExplorer = jobExplorer;
 	}
 
 	/* (non-Javadoc)
@@ -34,12 +45,32 @@ public class JdbcProductImportRepository implements ProductImportRepository {
 	@Override
 	public void createProductImport(String importId)
 			throws DuplicateKeyException {
-		// TODO handle state of the import
 		int count = jdbcTemplate.queryForInt("select count(1) from product_import where import_id = ?",importId);
 		if(count > 0) {
 			throw new DuplicateKeyException("Import already exists: "+importId);
 		}
 		jdbcTemplate.update("insert into product_import (import_id,creation_date) values (?,?)",importId,new Date());
+	}
+	
+	/*
+	 * (non-Javadoc)
+	 * @see com.manning.sbia.ch11.repository.ProductImportRepository#mapImportToJobInstance(java.lang.String, java.lang.Long)
+	 */
+	@Override
+	public void mapImportToJobInstance(String importId, Long jobInstanceId) {
+		jdbcTemplate.update("update product_import set job_instance_id = ? where import_id = ?",
+			jobInstanceId,importId);		
+	}
+	
+	@Override
+	public ProductImport get(String importId) {
+		Long instanceId = jdbcTemplate.queryForLong("select job_instance_id from product_import where import_id = ?",importId);
+		JobInstance jobInstance = jobExplorer.getJobInstance(instanceId);
+		if(jobInstance == null) {
+			throw new EmptyResultDataAccessException("No job instance for this import: "+importId,1);
+		}
+		JobExecution lastJobExecution = jobExplorer.getJobExecutions(jobInstance).get(0); 
+		return new ProductImport(importId, lastJobExecution.getStatus().toString());			
 	}
 
 }
