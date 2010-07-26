@@ -45,6 +45,9 @@
 		<jdbc:script location="classpath:/create-tables.sql" />
 		<jdbc:script location="classpath:/create-tables-integration.sql" />
 	</jdbc:initialize-database>
-	
+
+	<bean class="org.springframework.jdbc.core.JdbcTemplate">
+		<constructor-arg ref="dataSource" />
+	</bean>
 
 </beans>

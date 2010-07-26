@@ -8,6 +8,7 @@
 	<import resource="classpath:/com/manning/sbia/ch11/batch-infrastructure-test.xml" />
 	<import resource="classpath:/com/manning/sbia/ch11/import-products-job.xml" />
 	<import resource="classpath:/com/manning/sbia/ch11/data-access.xml" />
+	<import resource="classpath:/com/manning/sbia/ch11/xml-marshalling.xml" />
 	
 	<tx:annotation-driven />
 

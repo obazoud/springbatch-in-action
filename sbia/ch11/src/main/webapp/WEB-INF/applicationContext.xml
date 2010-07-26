@@ -22,6 +22,7 @@
 	<import resource="classpath:/com/manning/sbia/ch11/batch-infrastructure.xml" />
 	<import resource="classpath:/com/manning/sbia/ch11/integration-job-launching.xml" />
 	<import resource="classpath:/com/manning/sbia/ch11/import-products-job.xml" />
+	<import resource="classpath:/com/manning/sbia/ch11/xml-marshalling.xml" />
 	
 		
 	<int:channel id="job-executions">

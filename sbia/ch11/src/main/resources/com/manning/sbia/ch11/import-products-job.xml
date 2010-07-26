@@ -6,8 +6,13 @@
 		http://www.springframework.org/schema/batch http://www.springframework.org/schema/batch/spring-batch-2.1.xsd">
 
 	<batch:job id="importProducts" xmlns="http://www.springframework.org/schema/batch">
-		<step id="mapImportToJobInstanceStep">
+		<step id="mapImportToJobInstanceStep" next="readWriteProducts">
 			<tasklet ref="mapImportToJobInstanceTasklet" />
+		</step>
+		<step id="readWriteProducts" >
+			<tasklet>
+				<chunk reader="productsReader" writer="productsWriter" commit-interval="3" />
+			</tasklet>
 		</step>
 	</batch:job>
 	
@@ -15,6 +20,17 @@
 		scope="step">
 		<property name="productImportId" value="#{jobParameters['importId']}" />
 		<property name="productImportRepository" ref="productImportRepository" />
+	</bean>
+	
+	<bean id="productsReader" class="com.manning.sbia.ch11.batch.CustomStaxEventItemReader"
+		scope="step">
+		<property name="unmarshaller" ref="marshaller" />
+		<property name="fragmentRootElementName" value="product" />
+		<property name="resource" value="file:#{jobParameters['inputFile']}" />
+	</bean>
+	
+	<bean id="productsWriter" class="com.manning.sbia.ch02.batch.ProductJdbcItemWriter">
+		<constructor-arg ref="dataSource" />
 	</bean>
 
 </beans>
