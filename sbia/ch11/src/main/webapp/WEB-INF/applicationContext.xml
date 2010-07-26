@@ -18,6 +18,7 @@
 		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-3.0.xsd">
 
 	<import resource="classpath:/com/manning/sbia/ch11/enterprise-integration-infrastructure.xml" />
+	<import resource="classpath:/com/manning/sbia/ch11/data-access.xml" />
 	<import resource="classpath:/com/manning/sbia/ch11/batch-infrastructure.xml" />
 	<import resource="classpath:/com/manning/sbia/ch11/integration-job-launching.xml" />
 	<import resource="classpath:/com/manning/sbia/ch11/import-products-job.xml" />
@@ -26,11 +27,6 @@
 	<int:channel id="job-executions">
 		<int:queue capacity="10" />
 	</int:channel>
-	
-	<bean id="productImportRepository" class="com.manning.sbia.ch11.repository.jdbc.JdbcProductImportRepository">
-		<constructor-arg ref="dataSource" />
-		<constructor-arg ref="jobExplorer" />
-	</bean>
 	
 	<int:gateway id="productImportGateway" 
 		service-interface="com.manning.sbia.ch11.integration.ProductImportGateway" 

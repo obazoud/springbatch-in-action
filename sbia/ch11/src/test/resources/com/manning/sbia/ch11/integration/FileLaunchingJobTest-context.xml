@@ -11,7 +11,7 @@
 		http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-3.0.xsd
 		http://www.springframework.org/schema/batch http://www.springframework.org/schema/batch/spring-batch-2.1.xsd">
 
-	<import resource="classpath:/com/manning/sbia/ch11/integration/batch-infrastructure-test.xml" />
+	<import resource="classpath:/com/manning/sbia/ch11/batch-infrastructure-test.xml" />
 	
 	<import resource="classpath:/com/manning/sbia/ch11/integration-job-launching.xml" />
 	
