@@ -14,6 +14,7 @@
 				<chunk reader="productsReader" writer="productsWriter" commit-interval="3" />
 			</tasklet>
 		</step>
+		<!-- TODO move the file at the end of the job? -->
 	</batch:job>
 	
 	<bean id="mapImportToJobInstanceTasklet" class="com.manning.sbia.ch11.batch.ImportProductToJobInstanceMapper"

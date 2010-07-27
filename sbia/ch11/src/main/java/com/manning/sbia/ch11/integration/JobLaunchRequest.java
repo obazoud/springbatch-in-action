@@ -22,16 +22,16 @@ public class JobLaunchRequest {
 		this(jobName,Collections.EMPTY_MAP);
 	}
 
-	public JobLaunchRequest(String jobName, Map<String,String> jobParameters) {
+	public JobLaunchRequest(String jobName, Map<String,String> jobParams) {
 		super();
 		this.jobName = jobName;
-		this.jobParameters = jobParameters;
+		this.jobParameters = jobParams;
 	}
 	
-	public JobLaunchRequest(String jobName, Properties jobParametersAsProps) {
+	public JobLaunchRequest(String jobName, Properties jobParamsAsProps) {
 		this(jobName);
 		this.jobParameters = new HashMap<String, String>();
-		for(Map.Entry<?,?> entry : jobParametersAsProps.entrySet()) {
+		for(Map.Entry<?,?> entry : jobParamsAsProps.entrySet()) {
 			this.jobParameters.put(entry.getKey().toString(), entry.getValue().toString());
 		}
 	}

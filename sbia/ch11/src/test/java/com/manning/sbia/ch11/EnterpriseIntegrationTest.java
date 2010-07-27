@@ -34,7 +34,6 @@ import org.springframework.web.client.RestTemplate;
 import org.springframework.web.context.support.WebApplicationContextUtils;
 
 import com.manning.sbia.ch11.integration.ProductImport;
-import com.manning.sbia.ch11.repository.ProductImportRepository;
 
 /**
  * @author acogoluegnes
