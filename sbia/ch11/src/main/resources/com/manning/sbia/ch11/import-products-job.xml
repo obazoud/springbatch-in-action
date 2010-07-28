@@ -6,18 +6,17 @@
 		http://www.springframework.org/schema/batch http://www.springframework.org/schema/batch/spring-batch-2.1.xsd">
 
 	<batch:job id="importProducts" xmlns="http://www.springframework.org/schema/batch">
-		<step id="mapImportToJobInstanceStep" next="readWriteProducts">
+		<step id="mapImportToJobInstanceStep" next="readWriteProductsStep">
 			<tasklet ref="mapImportToJobInstanceTasklet" />
 		</step>
-		<step id="readWriteProducts" >
+		<step id="readWriteProductsStep" >
 			<tasklet>
 				<chunk reader="productsReader" writer="productsWriter" commit-interval="3" />
 			</tasklet>
 		</step>
-		<!-- TODO move the file at the end of the job? -->
 	</batch:job>
 	
-	<bean id="mapImportToJobInstanceTasklet" class="com.manning.sbia.ch11.batch.ImportProductToJobInstanceMapper"
+	<bean id="mapImportToJobInstanceTasklet" class="com.manning.sbia.ch11.batch.ImportToJobInstanceMappingTasklet"
 		scope="step">
 		<property name="productImportId" value="#{jobParameters['importId']}" />
 		<property name="productImportRepository" ref="productImportRepository" />

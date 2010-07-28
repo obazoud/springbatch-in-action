@@ -111,6 +111,14 @@ public class EnterpriseIntegrationTest {
 			Assert.assertEquals(HttpStatus.NOT_FOUND,e.getStatusCode());
 		}
 		
+		// check pending status (import exists but no corresponding job instance)
+		// creates fake product_import
+		importId = "fake-import";
+		jdbcTemplate.update("insert into product_import (import_id) values (?)","fake-import");
+		productImport = restTemplate.getForObject(BASE_URI + "product-imports/{importId}", ProductImport.class,importId);
+		Assert.assertEquals(importId, productImport.getImportId());
+		Assert.assertEquals("PENDING", productImport.getState());
+		
 		
 	}	
 

@@ -33,7 +33,7 @@
 		service-interface="com.manning.sbia.ch11.integration.ProductImportGateway" 
 		default-request-channel="product-imports-as-string" />
 
-	<int:channel id="product-imports-as-string" />
+	<int:channel id="product-imports-as-string" />	
 	
 	<int-file:outbound-channel-adapter directory="${product.import.pickup.dir}" auto-create-directory="true"
 		channel="product-imports-as-string"
@@ -50,7 +50,7 @@
  	</int-file:inbound-channel-adapter>
  	
  	<int:service-activator input-channel="product-imports" output-channel="job-requests">
- 		<bean class="com.manning.sbia.ch11.integration.ProductImportToJobLaunchRequestAdapter" />
+ 		<bean class="com.manning.sbia.ch11.integration.ProductImportToJobLaunchRequestHandler" />
  	</int:service-activator>
 
 </beans>

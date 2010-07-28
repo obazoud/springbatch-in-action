@@ -52,8 +52,6 @@ public class ImportProductsController {
 	
 	@ExceptionHandler(EmptyResultDataAccessException.class)
 	@ResponseStatus(value=HttpStatus.NOT_FOUND,reason="No product import for this ID.")
-	public void noImportFound() { }
-	
-	
+	public void noImportFound() { }	
 	
 }

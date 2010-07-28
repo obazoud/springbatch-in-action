@@ -4,15 +4,12 @@
 package com.manning.sbia.ch11.repository.jdbc;
 
 import java.util.Date;
-import java.util.List;
 
 import javax.sql.DataSource;
 
 import org.springframework.batch.core.JobExecution;
 import org.springframework.batch.core.JobInstance;
 import org.springframework.batch.core.explore.JobExplorer;
-import org.springframework.batch.core.launch.NoSuchJobExecutionException;
-import org.springframework.batch.core.launch.NoSuchJobInstanceException;
 import org.springframework.dao.DuplicateKeyException;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -64,13 +61,18 @@ public class JdbcProductImportRepository implements ProductImportRepository {
 	
 	@Override
 	public ProductImport get(String importId) {
+		int count = jdbcTemplate.queryForInt("select count(1) from product_import where import_id = ?",importId);
+		if(count == 0) {
+			throw new EmptyResultDataAccessException("No import with this ID: "+importId,1);
+		}
 		Long instanceId = jdbcTemplate.queryForLong("select job_instance_id from product_import where import_id = ?",importId);
 		JobInstance jobInstance = jobExplorer.getJobInstance(instanceId);
-		if(jobInstance == null) {
-			throw new EmptyResultDataAccessException("No job instance for this import: "+importId,1);
-		}
-		JobExecution lastJobExecution = jobExplorer.getJobExecutions(jobInstance).get(0); 
-		return new ProductImport(importId, lastJobExecution.getStatus().toString());			
+		String status = "PENDING";
+		if(jobInstance != null) {
+			JobExecution lastJobExecution = jobExplorer.getJobExecutions(jobInstance).get(0);
+			status = lastJobExecution.getStatus().toString();
+		}		 
+		return new ProductImport(importId, status);			
 	}
 
 }

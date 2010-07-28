@@ -16,7 +16,7 @@ import com.manning.sbia.ch11.repository.ProductImportRepository;
  * @author acogoluegnes
  *
  */
-public class ImportProductToJobInstanceMapper implements Tasklet,InitializingBean {
+public class ImportToJobInstanceMappingTasklet implements Tasklet,InitializingBean {
 	
 	private String productImportId;
 	

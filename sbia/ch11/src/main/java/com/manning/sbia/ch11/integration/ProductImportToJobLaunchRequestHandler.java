@@ -13,7 +13,7 @@ import org.apache.commons.io.FilenameUtils;
  * @author acogoluegnes
  *
  */
-public class ProductImportToJobLaunchRequestAdapter {
+public class ProductImportToJobLaunchRequestHandler {
 
 	public JobLaunchRequest adapt(File products) {
 		String importId = FilenameUtils.getBaseName(products.getAbsolutePath());
