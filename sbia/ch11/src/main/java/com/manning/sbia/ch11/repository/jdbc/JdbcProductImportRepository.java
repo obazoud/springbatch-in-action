@@ -65,9 +65,9 @@ public class JdbcProductImportRepository implements ProductImportRepository {
 		if(count == 0) {
 			throw new EmptyResultDataAccessException("No import with this ID: "+importId,1);
 		}
-		Long instanceId = jdbcTemplate.queryForLong("select job_instance_id from product_import where import_id = ?",importId);
-		JobInstance jobInstance = jobExplorer.getJobInstance(instanceId);
 		String status = "PENDING";
+		Long instanceId = jdbcTemplate.queryForLong("select job_instance_id from product_import where import_id = ?",importId);
+		JobInstance jobInstance = jobExplorer.getJobInstance(instanceId);		
 		if(jobInstance != null) {
 			JobExecution lastJobExecution = jobExplorer.getJobExecutions(jobInstance).get(0);
 			status = lastJobExecution.getStatus().toString();

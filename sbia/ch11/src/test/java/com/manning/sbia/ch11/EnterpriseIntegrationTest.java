@@ -74,7 +74,7 @@ public class EnterpriseIntegrationTest {
 		ProductImport productImport = restTemplate.getForObject(BASE_URI + "product-imports/{importId}", ProductImport.class,importId);
 		Assert.assertEquals(importId, productImport.getImportId());
 		Assert.assertEquals(BatchStatus.COMPLETED.toString(), productImport.getState());
-		
+				
 		importId = "partner1-2";
 		restTemplate.postForLocation(BASE_URI + "product-imports/{importId}",
 				loadProductFiles(importId), importId);
