@@ -22,7 +22,8 @@ public class LaunchImportProductsJob {
     public static void main(String[] args) throws Exception {
             ApplicationContext ctx = new ClassPathXmlApplicationContext(
                     "/import-products-job-context.xml",
-                    "/com/manning/sbia/ch03/batch-infrastructure-pgsql-context.xml"
+                    "/com/manning/sbia/ch03/batch-infrastructure-context.xml",
+        			"/com/manning/sbia/ch03/connect-database-context.xml"
             );
             
             JobLauncher jobLauncher = ctx.getBean(JobLauncher.class);

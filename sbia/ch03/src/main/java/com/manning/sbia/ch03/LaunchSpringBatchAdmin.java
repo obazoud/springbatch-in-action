@@ -18,7 +18,7 @@ public class LaunchSpringBatchAdmin {
 	 * @param args
 	 */
 	public static void main(String[] args) throws Exception {
-		System.setProperty("ENVIRONMENT", "postgresql");
+		System.setProperty("ENVIRONMENT", "h2");
 		System.setProperty("batch.data.source.init", "false");
 		Server server = new Server();
         Connector connector = new SelectChannelConnector();
@@ -35,7 +35,7 @@ public class LaunchSpringBatchAdmin {
 
         server.start();
         
-        System.out.println("**** serveur launched");
+        System.out.println("**** Spring Batch Admin launched");
 
 	}
 

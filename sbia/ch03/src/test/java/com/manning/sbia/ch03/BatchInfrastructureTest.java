@@ -18,7 +18,10 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
  *
  */
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(locations={"/com/manning/sbia/ch03/batch-infrastructure-pgsql-context.xml"})
+@ContextConfiguration(locations={
+	"/com/manning/sbia/ch03/batch-infrastructure-context.xml",
+	"/com/manning/sbia/ch03/root-database-context.xml"
+})
 public class BatchInfrastructureTest {
 
 	@Autowired
