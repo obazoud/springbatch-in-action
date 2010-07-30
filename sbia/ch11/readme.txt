@@ -1,4 +1,4 @@
-Code source chapter 11 of Spring Batch in Action
+Code source for chapter 11 of Spring Batch in Action
 
 To start the web container of the enterprise integration use case, 
 launch the LaunchEnterpriseIntegrationServer class.
