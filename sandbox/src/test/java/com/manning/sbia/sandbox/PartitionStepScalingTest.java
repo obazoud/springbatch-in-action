@@ -4,6 +4,9 @@
 package com.manning.sbia.sandbox;
 
 import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 import org.junit.Assert;
 import org.junit.Test;
@@ -19,13 +22,15 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.util.StopWatch;
 
+import com.manning.sbia.ch02.domain.Product;
+
 /**
  * @author acogoluegnes
  *
  */
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration
-public class MultiThreadedStepScalingTest {
+public class PartitionStepScalingTest {
 	
 	@Autowired
 	private JobLauncher launcher;
@@ -35,21 +40,27 @@ public class MultiThreadedStepScalingTest {
 	private Job simpleJob;
 	
 	@Autowired
-	@Qualifier("readWriteMultiThreadedJob")
-	private Job multiThreadedJob;
+	@Qualifier("readWritePartitionJob")
+	private Job partitionJob;
+	
+	@Autowired
+	@Qualifier("writerForPartitionJob")
+	private DummyProductWriter writerForPartitionJob;
 
-	@Test public void multiThreadingStepScaling() throws Exception {
+	@Test public void partitionStepScaling() throws Exception {
 		StopWatch sw = new StopWatch();
 		
 		int nbOfExec = 5;
-		long count = 100;
+		int nbOfPartition = 6;
+		long maxPerPartition = 20;
+		long count = nbOfPartition * maxPerPartition;
 		
 		for(int i=0;i<nbOfExec;i++) {
 			sw.start("simple "+i);
 			JobExecution simpleJobExec = launcher.run(
 				simpleJob,
-				new JobParametersBuilder().addLong("exec", (long)i)
-					.addLong("count",count)
+				new JobParametersBuilder().addLong("exec", (long) i)
+					.addLong("max",count)
 					.toJobParameters()
 			);
 			sw.stop();
@@ -61,19 +72,38 @@ public class MultiThreadedStepScalingTest {
 			
 			sw.start("multi-threaded "+i);
 			JobExecution multiThreadedJobExec = launcher.run(
-				multiThreadedJob,
-				new JobParametersBuilder().addLong("exec", (long)i)
-					.addLong("count",count)
+				partitionJob,
+				new JobParametersBuilder().addLong("exec", (long) i)
+					.addLong("maxPerPartition", maxPerPartition)
 					.toJobParameters()
 			);
 			sw.stop();
 			Assert.assertEquals(ExitStatus.COMPLETED,multiThreadedJobExec.getExitStatus());
 			
 			writtenCount = multiThreadedJobExec.getStepExecutions().iterator().next().getWriteCount();
-			Assert.assertEquals(count,writtenCount);
+			Assert.assertEquals(count,writtenCount);			
+			
+			// checks partitionning is ok
+			List<Product> writtenProducts = writerForPartitionJob.getProducts();
+			Map<String, Long> counts = new HashMap<String, Long>();
+			for(Product product : writtenProducts) {
+				String prefix = product.getId().substring(0, 1);
+				Long currentCount = counts.get(prefix);
+				if(currentCount == null) {
+					currentCount = 0L;
+				}
+				currentCount++;
+				counts.put(prefix, currentCount);
+			}
+			for(Long currentCount : counts.values()) {
+				Assert.assertEquals(maxPerPartition,currentCount.longValue());
+			}
+			
+			writerForPartitionJob.clear();
 			
 			long multiThreadedExecTime = calculateExecutionTime(multiThreadedJobExec);
 			Assert.assertTrue("multi-threaded should be faster than simple",multiThreadedExecTime<simpleExecTime);
+			
 		}
 		
 		System.out.println(sw.prettyPrint());

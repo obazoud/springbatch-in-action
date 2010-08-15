@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:batch="http://www.springframework.org/schema/batch"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+		http://www.springframework.org/schema/batch http://www.springframework.org/schema/batch/spring-batch-2.1.xsd">
+
+	<import resource="batch-infrastructure-test.xml" />
+
+	<batch:job id="readWriteSimpleJob">
+		<batch:step id="readWriteSimpleStep">
+			<batch:tasklet>
+				<batch:chunk reader="reader" writer="writer" commit-interval="5" />
+			</batch:tasklet>
+		</batch:step>
+	</batch:job>
+	
+	<job id="readWritePartitionJob" xmlns="http://www.springframework.org/schema/batch">
+		<step id="readWritePartitionStep">
+			<partition step="partitionStep" partitioner="partitioner">
+				<handler grid-size="2" task-executor="taskExecutor" />
+			</partition>
+		</step>
+	</job>
+	
+	<bean id="partitioner" class="com.manning.sbia.sandbox.DummyPrefixPartitioner">
+		<constructor-arg value="A,B,C,D,E,F" />
+	</bean>
+
+	<step id="partitionStep" xmlns="http://www.springframework.org/schema/batch">
+		<tasklet>
+			<chunk reader="readerForPartitionJob" writer="writerForPartitionJob" commit-interval="5" />
+		</tasklet>
+	</step>
+	
+	<bean id="reader" class="com.manning.sbia.sandbox.DummyProductReader" scope="step">
+		<constructor-arg value="#{jobParameters['max']}" />
+	</bean>
+
+	<bean id="writer" class="com.manning.sbia.sandbox.DummyProductWriter" scope="step"/>
+	
+	<bean id="taskExecutor" class="org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor">
+		<property name="corePoolSize" value="5" />
+		<property name="maxPoolSize" value="5" />
+	</bean>
+	
+	
+	
+	<bean id="readerForPartitionJob" class="com.manning.sbia.sandbox.DummyPartitionProductReader" scope="step">
+		<property name="max" value="#{jobParameters[maxPerPartition]}" />
+		<property name="prefix" value="#{stepExecutionContext[prefix]}" />
+	</bean>
+
+	<bean id="writerForPartitionJob" class="com.manning.sbia.sandbox.DummyProductWriter" />
+
+</beans>
