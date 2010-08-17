@@ -10,11 +10,7 @@
 	<job id="importProducts" xmlns="http://www.springframework.org/schema/batch">
 		<step id="readWriteProducts">
 			<tasklet>
-				<chunk reader="reader" writer="writer" commit-interval="3" skip-limit="5">
-					<skippable-exception-classes>
-						<include class="org.springframework.batch.item.file.FlatFileParseException"/>
-					</skippable-exception-classes>
-				</chunk>
+				<chunk reader="reader" writer="writer" commit-interval="3" />
 			</tasklet>			
 		</step>
 	</job>

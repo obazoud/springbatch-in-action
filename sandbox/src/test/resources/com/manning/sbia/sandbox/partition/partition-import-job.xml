@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:batch="http://www.springframework.org/schema/batch"
+	xmlns:jdbc="http://www.springframework.org/schema/jdbc"
+	xsi:schemaLocation="http://www.springframework.org/schema/jdbc http://www.springframework.org/schema/jdbc/spring-jdbc-3.0.xsd
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+		http://www.springframework.org/schema/batch http://www.springframework.org/schema/batch/spring-batch-2.1.xsd">
+
+	<job id="importProducts" xmlns="http://www.springframework.org/schema/batch">
+		<step id="readWriteProducts">
+			<batch:partition step="partitionStep" partitioner="partitioner">
+				<batch:handler grid-size="2" task-executor="taskExecutor"/>
+			</batch:partition>
+		</step>
+	</job>
+	
+	<bean id="partitioner" class="org.springframework.batch.core.partition.support.MultiResourcePartitioner">
+		<property name="keyName" value="inputFile" />
+		<property name="resources" value="file:./src/test/resources/com/manning/sbia/sandbox/partition/input/*.txt" />
+	</bean>
+	
+	<step id="partitionStep" xmlns="http://www.springframework.org/schema/batch">
+		<tasklet>
+			<chunk reader="reader" writer="writer" commit-interval="3" />
+		</tasklet>
+	</step>
+	
+	<bean id="taskExecutor" class="org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor">
+		<property name="corePoolSize" value="5" />
+		<property name="maxPoolSize" value="5" />
+	</bean>
+	
+	<bean id="reader" class="org.springframework.batch.item.file.FlatFileItemReader" scope="step">
+		<property name="resource" value="#{stepExecutionContext[inputFile]}" />
+		<property name="linesToSkip" value="1" />
+		<property name="lineMapper">
+			<bean class="org.springframework.batch.item.file.mapping.DefaultLineMapper">
+				<property name="lineTokenizer">
+					<bean class="org.springframework.batch.item.file.transform.DelimitedLineTokenizer">
+						<property name="names" value="PRODUCT_ID,NAME,DESCRIPTION,PRICE" />
+					</bean>
+				</property>
+				<property name="fieldSetMapper">
+					<bean class="com.manning.sbia.ch02.batch.ProductFieldSetMapper" />
+				</property>
+			</bean>
+		</property>
+	</bean>
+	
+	<bean id="writer" class="com.manning.sbia.ch02.batch.ProductJdbcItemWriter">
+		<constructor-arg ref="dataSource" />
+	</bean>
+	
+	<bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+		<property name="dataSource" ref="dataSource" />
+	</bean>
+
+	<bean id="jobRepository" class="org.springframework.batch.core.repository.support.MapJobRepositoryFactoryBean">
+		<property name="transactionManager" ref="transactionManager" />
+	</bean>
+
+	<bean id="jobLauncher" class="org.springframework.batch.core.launch.support.SimpleJobLauncher">
+		<property name="jobRepository" ref="jobRepository" />
+	</bean>
+	
+	<bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource">
+		<property name="driverClassName" value="org.h2.Driver" />
+		<property name="url" value="jdbc:h2:mem:sbia_sandbox_partition;DB_CLOSE_DELAY=-1" />
+		<property name="username" value="sa" />
+		<property name="password" value="" />
+		<property name="initialSize" value="5" />
+		<property name="maxActive" value="5" />
+	</bean>
+
+	<jdbc:initialize-database data-source="dataSource">
+		<jdbc:script location="classpath:/org/springframework/batch/core/schema-h2.sql"/>
+		<jdbc:script location="classpath:/create-tables.sql" />
+	</jdbc:initialize-database>
+
+</beans>
