@@ -1,0 +1,9 @@
+PRODUCT_ID,NAME,DESCRIPTION,PRICE
+321,BlackBerry 8100 Pearl (P1),,124.60
+322,Sony Ericsson W810i (P1),,139.45
+323,Samsung MM-A900M Ace (P1),,97.80
+324,Toshiba M285-E 14 (P1),,166.20
+325,Nokia 2610 Phone (P1),,145.50
+326,CN Clogs Beach/Garden Clog (P1),,190,70
+327,AT&T 8525 PDA (P1),,289.20
+328,Canon Digital Rebel XT 8MP Digital SLR Camera (P1),,13.70
