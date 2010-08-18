@@ -1,7 +1,7 @@
 /**
  * 
  */
-package com.manning.sbia.sandbox.parallel;
+package com.manning.sbia.sandbox;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;

@@ -7,6 +7,7 @@
 	</appender>
 	
 	<logger name="org.springframework.batch" level="warn" />
+	<logger name="org.springframework.batch.integration" level="error" />
 
 	<root level="error">
 		<appender-ref ref="STDOUT" />
