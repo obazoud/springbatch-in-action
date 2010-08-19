@@ -23,8 +23,8 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
  *
  */
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration("local-chunk-import-job.xml")
-public class LocalChunkTest {
+@ContextConfiguration("remote-chunk-jms-import-job.xml")
+public class RemoteChunkJmsTest {
 	
 	@Autowired
 	private JobLauncher jobLauncher;
@@ -33,21 +33,21 @@ public class LocalChunkTest {
 	private Job jobSimple;
 	
 	@Autowired
-	private Job jobChunk;
+	private Job jobRemoteChunk;
 	
 	@Autowired
 	private JdbcTemplate template;
 
-	@Test public void localChunking() throws Exception {
+	@Test public void remoteChunking() throws Exception {
 		// warming up
 		executeJob(100, jobSimple);
-		executeJob(100, jobChunk);
-		int max = 100; // can see some difference starting from 1000 rows
+		executeJob(100, jobRemoteChunk);
+		int max = 100;
 		int nbIterations = 5;
 		for(int i=0;i<nbIterations;i++) {
 			long simpleTime = executeJob(max, jobSimple);
-			long remoteTime = executeJob(max, jobChunk);
-			System.out.println("simple: "+simpleTime+", local chunk: "+remoteTime);
+			long remoteTime = executeJob(max, jobRemoteChunk);
+//			System.out.println("simple: "+simpleTime+", remote chunk: "+remoteTime);
 		}		
 	}
 	
