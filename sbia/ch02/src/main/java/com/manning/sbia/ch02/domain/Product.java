@@ -3,13 +3,19 @@
  */
 package com.manning.sbia.ch02.domain;
 
+import java.io.Serializable;
 import java.math.BigDecimal;
 
 /**
  * @author acogoluegnes
  *
  */
-public class Product {
+public class Product implements Serializable {
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 6648416741847674063L;
 
 	public Product(String id) {
 		super();
