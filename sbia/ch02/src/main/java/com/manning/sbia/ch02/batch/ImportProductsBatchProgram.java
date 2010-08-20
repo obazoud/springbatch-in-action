@@ -19,7 +19,7 @@ import org.springframework.jdbc.core.simple.SimpleJdbcTemplate;
  * @author acogoluegnes
  * 
  */
-public class ImportInvoicesBatchProgram {
+public class ImportProductsBatchProgram {
 
 	/**
 	 * @param args

@@ -140,13 +140,14 @@
 		<module>ch01</module>
 		<module>ch02</module>
 		<module>ch03</module>
-    <module>ch08</module>
-    <module>ch11</module>
+		<module>ch05</module>
+    	<module>ch08</module>
+    	<module>ch11</module>
   </modules>
 
 	<properties>
 		<spring.batch.version>2.1.2.RELEASE</spring.batch.version>
-		<spring.version>3.0.3.RELEASE</spring.version>
+		<spring.version>3.0.4.RELEASE</spring.version>
 		<slf4j.version>1.6.0</slf4j.version>
 		<h2.version>1.2.137</h2.version>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
