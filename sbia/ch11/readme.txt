@@ -6,7 +6,7 @@ launch the LaunchEnterpriseIntegrationServer class.
 If you have CURL installed on your computer, you can use it to submit imports to the server.
 Open a shell in the directory of the project and launch the following command:
 
-curl http://localhost:8080/enterpriseintegration/product-imports/partner1-1 -H 'Content-type:text/xml;charset=utf-8' --data-binary @./data-samples/products-partner1-1.xml
+curl http://localhost:8080/enterpriseintegration/product-imports/partner1-1 -H 'Content-type:text/xml;charset=utf-8' -X PUT --data-binary @./data-samples/products-partner1-1.xml
 
 If you don't have CURL installed, you can launch the SubmitImport class to submit an import.
 

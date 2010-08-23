@@ -33,7 +33,7 @@ public class ImportProductsController {
 	@Autowired
 	private ProductImportGateway productImportGateway;
 
-	@RequestMapping(value="/product-imports/{importId}",method=RequestMethod.POST)
+	@RequestMapping(value="/product-imports/{importId}",method=RequestMethod.PUT)
 	@ResponseStatus(HttpStatus.ACCEPTED)
 	public void importProducts(@PathVariable String importId,@RequestBody String content) {
 		productImportRepository.createProductImport(importId);

@@ -20,7 +20,7 @@ public class SubmitImport {
 	public static void main(String[] args) throws Exception {
 		RestTemplate restTemplate = new RestTemplate();
 		String importId = "partner1-1";
-		restTemplate.postForLocation(
+		restTemplate.put(
 			"http://localhost:8080/enterpriseintegration/product-imports/{importId}",
 			loadProductFiles(importId), importId);
 	}

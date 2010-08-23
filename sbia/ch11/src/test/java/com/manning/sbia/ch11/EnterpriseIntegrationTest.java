@@ -66,7 +66,7 @@ public class EnterpriseIntegrationTest {
 	public void enterpriseIntegration() throws Exception {
 		assertPreConditions();
 		String importId = "partner1-1";
-		restTemplate.postForLocation(BASE_URI + "product-imports/{importId}",
+		restTemplate.put(BASE_URI + "product-imports/{importId}",
 				loadProductFiles(importId), importId);
 		extractMessage(Object.class);
 		checkProductImportTableCount(1);		
@@ -76,7 +76,7 @@ public class EnterpriseIntegrationTest {
 		Assert.assertEquals(BatchStatus.COMPLETED.toString(), productImport.getState());
 				
 		importId = "partner1-2";
-		restTemplate.postForLocation(BASE_URI + "product-imports/{importId}",
+		restTemplate.put(BASE_URI + "product-imports/{importId}",
 				loadProductFiles(importId), importId);
 		extractMessage(Object.class);
 		checkProductImportTableCount(2);
@@ -86,7 +86,7 @@ public class EnterpriseIntegrationTest {
 		Assert.assertEquals(BatchStatus.COMPLETED.toString(), productImport.getState());
 		
 		importId = "partner1-3";
-		restTemplate.postForLocation(BASE_URI + "product-imports/{importId}",
+		restTemplate.put(BASE_URI + "product-imports/{importId}",
 				loadProductFiles(importId), importId);
 		extractMessage(Object.class);
 		checkProductImportTableCount(3);
@@ -97,7 +97,7 @@ public class EnterpriseIntegrationTest {
 		
 		// try to re-submit
 		try {
-			restTemplate.postForLocation(BASE_URI + "product-imports/{importId}",
+			restTemplate.put(BASE_URI + "product-imports/{importId}",
 					loadProductFiles(importId), importId);
 		} catch (HttpClientErrorException e) {
 			Assert.assertEquals(HttpStatus.CONFLICT,e.getStatusCode());
@@ -105,7 +105,7 @@ public class EnterpriseIntegrationTest {
 		
 		// try to access to non-existing import
 		try {
-			restTemplate.postForLocation(BASE_URI + "product-imports/{importId}",
+			restTemplate.put(BASE_URI + "product-imports/{importId}",
 					loadProductFiles(importId), "does-not-exist");
 		} catch (HttpClientErrorException e) {
 			Assert.assertEquals(HttpStatus.NOT_FOUND,e.getStatusCode());
