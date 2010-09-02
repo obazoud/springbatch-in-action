@@ -8,13 +8,14 @@
 		<groupId>com.manning.sbia</groupId>
 		<version>1.0.0</version>
 	</parent>
-	<groupId>com.manning.sbia</groupId>
 	<artifactId>ch05</artifactId>
 	<name>ch05</name>
-	<properties>
-		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-	</properties>
+
 	<dependencies>
-		
+		<dependency>
+			<groupId>org.quartz-scheduler</groupId>
+			<artifactId>quartz</artifactId>
+			<version>1.8.4</version>
+		</dependency>
 	</dependencies>
 </project>
