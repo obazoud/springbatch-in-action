@@ -35,8 +35,8 @@ import static org.springframework.batch.test.AssertFile.assertFileEquals;
 @ContextConfiguration("/com/manning/sbia/ch14/spring/test-job-context.xml")
 public class ProductStepTest {
   String PRODUCTS_PATH = "classpath:com/manning/sbia/ch14/input/products.txt";
-  String STATISTIC_REF_PATH = "com/manning/sbia/ch14/output/statistic-product.txt";
-  String STATISTIC_PATH = "./target/statistic.txt";
+  String EXCLUDES_REF_PATH = "com/manning/sbia/ch14/output/excludes.txt";
+  String EXCLUDES_PATH = "./target/excludes.txt";
   @Autowired
   private JobLauncherTestUtils jobLauncherTestUtils;
   @Autowired
@@ -57,7 +57,7 @@ public class ProductStepTest {
     assertEquals(6, setpExec.getWriteCount());
     assertEquals(6, jdbcTemplate.queryForInt("SELECT COUNT(*) from PRODUCT"));
     assertFileEquals(//
-        new ClassPathResource(STATISTIC_REF_PATH), //
-        new FileSystemResource(STATISTIC_PATH));
+        new ClassPathResource(EXCLUDES_REF_PATH), //
+        new FileSystemResource(EXCLUDES_PATH));
   }
 }
