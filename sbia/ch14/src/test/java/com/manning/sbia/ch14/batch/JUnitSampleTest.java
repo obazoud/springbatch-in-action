@@ -24,7 +24,7 @@ public class JUnitSampleTest {
 
   @After
   public void tearDown() {
-    //
+    // do something
   }
 
   @Test

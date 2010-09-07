@@ -65,4 +65,12 @@ public class CompositeItemProcessorTest {
     Product p2 = processor.process(p1);
     assertNull(p2);
   }
+
+  @Test
+  @DirtiesContext
+  public void processorFailOrder() throws Exception {
+    Product p1 = new Product();
+    Product p2 = processor.process(p1);
+    assertNull(p2);
+  }
 }
