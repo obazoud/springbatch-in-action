@@ -13,7 +13,7 @@
 	<batch:job id="job">
 		<batch:step id="step">
 			<batch:tasklet>
-				<bean class="com.manning.sbia.ch05.QuartzSchedulingTest$CountDownTasklet">
+				<bean class="com.manning.sbia.ch05.CountDownTasklet">
 					<property name="countDownLatch" ref="countDownLatch" />
 				</bean>
 			</batch:tasklet>

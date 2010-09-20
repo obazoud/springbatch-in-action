@@ -18,7 +18,7 @@
 	<batch:job id="xmlJob">
 		<batch:step id="xmlStep">
 			<batch:tasklet>
-				<bean class="com.manning.sbia.ch05.SpringSchedulingTest$CountDownTasklet">
+				<bean class="com.manning.sbia.ch05.CountDownTasklet">
 					<property name="countDownLatch" ref="xmlCountDownLatch" />
 				</bean>
 			</batch:tasklet>		
@@ -40,7 +40,7 @@
 	<batch:job id="annotationJob">
 		<batch:step id="annotationStep">
 			<batch:tasklet>
-				<bean class="com.manning.sbia.ch05.SpringSchedulingTest$CountDownTasklet">
+				<bean class="com.manning.sbia.ch05.CountDownTasklet">
 					<property name="countDownLatch" ref="annotationCountDownLatch" />
 				</bean>
 			</batch:tasklet>		
