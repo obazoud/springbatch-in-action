@@ -24,6 +24,12 @@
 			<groupId>net.java.dev.springmodules</groupId>
 			<artifactId>com.springsource.org.springmodules.validation.validator</artifactId>
 			<version>0.9.0</version>
+			<exclusions>
+				<exclusion>
+					<artifactId>com.springsource.org.hibernate.validator</artifactId>
+					<groupId>org.hibernate</groupId>
+				</exclusion>
+			</exclusions>
 		</dependency>
 		
 		<!-- spring modules validation depends on some Web artifacts! -->
