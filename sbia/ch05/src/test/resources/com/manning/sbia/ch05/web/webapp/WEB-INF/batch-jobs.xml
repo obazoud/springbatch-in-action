@@ -7,7 +7,7 @@
 
 	<batch:job id="scheduledJob">
 		<batch:step id="scheduledStep">
-			<batch:tasklet>
+			<batch:tasklet>				
 				<bean class="com.manning.sbia.ch05.CountDownTasklet">
 					<property name="countDownLatch" ref="countDownLatch" />
 				</bean>
