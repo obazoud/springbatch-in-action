@@ -2,8 +2,22 @@
 <beans xmlns="http://www.springframework.org/schema/beans"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xmlns:batch="http://www.springframework.org/schema/batch"
-	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+	xmlns:jdbc="http://www.springframework.org/schema/jdbc"
+	xsi:schemaLocation="http://www.springframework.org/schema/jdbc http://www.springframework.org/schema/jdbc/spring-jdbc-3.0.xsd
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
 		http://www.springframework.org/schema/batch http://www.springframework.org/schema/batch/spring-batch-2.1.xsd">
+
+	<bean id="dataSource" class="org.springframework.jdbc.datasource.SingleConnectionDataSource">
+		<property name="driverClassName" value="org.h2.Driver" />
+		<property name="url" value="jdbc:h2:." />
+		<property name="username" value="sa" />
+		<property name="password" value="" />
+		<property name="suppressClose" value="true" />
+	</bean>
+
+	<jdbc:initialize-database data-source="dataSource">
+		<jdbc:script location="classpath:/create-tables.sql" />
+	</jdbc:initialize-database>
 
 	<bean id="transactionManager" class="org.springframework.batch.support.transaction.ResourcelessTransactionManager" />
 	
@@ -23,23 +37,15 @@
  		</step>
  	</job>
  	
- 	<bean id="productItemReader"
-  		class="org.springframework.batch.item.file.FlatFileItemReader">
- 		<property name="resource" value="classpath:/com/manning/sbia/ch06/input/products.json"/>
-		<property name="recordSeparatorPolicy"
-				ref="productRecordSeparatorPolicy"/>
- 		<property name="lineMapper" ref="productLineMapper"/>
- 	</bean>
-
-	<bean id="productRecordSeparatorPolicy" class="org.springframework.batch.item.file.separator.JsonRecordSeparatorPolicy"/>
-
-	<bean id="productLineMapper"
-		class="com.manning.sbia.ch06.WrappedJsonLineMapper">
-		<property name="delegate" ref="targetProductsLineMapper"/>
+	<bean id="productItemReader"
+		class="org.springframework.batch.item.database.JdbcCursorItemReader">
+		<property name="dataSource" ref="dataSource"/>
+		<property name="sql" value="select id, name, description, price from product"/>
+		<property name="rowMapper" ref="productRowMapper"/>
 	</bean>
 
-	<bean id="targetProductsLineMapper"
-		class="org.springframework.batch.item.file.mapping.JsonLineMapper"/>
+	<bean id="productRowMapper"
+		class="com.manning.sbia.ch06.database.ProductRowMapper"/>
 
 	<bean id="productItemWriter" class="com.manning.sbia.ch06.DummyProductItemWriter"/>
 

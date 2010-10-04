@@ -1,12 +1,14 @@
 /**
  * 
  */
-package com.manning.sbia.ch06;
+package com.manning.sbia.ch06.file;
 
 import java.util.Map;
 
 import org.springframework.batch.item.file.LineMapper;
 import org.springframework.batch.item.file.mapping.JsonLineMapper;
+
+import com.manning.sbia.ch06.Product;
 
 /**
  * @author templth

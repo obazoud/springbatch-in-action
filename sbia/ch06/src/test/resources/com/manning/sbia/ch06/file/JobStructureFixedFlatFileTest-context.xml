@@ -25,14 +25,12 @@
  	
  	<bean id="productItemReader"
   		class="org.springframework.batch.item.file.FlatFileItemReader">
- 		<property name="resource" value="classpath:/com/manning/sbia/ch06/input/products-delimited-two-lines.txt"/>
+ 		<property name="resource" value="classpath:/com/manning/sbia/ch06/input/products-fixed.txt"/>
 		<property name="linesToSkip" value="1"/>
-		<property name="recordSeparatorPolicy"
-				ref="productRecordSeparatorPolicy"/>
+		<!-- property name="recordSeparatorPolicy"
+				ref="productRecordSeparatorPolicy"/ -->
  		<property name="lineMapper" ref="productLineMapper"/>
  	</bean>
-
-	<bean id="productRecordSeparatorPolicy" class="com.manning.sbia.ch06.TwoLineProductRecordSeparatorPolicy"/>
 
  	<bean id="productLineMapper"
  		class="org.springframework.batch.item.file.mapping.DefaultLineMapper">
@@ -41,20 +39,20 @@
  	</bean>
 
 	<bean id=" productLineTokenizer"
-		class="org.springframework.batch.item.file.transform.DelimitedLineTokenizer">
- 		<property name="delimiter" value=","/>
- 		<property name="names" value="id,name,description,price"/>
+		class="org.springframework.batch.item.file.transform.FixedLengthTokenizer">
+		<property name="columns" value="1-9,10-35,36-50,51-56"/>
+		<property name="names" value="id,name,description,price"/>
 	</bean>
 
 	<bean id="productFieldSetMapper"
-		class="com.manning.sbia.ch06.ProductFieldSetMapper"/>
+		class="com.manning.sbia.ch06.file.ProductFieldSetMapper"/>
 
 	<!-- bean id="productFieldSetMapper"
 		class="org.springframework.batch.item.file.mapping.BeanWrapperFieldSetMapper">
 		<property name="prototypeBeanName" value="product"/>
 	</bean>
 
-	<bean id="product" class="com.manning.sbia.reading.Product" scope="prototype"/ -->
+	<bean id="product" class="com.manning.sbia.ch06.Product" scope="prototype"/ -->
 
 	<bean id="productItemWriter" class="com.manning.sbia.ch06.DummyProductItemWriter"/>
 

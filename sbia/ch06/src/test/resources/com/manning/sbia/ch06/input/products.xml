@@ -25,7 +25,7 @@
     <price>166.20</price>
   </product>
   <product>
-    <id>PR....214/id>
+    <id>PR....214</id>
     <name>Nokia 2610 Phone</name>
     <description/>
     <price>145.50</price>
@@ -38,7 +38,7 @@
   </product>
   <product>
     <id>PR....216</id>
-    <name>AT&T 8525 PDA</name>
+    <name>AT&amp;T 8525 PDA</name>
     <description/>
     <price>289.20</price>
   </product>

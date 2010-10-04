@@ -25,8 +25,13 @@
  	
 	<bean id="productItemReader"
 		class="org.springframework.batch.item.adapter.ItemReaderAdapter">
-		<property name="targetObject" ref="productService"/>
-		<property name="targetMethod" value="getProducts"/>
+		<property name="targetObject" ref="productServiceAdapter"/>
+		<property name="targetMethod" value="getProduct"/>
+	</bean>
+
+	<bean id="productServiceAdapter"
+		class="com.manning.sbia.ch06.service.ProductServiceAdapter">
+		<property name="productService" ref="productService"/>
 	</bean>
 
 	<bean id="productService"

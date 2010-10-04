@@ -1,7 +1,7 @@
 /**
  * 
  */
-package com.manning.sbia.ch06;
+package com.manning.sbia.ch06.file;
 
 import org.springframework.batch.item.file.separator.RecordSeparatorPolicy;
 

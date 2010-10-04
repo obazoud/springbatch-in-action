@@ -1,10 +1,12 @@
 /**
  * 
  */
-package com.manning.sbia.ch06;
+package com.manning.sbia.ch06.file;
 
 import org.springframework.batch.item.file.mapping.FieldSetMapper;
 import org.springframework.batch.item.file.transform.FieldSet;
+
+import com.manning.sbia.ch06.Product;
 
 /**
  * @author templth

@@ -1,19 +1,13 @@
 /**
  * 
  */
-package com.manning.sbia.ch06;
-
-import java.util.List;
+package com.manning.sbia.ch06.service;
 
 import org.junit.Test;
-import org.junit.Assert;
-import org.junit.runner.RunWith;
-import org.springframework.batch.core.Job;
 import org.springframework.batch.core.JobParameters;
-import org.springframework.batch.core.launch.JobLauncher;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+
+import com.manning.sbia.ch06.AbstractJobStructureTest;
 
 /**
  * @author templth

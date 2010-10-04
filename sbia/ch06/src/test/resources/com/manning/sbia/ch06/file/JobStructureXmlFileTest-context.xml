@@ -33,7 +33,7 @@
 	<bean id="productMarshaller"
 		class="org.springframework.oxm.castor.CastorMarshaller">
 		<property name="mappingLocation"
-			value="classpath:/com/manning/sbia/ch06/mapping.xml"/>
+			value="classpath:/com/manning/sbia/ch06/file/mapping.xml"/>
 	</bean>
 
 	<bean id="productItemWriter" class="com.manning.sbia.ch06.DummyProductItemWriter"/>
