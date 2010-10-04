@@ -23,6 +23,7 @@ public class DummyProductItemWriter implements ItemWriter<Product> {
 	 */
 	@Override
 	public void write(List<? extends Product> items) throws Exception {
+		//System.out.println("items = "+items.size());
 		products.addAll(items);
 	}
 
