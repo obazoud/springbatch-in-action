@@ -3,6 +3,8 @@
  */
 package com.manning.sbia.ch06;
 
+import java.io.Serializable;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -12,7 +14,7 @@ import javax.persistence.Id;
  *
  */
 @Entity
-public class Product {
+public class Product implements Serializable {
 	@Id
 	private String id;
 	@Column

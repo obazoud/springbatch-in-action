@@ -5,14 +5,11 @@ package com.manning.sbia.ch06;
 
 import java.util.List;
 
-import org.junit.Test;
 import org.junit.Assert;
 import org.junit.runner.RunWith;
 import org.springframework.batch.core.Job;
-import org.springframework.batch.core.JobParameters;
 import org.springframework.batch.core.launch.JobLauncher;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 /**
@@ -30,6 +27,16 @@ public abstract class AbstractJobStructureTest {
 
 	@Autowired
 	protected DummyProductItemWriter writer;
+	
+	protected Product createProduct(String id, String name,
+							String description, float price) {
+		Product product = new Product();
+		product.setId(id);
+		product.setName(name);
+		product.setDescription(description);
+		product.setPrice(price);
+		return product;
+	}
 	
 	protected void hasProduct(List<Product> products, String productId) {
 		for (Product product : products) {
