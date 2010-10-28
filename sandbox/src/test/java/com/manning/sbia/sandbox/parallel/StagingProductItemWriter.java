@@ -72,7 +72,7 @@ public class StagingProductItemWriter implements ItemWriter<Product> {
 				return items.size();
 			}
 		});
-//		Thread.sleep(10);
+		Thread.sleep(50);
 	}
 	
 	public void addPoisonPills(String ... ids) {

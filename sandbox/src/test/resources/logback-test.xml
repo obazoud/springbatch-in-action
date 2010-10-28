@@ -6,8 +6,10 @@
 		</encoder>
 	</appender>
 	
-	<logger name="org.springframework.batch" level="warn" />
+	<logger name="org.springframework.batch" level="debug" />
 <!--	<logger name="org.springframework.batch.integration.chunk.JmsRedeliveredExtractor" level="debug" />-->
+
+	<logger name="com.manning.sbia.sandbox.robustness" level="debug" />
 
 	<root level="error">
 		<appender-ref ref="STDOUT" />

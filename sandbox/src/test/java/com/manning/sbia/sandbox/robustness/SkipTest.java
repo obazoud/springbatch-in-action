@@ -19,7 +19,6 @@ import org.hamcrest.BaseMatcher;
 import org.hamcrest.Description;
 import org.junit.Assert;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.batch.core.ExitStatus;
@@ -38,23 +37,9 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
  * @author acogoluegnes
  *
  */
-@RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration
-public class SkipTest {
+public class SkipTest extends AbstractRobustnessTest {
 	
-	@Before public void setUp() {
-		reset(service);
-	}
-	
-	@Autowired
-	JobLauncher jobLauncher;
-	
-	@Autowired
-	Job job;
-	
-	@Autowired
-	BusinessService service;
-
 	@Test public void sunnyDay() throws Exception {
 		int read = 12;
 		configureServiceForRead(service, read);
@@ -127,7 +112,7 @@ public class SkipTest {
 		);
 		Assert.assertEquals(ExitStatus.COMPLETED,exec.getExitStatus());
 		verify(service,times(13)).reading();
-		verify(service,times(5+2+1+1+3+2)).writing(anyString());
+		verify(service,times(5+5+1+1+1+1+1+2)).processing(anyString());
 		verify(service,times(5+2+1+1+3+2)).writing(anyString());
 		assertRead(read, exec);
 		assertWrite(read-1, exec);
@@ -172,55 +157,6 @@ public class SkipTest {
 		assertWriteSkip(0, exec);
 		assertCommit(3, exec);
 		assertRollback(1, exec);
-	}
-	
-	private void configureServiceForRead(BusinessService service,int count) {
-		List<String> args = new ArrayList<String>();
-		for(int i=2;i<=count;i++) {
-			args.add(String.valueOf(i));
-		}
-		args.add(null);
-		when(service.reading()).thenReturn("1",args.toArray(new String[0]));
-	}
-	
-	private void assertRead(int read, JobExecution exec) {
-		StepExecution stepExec = getStepExecution(exec);
-		Assert.assertEquals(read,stepExec.getReadCount());
-	}
-	
-	private void assertWrite(int write, JobExecution exec) {
-		StepExecution stepExec = getStepExecution(exec);
-		Assert.assertEquals(write,stepExec.getWriteCount());
-	}
-	
-	private void assertProcessSkip(int processSkip, JobExecution exec) {
-		StepExecution stepExec = getStepExecution(exec);
-		Assert.assertEquals(processSkip,stepExec.getProcessSkipCount());
-	}
-	
-	private void assertReadSkip(int readSkip, JobExecution exec) {
-		StepExecution stepExec = getStepExecution(exec);
-		Assert.assertEquals(readSkip,stepExec.getReadSkipCount());
-	}
-	
-	private void assertWriteSkip(int writeSkip, JobExecution exec) {
-		StepExecution stepExec = getStepExecution(exec);
-		Assert.assertEquals(writeSkip,stepExec.getWriteSkipCount());
-	}
-	
-	private void assertCommit(int commit, JobExecution exec) {
-		StepExecution stepExec = getStepExecution(exec);
-		Assert.assertEquals(commit,stepExec.getCommitCount());
-	}
-	
-	private void assertRollback(int rollback, JobExecution exec) {
-		StepExecution stepExec = getStepExecution(exec);
-		Assert.assertEquals(rollback,stepExec.getRollbackCount());
-	}
-
-	private StepExecution getStepExecution(JobExecution exec) {
-		StepExecution stepExec = exec.getStepExecutions().iterator().next();
-		return stepExec;
 	}
 	
 }

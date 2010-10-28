@@ -47,12 +47,13 @@ public class ParallelTest {
 		// warming up
 		executeJob(100, jobSimple);
 		executeJob(100, jobParallel);
-		int max = 100; // can see some difference starting from 1000 rows
-		int nbIterations = 5;
+		Thread.sleep(2000);
+		int max = 2000; // can see some difference starting from 1000 rows
+		int nbIterations = 1;
 		for(int i=0;i<nbIterations;i++) {
 			long simpleTime = executeJob(max, jobSimple);
 			long parallelTime = executeJob(max, jobParallel);
-//			System.out.println("simple: "+simpleTime+", parallel: "+parallelTime);
+			System.out.println("simple: "+simpleTime+", parallel: "+parallelTime);
 		}		
 	}
 	

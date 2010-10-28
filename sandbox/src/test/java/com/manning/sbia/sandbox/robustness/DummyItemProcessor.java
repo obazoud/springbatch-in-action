@@ -3,6 +3,8 @@
  */
 package com.manning.sbia.sandbox.robustness;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.batch.item.ItemProcessor;
 
 /**
@@ -10,6 +12,8 @@ import org.springframework.batch.item.ItemProcessor;
  *
  */
 public class DummyItemProcessor implements ItemProcessor<String, String> {
+	
+	private static final Logger LOG = LoggerFactory.getLogger(DummyItemProcessor.class);
 	
 	private BusinessService service;
 	
@@ -23,10 +27,10 @@ public class DummyItemProcessor implements ItemProcessor<String, String> {
 	 */
 	@Override
 	public String process(String item) throws Exception {
-		System.out.println("processing "+item);
+		LOG.debug("processing "+item);
 		service.processing(item);
-		System.out.println("after processing "+item);
-		return item;
+		LOG.debug("after processing "+item);
+		return "*"+item+"*";
 	}
 
 }

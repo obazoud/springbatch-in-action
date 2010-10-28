@@ -5,18 +5,19 @@ package com.manning.sbia.sandbox.robustness;
 
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.batch.item.ItemWriter;
-import org.springframework.batch.item.ParseException;
-import org.springframework.batch.item.UnexpectedInputException;
 
 /**
  * @author acogoluegnes
  * 
  */
 public class DummyItemWriter implements ItemWriter<String> {
+	
+	private static final Logger LOG = LoggerFactory.getLogger(DummyItemWriter.class);
 
 	private BusinessService service;
-
 
 	public DummyItemWriter(BusinessService service) {
 		super();
@@ -26,9 +27,9 @@ public class DummyItemWriter implements ItemWriter<String> {
 	@Override
 	public void write(List<? extends String> items) throws Exception {
 		for(String item : items) {
-			System.out.println("writing "+item);
+			LOG.debug("writing "+item);
 			service.writing(item);
-			System.out.println("item written "+item);
+			LOG.debug("item written "+item);
 		}
 	}
 
