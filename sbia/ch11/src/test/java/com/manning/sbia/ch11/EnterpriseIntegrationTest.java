@@ -30,6 +30,7 @@ import org.springframework.integration.core.Message;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.oxm.Marshaller;
 import org.springframework.web.client.HttpClientErrorException;
+import org.springframework.web.client.ResourceAccessException;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.context.support.WebApplicationContextUtils;
 
@@ -99,8 +100,10 @@ public class EnterpriseIntegrationTest {
 		try {
 			restTemplate.put(BASE_URI + "product-imports/{importId}",
 					loadProductFiles(importId), importId);
-		} catch (HttpClientErrorException e) {
-			Assert.assertEquals(HttpStatus.CONFLICT,e.getStatusCode());
+		} catch (ResourceAccessException e) {
+			Assert.assertTrue(e.getMessage().contains(
+				String.valueOf(HttpStatus.CONFLICT.value())
+			));
 		}
 		
 		// try to access to non-existing import
