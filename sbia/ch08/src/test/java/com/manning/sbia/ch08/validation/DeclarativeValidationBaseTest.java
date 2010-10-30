@@ -6,7 +6,6 @@ package com.manning.sbia.ch08.validation;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 import org.springframework.batch.core.ExitStatus;
 import org.springframework.batch.core.Job;
 import org.springframework.batch.core.JobExecution;
@@ -15,16 +14,12 @@ import org.springframework.batch.core.StepExecution;
 import org.springframework.batch.core.launch.JobLauncher;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 /**
  * @author acogoluegnes
  *
  */
-@RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration
-public class DeclarativeValidationTest {
+public abstract class DeclarativeValidationBaseTest {
 
 	@Autowired
 	private JobLauncher jobLauncher;

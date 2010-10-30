@@ -35,7 +35,7 @@
 					</bean>
 				</property>
 				<property name="fieldSetMapper">
-					<bean class="com.manning.sbia.ch02.batch.ProductFieldSetMapper" />
+					<bean class="com.manning.sbia.ch02.batch.ProductFieldSetMapper" />	
 				</property>
 			</bean>
 		</property>
@@ -46,19 +46,6 @@
 		scope="step">
 		<property name="filter" value="#{jobParameters['filter']}" />
 		<property name="validator" ref="validator" />
-	</bean>
-
-	<bean id="validator"
-		class="org.springframework.batch.item.validator.SpringValidator">
-		<property name="validator">
-			<bean class="org.springmodules.validation.valang.ValangValidator">
-				<property name="valang">
-					<value><![CDATA[
-                     {price : ? >= 0 : 'Product price cannot be negative!'}
-                    ]]></value>
-				</property>
-			</bean>
-		</property>
 	</bean>
 
 	<bean id="writer" class="com.manning.sbia.ch02.batch.ProductJdbcItemWriter">
