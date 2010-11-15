@@ -151,7 +151,8 @@
 		<module>ch08</module>
 		<module>ch11</module>
 		<module>ch14</module>
-	</modules>
+    <module>ch09</module>
+  </modules>
 
 	<properties>
 		<spring.batch.version>2.1.3.RELEASE</spring.batch.version>
