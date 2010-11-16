@@ -17,7 +17,7 @@ import org.springframework.batch.core.launch.support.SystemExiter;
  */
 public class CommandLineJobRunnerTest {
 
-	@Test public void run() {
+	@Test public void run() throws Exception {
 		final Queue<Integer> exitCode = new ArrayBlockingQueue<Integer>(1);
 		CommandLineJobRunner.presetSystemExiter(new SystemExiter() {			
 			@Override
