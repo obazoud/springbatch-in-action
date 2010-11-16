@@ -19,8 +19,19 @@
 							class="org.springframework.dao.DataIntegrityViolationException" />
 					</batch:skippable-exception-classes>
 				</batch:chunk>
+				<batch:listeners>
+					<batch:listener ref="skipListener" />
+				</batch:listeners>
 			</batch:tasklet>
 		</batch:step>
 	</batch:job>
+	
+	<bean id="dataSource" class="org.springframework.jdbc.datasource.SingleConnectionDataSource">
+		<property name="driverClassName" value="org.h2.Driver" />
+		<property name="url" value="jdbc:h2:mem:sbia_ch09_skip_behavior;DB_CLOSE_DELAY=-1" />
+		<property name="username" value="sa" />
+		<property name="password" value="" />
+		<property name="suppressClose" value="true" />
+	</bean>
 	
 </beans>

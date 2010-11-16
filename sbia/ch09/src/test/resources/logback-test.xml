@@ -7,6 +7,7 @@
 	</appender>
 	
 	<logger name="org.springframework.batch" level="error" />
+	<logger name="com.manning.sbia.ch09" level="debug" />
 
 	<root level="error">
 		<appender-ref ref="STDOUT" />

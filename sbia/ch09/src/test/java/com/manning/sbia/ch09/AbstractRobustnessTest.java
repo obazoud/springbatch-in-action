@@ -14,6 +14,7 @@ import org.junit.Before;
 import org.junit.runner.RunWith;
 import org.springframework.batch.core.Job;
 import org.springframework.batch.core.JobExecution;
+import org.springframework.batch.core.SkipListener;
 import org.springframework.batch.core.StepExecution;
 import org.springframework.batch.core.launch.JobLauncher;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,6 +29,7 @@ public abstract class AbstractRobustnessTest {
 
 	@Before public void setUp() {
 		reset(service);
+		reset(skipListener);
 	}
 	
 	@Autowired
@@ -38,6 +40,9 @@ public abstract class AbstractRobustnessTest {
 	
 	@Autowired
 	protected BusinessService service;
+	
+	@Autowired
+	protected SkipListener<?, ?> skipListener;
 	
 	protected void configureServiceForRead(BusinessService service,int count) {
 		List<String> args = new ArrayList<String>();
