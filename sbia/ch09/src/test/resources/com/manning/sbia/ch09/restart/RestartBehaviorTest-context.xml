@@ -14,7 +14,8 @@
 		</step>
 	</job>
 	
-	<bean id="taskletForNotRestartableJob" class="org.mockito.Mockito" factory-method="mock">
+	<bean id="taskletForNotRestartableJob" class="org.mockito.Mockito" 
+		factory-method="mock">
 		<constructor-arg value="org.springframework.batch.core.step.tasklet.Tasklet" />
 	</bean>
 	
@@ -28,6 +29,42 @@
 	<bean id="taskletForRestartableJob" class="org.mockito.Mockito" factory-method="mock">
 		<constructor-arg value="org.springframework.batch.core.step.tasklet.Tasklet" />
 	</bean>
+	
+	<job id="importProductsJob" 
+		xmlns="http://www.springframework.org/schema/batch">
+		<step id="decompressStep" next="readWriteProductsStep">
+			<tasklet allow-start-if-complete="true">
+				<ref bean="decompressTasklet" xmlns="http://www.springframework.org/schema/beans"/>
+			</tasklet>			
+		</step>
+		<step id="readWriteProductsStep">
+			<tasklet>
+				<ref bean="readWriteProductsTasklet" xmlns="http://www.springframework.org/schema/beans"/>
+			</tasklet>			
+		</step>
+	</job>
+	
+	<bean id="decompressTasklet" class="org.mockito.Mockito" factory-method="mock">
+		<constructor-arg value="org.springframework.batch.core.step.tasklet.Tasklet" />
+	</bean>
+	
+	<bean id="readWriteProductsTasklet" class="org.mockito.Mockito" factory-method="mock">
+		<constructor-arg value="org.springframework.batch.core.step.tasklet.Tasklet" />
+	</bean>
+	
+	<job id="importProductsLimitJob" 
+		xmlns="http://www.springframework.org/schema/batch">
+		<step id="decompressStepLimit" next="readWriteProductsStepLimit">
+			<tasklet>
+				<ref bean="decompressTasklet" xmlns="http://www.springframework.org/schema/beans"/>
+			</tasklet>			
+		</step>
+		<step id="readWriteProductsStepLimit">
+			<tasklet start-limit="3">
+				<ref bean="readWriteProductsTasklet" xmlns="http://www.springframework.org/schema/beans"/>
+			</tasklet>			
+		</step>
+	</job>
 
 	<bean id="transactionManager"
 		class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
