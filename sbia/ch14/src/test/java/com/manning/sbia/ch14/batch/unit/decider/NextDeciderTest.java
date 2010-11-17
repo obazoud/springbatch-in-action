@@ -1,9 +1,7 @@
 /**
  *
  */
-package com.manning.sbia.ch14.batch.unit;
-
-import static org.junit.Assert.assertEquals;
+package com.manning.sbia.ch14.batch.unit.decider;
 
 import org.junit.Test;
 import org.springframework.batch.core.JobExecution;
@@ -12,6 +10,8 @@ import org.springframework.batch.core.job.flow.FlowExecutionStatus;
 import org.springframework.batch.test.MetaDataInstanceFactory;
 
 import com.manning.sbia.ch14.batch.NextDecider;
+
+import static org.junit.Assert.assertEquals;
 
 /**
  * Unit with mock Spring Batch.

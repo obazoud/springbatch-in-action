@@ -1,17 +1,7 @@
 /**
  *
  */
-package com.manning.sbia.ch14.batch.unit;
-
-import static com.manning.sbia.ch14.batch.ProductItemWriter.INSERT_SQL;
-import static com.manning.sbia.ch14.batch.ProductItemWriter.UPDATE_SQL;
-import static org.mockito.Matchers.any;
-import static org.mockito.Matchers.eq;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.verifyNoMoreInteractions;
-import static org.mockito.Mockito.when;
+package com.manning.sbia.ch14.batch.unit.writer;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,6 +15,16 @@ import org.springframework.jdbc.core.simple.SimpleJdbcTemplate;
 
 import com.manning.sbia.ch14.batch.ProductItemWriter;
 import com.manning.sbia.ch14.domain.Product;
+
+import static com.manning.sbia.ch14.batch.ProductItemWriter.INSERT_SQL;
+import static com.manning.sbia.ch14.batch.ProductItemWriter.UPDATE_SQL;
+import static org.mockito.Matchers.any;
+import static org.mockito.Matchers.eq;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.verifyNoMoreInteractions;
+import static org.mockito.Mockito.when;
 
 /**
  * Unit with mock

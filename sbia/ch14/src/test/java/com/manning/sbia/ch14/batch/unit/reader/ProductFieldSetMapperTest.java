@@ -1,17 +1,7 @@
 /**
  *
  */
-package com.manning.sbia.ch14.batch.unit;
-
-import static com.manning.sbia.ch14.batch.ProductFieldSetMapper.FIELD_DESCRIPTION;
-import static com.manning.sbia.ch14.batch.ProductFieldSetMapper.FIELD_ID;
-import static com.manning.sbia.ch14.batch.ProductFieldSetMapper.FIELD_NAME;
-import static com.manning.sbia.ch14.batch.ProductFieldSetMapper.FIELD_PRICE;
-import static org.junit.Assert.assertEquals;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.verifyNoMoreInteractions;
+package com.manning.sbia.ch14.batch.unit.reader;
 
 import java.math.BigDecimal;
 
@@ -21,6 +11,18 @@ import org.springframework.batch.item.file.transform.FieldSet;
 
 import com.manning.sbia.ch14.batch.ProductFieldSetMapper;
 import com.manning.sbia.ch14.domain.Product;
+
+import static com.manning.sbia.ch14.batch.ProductFieldSetMapper.FIELD_DESCRIPTION;
+import static com.manning.sbia.ch14.batch.ProductFieldSetMapper.FIELD_ID;
+import static com.manning.sbia.ch14.batch.ProductFieldSetMapper.FIELD_NAME;
+import static com.manning.sbia.ch14.batch.ProductFieldSetMapper.FIELD_PRICE;
+
+import static org.junit.Assert.assertEquals;
+
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.verifyNoMoreInteractions;
 
 /**
  * Unit with mock.
