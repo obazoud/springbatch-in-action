@@ -1,7 +1,10 @@
 /**
  *
  */
-package com.manning.sbia.ch14.batch;
+package com.manning.sbia.ch14.batch.unit;
+
+import static org.junit.Assert.assertEquals;
+import static org.springframework.batch.test.MetaDataInstanceFactory.createStepExecution;
 
 import org.junit.Test;
 import org.springframework.batch.core.StepContribution;
@@ -10,9 +13,7 @@ import org.springframework.batch.core.scope.context.ChunkContext;
 import org.springframework.batch.core.scope.context.StepContext;
 import org.springframework.batch.repeat.RepeatStatus;
 
-import static org.junit.Assert.assertEquals;
-
-import static org.springframework.batch.test.MetaDataInstanceFactory.createStepExecution;
+import com.manning.sbia.ch14.batch.CleanTasklet;
 
 /**
  * @author bazoud

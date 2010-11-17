@@ -1,19 +1,7 @@
 /**
  *
  */
-package com.manning.sbia.ch14.batch;
-
-import java.util.ArrayList;
-import java.util.List;
-
-import org.junit.Before;
-import org.junit.Test;
-import org.springframework.batch.item.database.BeanPropertyItemSqlParameterSourceProvider;
-import org.springframework.batch.item.database.ItemSqlParameterSourceProvider;
-import org.springframework.jdbc.core.namedparam.SqlParameterSource;
-import org.springframework.jdbc.core.simple.SimpleJdbcTemplate;
-
-import com.manning.sbia.ch14.domain.Product;
+package com.manning.sbia.ch14.batch.unit;
 
 import static com.manning.sbia.ch14.batch.ProductItemWriter.INSERT_SQL;
 import static com.manning.sbia.ch14.batch.ProductItemWriter.UPDATE_SQL;
@@ -25,11 +13,24 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.verifyNoMoreInteractions;
 import static org.mockito.Mockito.when;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import org.junit.Before;
+import org.junit.Test;
+import org.springframework.batch.item.database.BeanPropertyItemSqlParameterSourceProvider;
+import org.springframework.batch.item.database.ItemSqlParameterSourceProvider;
+import org.springframework.jdbc.core.namedparam.SqlParameterSource;
+import org.springframework.jdbc.core.simple.SimpleJdbcTemplate;
+
+import com.manning.sbia.ch14.batch.ProductItemWriter;
+import com.manning.sbia.ch14.domain.Product;
+
 /**
  * Unit with mock
- * 
+ *
  * @author bazoud
- * 
+ *
  */
 public class ProductItemWriterMockTest {
     private Product p;

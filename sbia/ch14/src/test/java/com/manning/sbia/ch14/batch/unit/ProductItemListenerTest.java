@@ -1,7 +1,12 @@
 /**
  *
  */
-package com.manning.sbia.ch14.batch;
+package com.manning.sbia.ch14.batch.unit;
+
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.never;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -10,12 +15,8 @@ import org.junit.Before;
 import org.junit.Test;
 import org.springframework.batch.item.file.FlatFileItemWriter;
 
+import com.manning.sbia.ch14.batch.ProductItemListener;
 import com.manning.sbia.ch14.domain.Product;
-
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.never;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
 
 /**
  * Unit with mock.

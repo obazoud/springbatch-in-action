@@ -1,7 +1,11 @@
 /**
  *
  */
-package com.manning.sbia.ch14.batch.processor;
+package com.manning.sbia.ch14.batch.integration.processor;
+
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
+import static org.springframework.batch.test.MetaDataInstanceFactory.createStepExecution;
 
 import java.math.BigDecimal;
 
@@ -20,11 +24,6 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.support.DependencyInjectionTestExecutionListener;
 
 import com.manning.sbia.ch14.domain.Product;
-
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
-
-import static org.springframework.batch.test.MetaDataInstanceFactory.createStepExecution;
 
 /**
  * Unit with Spring Batch.

@@ -1,7 +1,7 @@
 /**
  *
  */
-package com.manning.sbia.ch14.batch.validation;
+package com.manning.sbia.ch14.batch.unit.validation;
 
 import java.math.BigDecimal;
 
@@ -9,6 +9,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.springframework.batch.item.validator.ValidationException;
 
+import com.manning.sbia.ch14.batch.validation.PositivePriceValidator;
 import com.manning.sbia.ch14.domain.Product;
 
 /**
@@ -17,13 +18,13 @@ import com.manning.sbia.ch14.domain.Product;
  * @author bazoud
  *
  */
-public class PriceMandatoryValidatorTest {
-  private PriceMandatoryValidator validator;
+public class PositivePriceValidatorTest {
+  private PositivePriceValidator validator;
   private Product product;
 
   @Before
   public void setUp() {
-    validator = new PriceMandatoryValidator();
+    validator = new PositivePriceValidator();
     product = new Product();
   }
 
@@ -34,7 +35,8 @@ public class PriceMandatoryValidatorTest {
   }
 
   @Test(expected = ValidationException.class)
-  public void notValidate() {
+  public void validatePositivePrice() {
+    product.setPrice(new BigDecimal(-800.0f));
     validator.validate(product);
   }
 }

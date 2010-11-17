@@ -1,7 +1,11 @@
 /**
  *
  */
-package com.manning.sbia.ch14.batch.step;
+package com.manning.sbia.ch14.batch.integration.step;
+
+import static com.manning.sbia.ch14.batch.ProductItemWriter.INSERT_SQL;
+import static org.junit.Assert.assertEquals;
+import static org.springframework.batch.test.AssertFile.assertFileEquals;
 
 import java.math.BigDecimal;
 
@@ -25,12 +29,6 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import com.manning.sbia.ch14.domain.Product;
-
-import static com.manning.sbia.ch14.batch.ProductItemWriter.INSERT_SQL;
-
-import static org.junit.Assert.assertEquals;
-
-import static org.springframework.batch.test.AssertFile.assertFileEquals;
 
 /**
  * Integration with Spring Batch Test.

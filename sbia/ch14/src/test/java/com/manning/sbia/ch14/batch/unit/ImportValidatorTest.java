@@ -1,15 +1,7 @@
 /**
  *
  */
-package com.manning.sbia.ch14.batch;
-
-import org.junit.Before;
-import org.junit.Test;
-import org.springframework.batch.core.JobParameters;
-import org.springframework.batch.core.JobParametersBuilder;
-import org.springframework.batch.core.JobParametersInvalidException;
-import org.springframework.core.io.Resource;
-import org.springframework.core.io.ResourceLoader;
+package com.manning.sbia.ch14.batch.unit;
 
 import static com.manning.sbia.ch14.batch.ImportValidator.PARAM_INPUT_RESOURCE;
 import static com.manning.sbia.ch14.batch.ImportValidator.PARAM_REPORT_RESOURCE;
@@ -19,6 +11,16 @@ import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.verifyNoMoreInteractions;
 import static org.mockito.Mockito.when;
+
+import org.junit.Before;
+import org.junit.Test;
+import org.springframework.batch.core.JobParameters;
+import org.springframework.batch.core.JobParametersBuilder;
+import org.springframework.batch.core.JobParametersInvalidException;
+import org.springframework.core.io.Resource;
+import org.springframework.core.io.ResourceLoader;
+
+import com.manning.sbia.ch14.batch.ImportValidator;
 
 /**
  * Unit with mock.
