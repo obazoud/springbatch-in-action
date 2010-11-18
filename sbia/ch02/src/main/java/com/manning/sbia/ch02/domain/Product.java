@@ -6,6 +6,9 @@ package com.manning.sbia.ch02.domain;
 import java.io.Serializable;
 import java.math.BigDecimal;
 
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
+
 /**
  * @author acogoluegnes
  *
@@ -54,6 +57,8 @@ public class Product implements Serializable {
 		this.description = description;
 	}
 
+	@NotNull
+	@Min(0)
 	public BigDecimal getPrice() {
 		return price;
 	}
