@@ -149,9 +149,9 @@
 		<module>ch05</module>
 		<module>ch06</module>
 		<module>ch08</module>
+    	<module>ch09</module>
 		<module>ch11</module>
 		<module>ch14</module>
-    <module>ch09</module>
   </modules>
 
 	<properties>
