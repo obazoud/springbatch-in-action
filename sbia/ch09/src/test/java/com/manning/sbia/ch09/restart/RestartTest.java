@@ -51,14 +51,12 @@ public class RestartTest {
 			"date", System.currentTimeMillis()).toJobParameters();
 
 	@Test
-	public void firstRun() throws Exception {
+	public void restart() throws Exception {
 		doNothing().doThrow(new RuntimeException()).when(writer)
 				.write(anyList());
 
 		JobExecution exec = jobLauncher.run(job, jobParameters);
 		Assert.assertEquals(ExitStatus.FAILED, exec.getExitStatus());
-
-		List<File> t = new ArrayList<File>();
 
 		ArgumentCaptor<List> captor = ArgumentCaptor.forClass(List.class);
 		verify(writer, times(2)).write(captor.capture());

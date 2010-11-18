@@ -33,7 +33,7 @@
 	<job id="importProductsJob" 
 		xmlns="http://www.springframework.org/schema/batch">
 		<step id="decompressStep" next="readWriteProductsStep">
-			<tasklet allow-start-if-complete="true">
+			<tasklet allow-start-if-complete="true" >
 				<ref bean="decompressTasklet" xmlns="http://www.springframework.org/schema/beans"/>
 			</tasklet>			
 		</step>

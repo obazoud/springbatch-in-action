@@ -4,7 +4,9 @@
 package com.manning.sbia.ch09.restart;
 
 import java.io.File;
+import java.io.FileFilter;
 
+import org.apache.commons.io.filefilter.FileFilterUtils;
 import org.springframework.batch.item.ExecutionContext;
 import org.springframework.batch.item.ItemReader;
 import org.springframework.batch.item.ItemStream;
@@ -63,7 +65,9 @@ public class FileInDirectoryItemReader implements ItemReader<File>, ItemStream {
 	}
 	
 	public void setDirectory(String directory) {
-		this.files = new File(directory).listFiles();
+		this.files = new File(directory).listFiles(
+			(FileFilter) FileFilterUtils.fileFileFilter()
+		);
 	}
 
 }
