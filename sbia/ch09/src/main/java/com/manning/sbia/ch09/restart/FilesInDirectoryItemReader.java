@@ -19,7 +19,7 @@ import org.springframework.batch.item.UnexpectedInputException;
  * @author acogoluegnes
  *
  */
-public class FileInDirectoryItemReader implements ItemReader<File>, ItemStream {
+public class FilesInDirectoryItemReader implements ItemReader<File>, ItemStream {
 	
 	private File [] files;
 	

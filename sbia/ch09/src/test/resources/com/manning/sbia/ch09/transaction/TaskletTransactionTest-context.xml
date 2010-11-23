@@ -3,27 +3,30 @@
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xmlns:batch="http://www.springframework.org/schema/batch"
 	xmlns:jdbc="http://www.springframework.org/schema/jdbc"
-	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
-		http://www.springframework.org/schema/batch http://www.springframework.org/schema/batch/spring-batch-2.1.xsd
-		http://www.springframework.org/schema/jdbc http://www.springframework.org/schema/jdbc/spring-jdbc-3.0.xsd">
+	xsi:schemaLocation="http://www.springframework.org/schema/jdbc http://www.springframework.org/schema/jdbc/spring-jdbc-3.0.xsd
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+		http://www.springframework.org/schema/batch http://www.springframework.org/schema/batch/spring-batch-2.1.xsd">
 
-	<job id="restartJob" 
+	<bean id="tasklet" class="org.mockito.Mockito" factory-method="mock">
+		<constructor-arg value="org.springframework.batch.core.step.tasklet.Tasklet" />
+	</bean>
+
+	<job id="transactionalJob" 
 		xmlns="http://www.springframework.org/schema/batch">
-		<step id="restartJobStep">
-			<tasklet>
-				<chunk reader="reader" writer="writer" commit-interval="3" />
-			</tasklet>			
+		<step id="transactionalStep">
+			<tasklet ref="tasklet" />
 		</step>
 	</job>
 	
-	<bean id="reader" class="com.manning.sbia.ch09.restart.FilesInDirectoryItemReader">
-		<property name="directory" value="./src/test/resources/com/manning/sbia/ch09/restart/inputs" />
-	</bean>
-	
-	<bean id="writer" class="org.mockito.Mockito" factory-method="mock">
-		<constructor-arg value="org.springframework.batch.item.ItemWriter" />
-	</bean>
-	
+	<job id="noTransactionJob" 
+		xmlns="http://www.springframework.org/schema/batch">
+		<step id="noTransactionStep">
+			<tasklet ref="tasklet">
+				<transaction-attributes propagation="NEVER" />
+			</tasklet>			
+		</step>
+	</job>
+
 	<bean id="transactionManager"
 		class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
 		<property name="dataSource" ref="dataSource" />
@@ -41,7 +44,7 @@
 	
 	<bean id="dataSource" class="org.springframework.jdbc.datasource.SingleConnectionDataSource">
 		<property name="driverClassName" value="org.h2.Driver" />
-		<property name="url" value="jdbc:h2:mem:sbia_ch09_restart;DB_CLOSE_DELAY=-1" />
+		<property name="url" value="jdbc:h2:mem:sbia_ch09_tasklet_transaction;DB_CLOSE_DELAY=-1" />
 		<property name="username" value="sa" />
 		<property name="password" value="" />
 		<property name="suppressClose" value="true" />
