@@ -8,7 +8,7 @@
 	
 	<logger name="org.springframework.transaction" level="error" />
 	<logger name="org.springframework.jdbc" level="error" />
-	<logger name="com.manning.sbia.ch09" level="debug" />
+	<logger name="com.manning.sbia.ch09" level="error" />
 
 	<root level="error">
 		<appender-ref ref="STDOUT" />

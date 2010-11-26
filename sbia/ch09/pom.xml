@@ -10,12 +10,32 @@
 	</parent>
 	<artifactId>ch09</artifactId>
 	<name>ch09</name>
+	
+	<properties>
+		<btm.version>2.1.0</btm.version>
+		<derby.version>10.6.2.1</derby.version>
+	</properties>
+	
 	<dependencies>
 
 		<dependency>
 			<groupId>${project.groupId}</groupId>
 			<artifactId>ch02</artifactId>
 			<version>${project.version}</version>
+		</dependency>
+		
+		<dependency>
+			<groupId>org.apache.derby</groupId>
+			<artifactId>derby</artifactId>
+			<version>${derby.version}</version>
+			<scope>test</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>org.codehaus.btm</groupId>
+			<artifactId>btm</artifactId>
+			<version>${btm.version}</version>
+			<scope>test</scope>
 		</dependency>
 		
 		<dependency>
