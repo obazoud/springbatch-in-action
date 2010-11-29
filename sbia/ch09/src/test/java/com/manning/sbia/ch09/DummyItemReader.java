@@ -32,8 +32,9 @@ public class DummyItemReader implements ItemReader<String> {
 	@Override
 	public String read() throws Exception, UnexpectedInputException,
 			ParseException {
-		LOG.debug("read");
-		return service.reading();
+		String read = service.reading();
+		LOG.debug("read "+read);
+		return read;
 	}
 
 }

@@ -3,10 +3,13 @@
  */
 package com.manning.sbia.ch09.retry;
 
+import static org.mockito.Matchers.any;
 import static org.mockito.Matchers.anyString;
 import static org.mockito.Matchers.argThat;
+import static org.mockito.Mockito.doAnswer;
 import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.doThrow;
+import static org.mockito.Mockito.reset;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -14,10 +17,19 @@ import static org.mockito.Mockito.when;
 import org.hamcrest.BaseMatcher;
 import org.hamcrest.Description;
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.Test;
+import org.mockito.invocation.InvocationOnMock;
+import org.mockito.stubbing.Answer;
 import org.springframework.batch.core.ExitStatus;
+import org.springframework.batch.core.Job;
 import org.springframework.batch.core.JobExecution;
 import org.springframework.batch.core.JobParametersBuilder;
+import org.springframework.batch.retry.RetryCallback;
+import org.springframework.batch.retry.RetryContext;
+import org.springframework.batch.retry.RetryListener;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.ConcurrencyFailureException;
 import org.springframework.dao.DeadlockLoserDataAccessException;
 import org.springframework.dao.OptimisticLockingFailureException;
 import org.springframework.test.context.ContextConfiguration;
@@ -30,6 +42,19 @@ import com.manning.sbia.ch09.AbstractRobustnessTest;
  */
 @ContextConfiguration
 public class RetryBehaviorTest extends AbstractRobustnessTest {
+	
+	@Autowired
+	private Job retryPolicyJob;
+	
+	@Autowired
+	private RetryListener listener;
+	
+	@Before public void init() {
+		reset(listener);
+		when(listener.open(any(RetryContext.class), any(RetryCallback.class)))
+			.thenReturn(true);
+			
+	}
 	
 	@Test public void sunnyDay() throws Exception {
 		int read = 12;
@@ -135,6 +160,13 @@ public class RetryBehaviorTest extends AbstractRobustnessTest {
 			.doThrow(new DeadlockLoserDataAccessException("",null))
 			.doNothing()
 			.when(service).writing(toFailWriting);
+		
+		doAnswer(new Answer<Void>() {
+			@Override
+			public Void answer(InvocationOnMock invocation) throws Throwable {
+				return null;
+			}
+		}).when(listener).onError(any(RetryContext.class), any(RetryCallback.class), any(Throwable.class));
 			
 		JobExecution exec = jobLauncher.run(
 			job, 
@@ -296,6 +328,48 @@ public class RetryBehaviorTest extends AbstractRobustnessTest {
 		assertWriteSkip(0, exec);
 		assertCommit(3, exec);
 		assertRollback(2, exec); // one for each retry
+	}
+	
+	@Test public void retryPolicy() throws Exception {
+		int read = 12;
+		configureServiceForRead(service, read);
+		
+		final String toFailProcessingConcurrency = "7";
+		final String toFailProcessingDeadlock = "11";
+		final int maxAttemptsConcurrency = 4;
+		final int maxAttemptsDeadlock = 4;
+		doAnswer(new Answer<Void>() {
+			
+			private int countConcurrency = 0;
+			private int countDeadlock = 0;
+			@Override
+			public Void answer(InvocationOnMock invocation) throws Throwable {
+				String item = (String) invocation.getArguments()[0];
+				if(toFailProcessingConcurrency.equals(item) &&
+					countConcurrency < maxAttemptsConcurrency 
+				) {
+					countConcurrency++;
+					throw new ConcurrencyFailureException("");
+				} else if(toFailProcessingDeadlock.equals(item) &&
+					countDeadlock < maxAttemptsDeadlock	
+				) {
+					countDeadlock++;
+					throw new DeadlockLoserDataAccessException("", null);
+				}
+				return null;
+			}
+		}).when(service).writing(anyString());
+		
+		JobExecution exec = jobLauncher.run(
+			retryPolicyJob, 
+			new JobParametersBuilder().addLong("time", System.currentTimeMillis()).toJobParameters()
+		);
+		Assert.assertEquals(ExitStatus.COMPLETED,exec.getExitStatus());
+		assertRead(read, exec);
+		assertWrite(read, exec);
+		
+		
+		
 	}
 	
 }
