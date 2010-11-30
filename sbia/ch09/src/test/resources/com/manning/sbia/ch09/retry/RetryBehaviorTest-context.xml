@@ -19,6 +19,7 @@
 						<batch:include class="org.springframework.dao.DeadlockLoserDataAccessException" />
 					</batch:skippable-exception-classes>
 					<batch:retry-listeners>
+						<batch:listener ref="mockRetryListener" />
 						<batch:listener ref="retryListener" />
 					</batch:retry-listeners>
 				</batch:chunk>
@@ -26,7 +27,9 @@
 		</batch:step>
 	</batch:job>
 	
-	<bean id="retryListener" class="org.mockito.Mockito" factory-method="mock">
+	<bean id="retryListener" class="com.manning.sbia.ch09.retry.Slf4jRetryListener" />
+	
+	<bean id="mockRetryListener" class="org.mockito.Mockito" factory-method="mock">
 		<constructor-arg value="org.springframework.batch.retry.RetryListener" />
 	</bean>
 	

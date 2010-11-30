@@ -47,11 +47,11 @@ public class RetryBehaviorTest extends AbstractRobustnessTest {
 	private Job retryPolicyJob;
 	
 	@Autowired
-	private RetryListener listener;
+	private RetryListener mockRetryListener;
 	
 	@Before public void init() {
-		reset(listener);
-		when(listener.open(any(RetryContext.class), any(RetryCallback.class)))
+		reset(mockRetryListener);
+		when(mockRetryListener.open(any(RetryContext.class), any(RetryCallback.class)))
 			.thenReturn(true);
 			
 	}
@@ -161,12 +161,6 @@ public class RetryBehaviorTest extends AbstractRobustnessTest {
 			.doNothing()
 			.when(service).writing(toFailWriting);
 		
-		doAnswer(new Answer<Void>() {
-			@Override
-			public Void answer(InvocationOnMock invocation) throws Throwable {
-				return null;
-			}
-		}).when(listener).onError(any(RetryContext.class), any(RetryCallback.class), any(Throwable.class));
 			
 		JobExecution exec = jobLauncher.run(
 			job, 
@@ -176,6 +170,7 @@ public class RetryBehaviorTest extends AbstractRobustnessTest {
 		verify(service,times(5+5+2+1)).reading();
 		verify(service,times(5+5+1+1+2)).processing(anyString());
 		verify(service,times(5+2+2+5+2)).writing(anyString());
+		verify(mockRetryListener,times(2)).onError(any(RetryContext.class), any(RetryCallback.class), any(Throwable.class));
 		assertRead(read, exec);
 		assertWrite(read, exec);
 		assertReadSkip(0, exec);
@@ -336,7 +331,7 @@ public class RetryBehaviorTest extends AbstractRobustnessTest {
 		
 		final String toFailProcessingConcurrency = "7";
 		final String toFailProcessingDeadlock = "11";
-		final int maxAttemptsConcurrency = 4;
+		final int maxAttemptsConcurrency = 2;
 		final int maxAttemptsDeadlock = 4;
 		doAnswer(new Answer<Void>() {
 			
