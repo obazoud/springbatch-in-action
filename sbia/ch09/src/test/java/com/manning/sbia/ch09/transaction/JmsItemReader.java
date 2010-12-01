@@ -3,6 +3,8 @@
  */
 package com.manning.sbia.ch09.transaction;
 
+import javax.jms.Message;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.batch.item.ItemReader;
@@ -24,7 +26,8 @@ public class JmsItemReader<T> implements ItemReader<T> {
 	@Override
 	public T read() throws Exception, UnexpectedInputException, ParseException,
 			NonTransientResourceException {
-		Object object = jmsTemplate.receiveAndConvert();
+//		Object object = jmsTemplate.receiveAndConvert();
+		Message object = jmsTemplate.receive();
 		LOG.debug("read "+object);
 		return (T) object;
 	}

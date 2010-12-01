@@ -93,7 +93,7 @@
 		<property name="receiveTimeout" value="100" />
 	</bean>
 	
-	<bean id="jmsReader" class="com.manning.sbia.ch09.transaction.JmsItemReader">
+	<bean id="jmsReader" class="org.springframework.batch.item.jms.JmsItemReader">
 		<property name="jmsTemplate" ref="jmsTemplate" />
 	</bean>
 	
