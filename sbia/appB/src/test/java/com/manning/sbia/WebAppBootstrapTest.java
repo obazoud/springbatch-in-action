@@ -38,13 +38,11 @@ public class WebAppBootstrapTest {
 	@Before
 	public void setUp() throws Exception {
 		startDatabase();
-//		startWebContainer();
+		startWebContainer();
 	}
 	
 
 	@Test public void webAppBootstrap() throws Exception {
-		Thread.sleep(1000000000);
-		
 		RestTemplate tpl = new RestTemplate();
 		ResponseEntity<String> resp = tpl.getForEntity(BASE_URL+"batch/home", String.class);
 		Assert.assertEquals(HttpStatus.OK,resp.getStatusCode());
