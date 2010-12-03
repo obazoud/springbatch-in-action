@@ -152,6 +152,7 @@
     	<module>ch09</module>
 		<module>ch11</module>
 		<module>ch14</module>
+    	<module>appB</module>
   </modules>
 
 	<properties>
