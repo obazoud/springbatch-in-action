@@ -66,7 +66,7 @@ public class ImportValidatorTest {
   }
 
   @Test(expected = JobParametersInvalidException.class)
-  public void validateMissingMaxPrice() throws JobParametersInvalidException {
+  public void validateMissing() throws JobParametersInvalidException {
     JobParameters jobParameters = new JobParametersBuilder() //
         .addString(PARAM_INPUT_RESOURCE, PRODUCTS_PATH) //
         .toJobParameters();
