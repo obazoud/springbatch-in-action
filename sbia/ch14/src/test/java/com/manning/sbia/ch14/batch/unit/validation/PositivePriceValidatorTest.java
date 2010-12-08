@@ -30,13 +30,13 @@ public class PositivePriceValidatorTest {
 
   @Test
   public void validate() {
-    product.setPrice(new BigDecimal(100.0f));
+    product.setPrice(new BigDecimal("100.0"));
     validator.validate(product);
   }
 
   @Test(expected = ValidationException.class)
   public void validatePositivePrice() {
-    product.setPrice(new BigDecimal(-800.0f));
+    product.setPrice(new BigDecimal("-800.0"));
     validator.validate(product);
   }
 }

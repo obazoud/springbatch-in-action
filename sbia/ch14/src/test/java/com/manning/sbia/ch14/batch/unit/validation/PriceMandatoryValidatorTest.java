@@ -30,7 +30,7 @@ public class PriceMandatoryValidatorTest {
 
   @Test
   public void validate() {
-    product.setPrice(new BigDecimal(100.0f));
+    product.setPrice(new BigDecimal("100.0"));
     validator.validate(product);
   }
 

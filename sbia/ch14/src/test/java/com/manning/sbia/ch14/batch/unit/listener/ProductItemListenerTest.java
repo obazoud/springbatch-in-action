@@ -3,7 +3,7 @@
  */
 package com.manning.sbia.ch14.batch.unit.listener;
 
-import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import org.junit.Before;
@@ -34,8 +34,7 @@ public class ProductItemListenerTest {
     p = new Product();
     p.setId("211");
     p.setName("BlackBerry");
-    items = new ArrayList<Product>();
-    items.add(p);
+    items = Arrays.asList(p);
     writer = mock(FlatFileItemWriter.class);
   }
 

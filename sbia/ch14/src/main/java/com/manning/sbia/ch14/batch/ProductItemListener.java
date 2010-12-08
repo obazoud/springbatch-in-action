@@ -3,8 +3,7 @@
  */
 package com.manning.sbia.ch14.batch;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Arrays;
 
 import org.springframework.batch.core.listener.ItemListenerSupport;
 import org.springframework.batch.item.file.FlatFileItemWriter;
@@ -16,17 +15,14 @@ import com.manning.sbia.ch14.domain.Product;
  * @author bazoud
  *
  */
-public class ProductItemListener extends
-    ItemListenerSupport<Product, Product> {
+public class ProductItemListener extends ItemListenerSupport<Product,Product> {
   private FlatFileItemWriter<Product> excludeWriter;
 
   @Override
   public void afterProcess(Product item, Product result) {
     if (result == null) {
       try {
-        List<Product> excludes = new ArrayList<Product>();
-        excludes.add(item);
-        excludeWriter.write(excludes);
+        excludeWriter.write(Arrays.asList(item));
       } catch (Exception e) {
       }
     }
