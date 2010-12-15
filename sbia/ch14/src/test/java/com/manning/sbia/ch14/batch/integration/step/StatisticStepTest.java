@@ -3,12 +3,9 @@
  */
 package com.manning.sbia.ch14.batch.integration.step;
 
-import static com.manning.sbia.ch14.batch.ProductItemWriter.INSERT_SQL;
-import static org.junit.Assert.assertEquals;
-import static org.springframework.batch.test.AssertFile.assertFileEquals;
-
 import java.math.BigDecimal;
 
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.batch.core.BatchStatus;
@@ -30,6 +27,12 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import com.manning.sbia.ch14.domain.Product;
 
+import static com.manning.sbia.ch14.batch.ProductItemWriter.INSERT_SQL;
+
+import static org.junit.Assert.assertEquals;
+
+import static org.springframework.batch.test.AssertFile.assertFileEquals;
+
 /**
  * Integration with Spring Batch Test.
  *
@@ -47,26 +50,29 @@ public class StatisticStepTest {
   private SimpleJdbcTemplate jdbcTemplate;
   ItemSqlParameterSourceProvider<Product> ispsp;
 
+  @Before
+  public void setup() {
+      ispsp = new BeanPropertyItemSqlParameterSourceProvider<Product>();
+
+      Product product = new Product();
+      product.setId("1");
+      product.setDescription("");
+      product.setPrice(new BigDecimal(10.0f));
+
+      SqlParameterSource args = ispsp.createSqlParameterSource(product);
+      jdbcTemplate.update(INSERT_SQL, args);
+
+      product = new Product();
+      product.setId("2");
+      product.setDescription("");
+      product.setPrice(new BigDecimal(30.0f));
+      args = ispsp.createSqlParameterSource(product);
+      jdbcTemplate.update(INSERT_SQL, args);
+  }
+  
   @Test
   @DirtiesContext
   public void integration() throws Exception {
-    ispsp = new BeanPropertyItemSqlParameterSourceProvider<Product>();
-
-    Product product = new Product();
-    product.setId("1");
-    product.setDescription("");
-    product.setPrice(new BigDecimal(10.0f));
-
-    SqlParameterSource args = ispsp.createSqlParameterSource(product);
-    jdbcTemplate.update(INSERT_SQL, args);
-
-    product = new Product();
-    product.setId("2");
-    product.setDescription("");
-    product.setPrice(new BigDecimal(30.0f));
-    args = ispsp.createSqlParameterSource(product);
-    jdbcTemplate.update(INSERT_SQL, args);
-
     JobParameters jobParameters = new JobParametersBuilder() //
         .addString("reportResource", "file:" + STATISTIC_PATH) //
         .toJobParameters();
