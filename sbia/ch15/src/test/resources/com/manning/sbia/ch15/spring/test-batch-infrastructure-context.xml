@@ -8,7 +8,7 @@
 		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.0.xsd">
 
   <context:property-placeholder
-    location="classpath:/com/manning/sbia/ch14/spring/batch-h2.properties" />
+    location="classpath:/com/manning/sbia/ch15/spring/batch-h2.properties" />
   <bean
     class="org.springframework.beans.factory.annotation.RequiredAnnotationBeanPostProcessor" />
 
@@ -38,7 +38,7 @@
   <bean class="org.springframework.batch.test.JobLauncherTestUtils" />
 
   <jdbc:initialize-database data-source="dataSource">
-    <jdbc:script location="classpath:com/manning/sbia/ch14/sql/create-tables.sql" />
+    <jdbc:script location="classpath:com/manning/sbia/ch15/sql/create-tables.sql" />
   </jdbc:initialize-database>
 
   <bean id="simpleJdbcTemplate" class="org.springframework.jdbc.core.simple.SimpleJdbcTemplate">

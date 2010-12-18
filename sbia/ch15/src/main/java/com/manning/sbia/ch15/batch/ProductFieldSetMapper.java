@@ -1,13 +1,13 @@
 /**
  *
  */
-package com.manning.sbia.ch14.batch;
+package com.manning.sbia.ch15.batch;
 
 import org.springframework.batch.item.file.mapping.FieldSetMapper;
 import org.springframework.batch.item.file.transform.FieldSet;
 import org.springframework.validation.BindException;
 
-import com.manning.sbia.ch14.domain.Product;
+import com.manning.sbia.ch15.domain.Product;
 
 /**
  * @author bazoud

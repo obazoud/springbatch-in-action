@@ -1,9 +1,9 @@
 /**
  *
  */
-package com.manning.sbia.ch14.batch.integration.step;
+package com.manning.sbia.ch15.batch.integration.step;
 
-import static com.manning.sbia.ch14.batch.ImportValidator.PARAM_INPUT_RESOURCE;
+import static com.manning.sbia.ch15.batch.ImportValidator.PARAM_INPUT_RESOURCE;
 import static org.junit.Assert.assertEquals;
 import static org.springframework.batch.test.AssertFile.assertFileEquals;
 
@@ -30,10 +30,10 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
  *
  */
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration("/com/manning/sbia/ch14/spring/test-job-context.xml")
+@ContextConfiguration("/com/manning/sbia/ch15/spring/test-job-context.xml")
 public class ProductStepTest {
-  String PRODUCTS_PATH = "classpath:com/manning/sbia/ch14/input/products.txt";
-  String EXCLUDES_REF_PATH = "com/manning/sbia/ch14/output/excludes.txt";
+  String PRODUCTS_PATH = "classpath:com/manning/sbia/ch15/input/products.txt";
+  String EXCLUDES_REF_PATH = "com/manning/sbia/ch15/output/excludes.txt";
   String EXCLUDES_PATH = "./target/excludes.txt";
   @Autowired
   private JobLauncherTestUtils jobLauncherTestUtils;

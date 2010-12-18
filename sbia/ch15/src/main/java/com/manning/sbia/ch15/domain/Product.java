@@ -1,7 +1,7 @@
 /**
  *
  */
-package com.manning.sbia.ch14.domain;
+package com.manning.sbia.ch15.domain;
 
 import java.math.BigDecimal;
 

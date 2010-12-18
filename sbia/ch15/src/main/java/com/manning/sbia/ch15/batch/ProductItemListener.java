@@ -1,7 +1,7 @@
 /**
  *
  */
-package com.manning.sbia.ch14.batch;
+package com.manning.sbia.ch15.batch;
 
 import java.util.Arrays;
 
@@ -9,7 +9,7 @@ import org.springframework.batch.core.listener.ItemListenerSupport;
 import org.springframework.batch.item.file.FlatFileItemWriter;
 import org.springframework.beans.factory.annotation.Required;
 
-import com.manning.sbia.ch14.domain.Product;
+import com.manning.sbia.ch15.domain.Product;
 
 /**
  * @author bazoud

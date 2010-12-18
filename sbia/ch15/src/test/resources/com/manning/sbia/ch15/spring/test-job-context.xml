@@ -8,7 +8,7 @@
         http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-3.0.xsd">
 
   <import
-    resource="classpath:com/manning/sbia/ch14/spring/test-batch-infrastructure-context.xml" />
+    resource="classpath:com/manning/sbia/ch15/spring/test-batch-infrastructure-context.xml" />
 
   <job id="import" xmlns="http://www.springframework.org/schema/batch">
     <validator ref="jobValidator" />
@@ -40,7 +40,7 @@
     </step>
   </job>
 
-  <bean id="jobValidator" class="com.manning.sbia.ch14.batch.ImportValidator" />
+  <bean id="jobValidator" class="com.manning.sbia.ch15.batch.ImportValidator" />
 
   <bean id="reader" class="org.springframework.batch.item.file.FlatFileItemReader"
     scope="step">
@@ -55,7 +55,7 @@
           </bean>
         </property>
         <property name="fieldSetMapper">
-          <bean class="com.manning.sbia.ch14.batch.ProductFieldSetMapper" />
+          <bean class="com.manning.sbia.ch15.batch.ProductFieldSetMapper" />
         </property>
       </bean>
     </property>
@@ -69,25 +69,25 @@
           <property name="filter" value="true" />
           <property name="validator">
             <bean
-              class="com.manning.sbia.ch14.batch.validation.PriceMandatoryValidator" />
+              class="com.manning.sbia.ch15.batch.validation.PriceMandatoryValidator" />
           </property>
         </bean>
         <bean class="org.springframework.batch.item.validator.ValidatingItemProcessor">
           <property name="filter" value="true" />
           <property name="validator">
             <bean
-              class="com.manning.sbia.ch14.batch.validation.PositivePriceValidator" />
+              class="com.manning.sbia.ch15.batch.validation.PositivePriceValidator" />
           </property>
         </bean>
       </list>
     </property>
   </bean>
 
-  <bean id="productItemListener" class="com.manning.sbia.ch14.batch.ProductItemListener">
+  <bean id="productItemListener" class="com.manning.sbia.ch15.batch.ProductItemListener">
     <property name="excludeWriter" ref="excludeWriter" />
   </bean>
 
-  <bean id="writer" class="com.manning.sbia.ch14.batch.ProductItemWriter">
+  <bean id="writer" class="com.manning.sbia.ch15.batch.ProductItemWriter">
     <property name="simpleJdbcTemplate" ref="simpleJdbcTemplate" />
     <property name="itemSqlParameterSourceProvider">
       <bean
@@ -103,7 +103,7 @@
     </property>
   </bean>
 
-  <bean id="nextDecider" class="com.manning.sbia.ch14.batch.NextDecider" />
+  <bean id="nextDecider" class="com.manning.sbia.ch15.batch.NextDecider" />
 
   <bean id="statisticReader" class="org.springframework.batch.item.database.JdbcCursorItemReader">
     <property name="dataSource" ref="dataSource" />
@@ -126,5 +126,5 @@
     </property>
   </bean>
 
-  <bean id="cleanTasklet" class="com.manning.sbia.ch14.batch.CleanTasklet" />
+  <bean id="cleanTasklet" class="com.manning.sbia.ch15.batch.CleanTasklet" />
 </beans>

@@ -1,7 +1,7 @@
 /**
  *
  */
-package com.manning.sbia.ch14.batch;
+package com.manning.sbia.ch15.batch;
 
 import java.util.ArrayList;
 import java.util.Collection;

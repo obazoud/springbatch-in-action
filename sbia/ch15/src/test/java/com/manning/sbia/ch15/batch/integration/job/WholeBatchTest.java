@@ -1,10 +1,10 @@
 /**
  *
  */
-package com.manning.sbia.ch14.batch.integration.job;
+package com.manning.sbia.ch15.batch.integration.job;
 
-import static com.manning.sbia.ch14.batch.ImportValidator.PARAM_INPUT_RESOURCE;
-import static com.manning.sbia.ch14.batch.ImportValidator.PARAM_REPORT_RESOURCE;
+import static com.manning.sbia.ch15.batch.ImportValidator.PARAM_INPUT_RESOURCE;
+import static com.manning.sbia.ch15.batch.ImportValidator.PARAM_REPORT_RESOURCE;
 import static org.junit.Assert.assertEquals;
 
 import org.junit.Assert;
@@ -29,9 +29,9 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
  *
  */
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration("/com/manning/sbia/ch14/spring/test-job-context.xml")
+@ContextConfiguration("/com/manning/sbia/ch15/spring/test-job-context.xml")
 public class WholeBatchTest {
-  String PRODUCTS_PATH = "classpath:com/manning/sbia/ch14/input/products.txt";
+  String PRODUCTS_PATH = "classpath:com/manning/sbia/ch15/input/products.txt";
   String STATISTIC_PATH = "file:./target/statistic.txt";
   @Autowired
   private JobLauncherTestUtils jobLauncherTestUtils;

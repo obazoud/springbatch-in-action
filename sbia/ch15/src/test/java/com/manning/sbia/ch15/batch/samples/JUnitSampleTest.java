@@ -1,7 +1,7 @@
 /**
  *
  */
-package com.manning.sbia.ch14.batch.samples;
+package com.manning.sbia.ch15.batch.samples;
 
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;

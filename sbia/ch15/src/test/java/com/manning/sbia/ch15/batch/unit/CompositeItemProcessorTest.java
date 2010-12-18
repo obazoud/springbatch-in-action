@@ -1,7 +1,7 @@
 /**
  * 
  */
-package com.manning.sbia.ch14.batch.unit;
+package com.manning.sbia.ch15.batch.unit;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -12,9 +12,9 @@ import org.junit.Test;
 import org.springframework.batch.item.support.CompositeItemProcessor;
 import org.springframework.batch.item.validator.ValidatingItemProcessor;
 
-import com.manning.sbia.ch14.batch.validation.PositivePriceValidator;
-import com.manning.sbia.ch14.batch.validation.PriceMandatoryValidator;
-import com.manning.sbia.ch14.domain.Product;
+import com.manning.sbia.ch15.batch.validation.PositivePriceValidator;
+import com.manning.sbia.ch15.batch.validation.PriceMandatoryValidator;
+import com.manning.sbia.ch15.domain.Product;
 
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;

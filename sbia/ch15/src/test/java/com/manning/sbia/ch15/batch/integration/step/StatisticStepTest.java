@@ -1,7 +1,7 @@
 /**
  *
  */
-package com.manning.sbia.ch14.batch.integration.step;
+package com.manning.sbia.ch15.batch.integration.step;
 
 import java.math.BigDecimal;
 
@@ -25,9 +25,9 @@ import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
-import com.manning.sbia.ch14.domain.Product;
+import com.manning.sbia.ch15.domain.Product;
 
-import static com.manning.sbia.ch14.batch.ProductItemWriter.INSERT_SQL;
+import static com.manning.sbia.ch15.batch.ProductItemWriter.INSERT_SQL;
 
 import static org.junit.Assert.assertEquals;
 
@@ -40,9 +40,9 @@ import static org.springframework.batch.test.AssertFile.assertFileEquals;
  *
  */
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration("/com/manning/sbia/ch14/spring/test-job-context.xml")
+@ContextConfiguration("/com/manning/sbia/ch15/spring/test-job-context.xml")
 public class StatisticStepTest {
-  String STATISTIC_REF_PATH = "com/manning/sbia/ch14/output/statistic-summary.txt";
+  String STATISTIC_REF_PATH = "com/manning/sbia/ch15/output/statistic-summary.txt";
   String STATISTIC_PATH = "./target/statistic-summary.txt";
   @Autowired
   private JobLauncherTestUtils jobLauncherTestUtils;

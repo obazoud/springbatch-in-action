@@ -1,10 +1,10 @@
 /**
  *
  */
-package com.manning.sbia.ch14.batch.unit;
+package com.manning.sbia.ch15.batch.unit;
 
-import static com.manning.sbia.ch14.batch.ImportValidator.PARAM_INPUT_RESOURCE;
-import static com.manning.sbia.ch14.batch.ImportValidator.PARAM_REPORT_RESOURCE;
+import static com.manning.sbia.ch15.batch.ImportValidator.PARAM_INPUT_RESOURCE;
+import static com.manning.sbia.ch15.batch.ImportValidator.PARAM_REPORT_RESOURCE;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.spy;
 import static org.mockito.Mockito.times;
@@ -20,7 +20,7 @@ import org.springframework.batch.core.JobParametersInvalidException;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.ResourceLoader;
 
-import com.manning.sbia.ch14.batch.ImportValidator;
+import com.manning.sbia.ch15.batch.ImportValidator;
 
 /**
  * Unit with mock.
@@ -29,7 +29,7 @@ import com.manning.sbia.ch14.batch.ImportValidator;
  *
  */
 public class ImportValidatorTest {
-  String PRODUCTS_PATH = "classpath:com/manning/sbia/ch14/input/products.txt";
+  String PRODUCTS_PATH = "classpath:com/manning/sbia/ch15/input/products.txt";
   String STATISTIC_PATH = "file:./target/statistic.txt";
   private ResourceLoader resourceLoader;
   private Resource resource;

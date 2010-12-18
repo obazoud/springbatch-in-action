@@ -1,9 +1,9 @@
 /**
  *
  */
-package com.manning.sbia.ch14.batch.integration.reader;
+package com.manning.sbia.ch15.batch.integration.reader;
 
-import static com.manning.sbia.ch14.batch.ImportValidator.PARAM_INPUT_RESOURCE;
+import static com.manning.sbia.ch15.batch.ImportValidator.PARAM_INPUT_RESOURCE;
 import static org.junit.Assert.assertEquals;
 import static org.springframework.batch.test.MetaDataInstanceFactory.createStepExecution;
 
@@ -23,17 +23,17 @@ import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
-import com.manning.sbia.ch14.domain.Product;
+import com.manning.sbia.ch15.domain.Product;
 
 /**
  * Integration with Spring Batch Test.
  * @author bazoud
  *
  */
-@ContextConfiguration("/com/manning/sbia/ch14/spring/test-job-context.xml")
+@ContextConfiguration("/com/manning/sbia/ch15/spring/test-job-context.xml")
 @RunWith(SpringJUnit4ClassRunner.class)
 public class ReaderWithStepScopeTestUtilsTest {
-  String PRODUCTS_PATH = "classpath:com/manning/sbia/ch14/input/products.txt";
+  String PRODUCTS_PATH = "classpath:com/manning/sbia/ch15/input/products.txt";
   @Autowired
   private ItemReader<Product> reader;
 

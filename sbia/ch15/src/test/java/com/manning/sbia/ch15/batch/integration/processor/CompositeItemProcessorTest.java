@@ -1,7 +1,7 @@
 /**
  *
  */
-package com.manning.sbia.ch14.batch.integration.processor;
+package com.manning.sbia.ch15.batch.integration.processor;
 
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
@@ -23,7 +23,7 @@ import org.springframework.test.context.TestExecutionListeners;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.support.DependencyInjectionTestExecutionListener;
 
-import com.manning.sbia.ch14.domain.Product;
+import com.manning.sbia.ch15.domain.Product;
 
 /**
  * Unit with Spring Batch.
@@ -31,7 +31,7 @@ import com.manning.sbia.ch14.domain.Product;
  * @author bazoud
  *
  */
-@ContextConfiguration("/com/manning/sbia/ch14/spring/test-job-context.xml")
+@ContextConfiguration("/com/manning/sbia/ch15/spring/test-job-context.xml")
 @TestExecutionListeners({ DependencyInjectionTestExecutionListener.class,
     StepScopeTestExecutionListener.class })
 @RunWith(SpringJUnit4ClassRunner.class)

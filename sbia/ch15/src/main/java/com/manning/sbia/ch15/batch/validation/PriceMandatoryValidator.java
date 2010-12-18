@@ -1,12 +1,12 @@
 /**
  *
  */
-package com.manning.sbia.ch14.batch.validation;
+package com.manning.sbia.ch15.batch.validation;
 
 import org.springframework.batch.item.validator.ValidationException;
 import org.springframework.batch.item.validator.Validator;
 
-import com.manning.sbia.ch14.domain.Product;
+import com.manning.sbia.ch15.domain.Product;
 
 /**
  * @author bazoud

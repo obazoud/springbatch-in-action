@@ -1,7 +1,7 @@
 /**
  *
  */
-package com.manning.sbia.ch14.batch.unit.listener;
+package com.manning.sbia.ch15.batch.unit.listener;
 
 import java.util.Arrays;
 import java.util.List;
@@ -10,8 +10,8 @@ import org.junit.Before;
 import org.junit.Test;
 import org.springframework.batch.item.file.FlatFileItemWriter;
 
-import com.manning.sbia.ch14.batch.ProductItemListener;
-import com.manning.sbia.ch14.domain.Product;
+import com.manning.sbia.ch15.batch.ProductItemListener;
+import com.manning.sbia.ch15.domain.Product;
 
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.never;

@@ -1,7 +1,7 @@
 /**
  *
  */
-package com.manning.sbia.ch14.batch.unit.writer;
+package com.manning.sbia.ch15.batch.unit.writer;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -13,11 +13,11 @@ import org.springframework.batch.item.database.ItemSqlParameterSourceProvider;
 import org.springframework.jdbc.core.namedparam.SqlParameterSource;
 import org.springframework.jdbc.core.simple.SimpleJdbcTemplate;
 
-import com.manning.sbia.ch14.batch.ProductItemWriter;
-import com.manning.sbia.ch14.domain.Product;
+import com.manning.sbia.ch15.batch.ProductItemWriter;
+import com.manning.sbia.ch15.domain.Product;
 
-import static com.manning.sbia.ch14.batch.ProductItemWriter.INSERT_SQL;
-import static com.manning.sbia.ch14.batch.ProductItemWriter.UPDATE_SQL;
+import static com.manning.sbia.ch15.batch.ProductItemWriter.INSERT_SQL;
+import static com.manning.sbia.ch15.batch.ProductItemWriter.UPDATE_SQL;
 import static org.mockito.Matchers.any;
 import static org.mockito.Matchers.eq;
 import static org.mockito.Mockito.mock;
