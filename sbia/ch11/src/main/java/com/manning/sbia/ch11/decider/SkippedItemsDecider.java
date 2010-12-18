@@ -1,7 +1,7 @@
 /**
  * 
  */
-package com.manning.sbia.ch11.batch;
+package com.manning.sbia.ch11.decider;
 
 import org.springframework.batch.core.JobExecution;
 import org.springframework.batch.core.StepExecution;
@@ -12,9 +12,7 @@ import org.springframework.batch.core.job.flow.JobExecutionDecider;
  * @author acogoluegnes
  *
  */
-public class FileExistsDecider implements JobExecutionDecider {
-	
-	private BatchService batchService;
+public class SkippedItemsDecider implements JobExecutionDecider {
 
 	/* (non-Javadoc)
 	 * @see org.springframework.batch.core.job.flow.JobExecutionDecider#decide(org.springframework.batch.core.JobExecution, org.springframework.batch.core.StepExecution)
@@ -22,16 +20,11 @@ public class FileExistsDecider implements JobExecutionDecider {
 	@Override
 	public FlowExecutionStatus decide(JobExecution jobExecution,
 			StepExecution stepExecution) {
-		String targetFile = jobExecution.getJobInstance().getJobParameters().getString("archiveFile");
-		if(batchService.exists(targetFile)) {
-			return new FlowExecutionStatus("FILE EXISTS");
+		if(stepExecution.getSkipCount() > 0) {
+			return new FlowExecutionStatus("SKIPPED ITEMS");
 		} else {
-			return new FlowExecutionStatus("NO FILE");
+			return new FlowExecutionStatus("NO SKIPPED");
 		}
 	}
-	
-	public void setBatchService(BatchService batchService) {
-		this.batchService = batchService;
-	}
-	
+
 }

@@ -1,19 +1,22 @@
 /**
  * 
  */
-package com.manning.sbia.ch11.batch;
+package com.manning.sbia.ch11.tasklet;
 
-import org.springframework.batch.core.BatchStatus;
 import org.springframework.batch.core.StepContribution;
 import org.springframework.batch.core.scope.context.ChunkContext;
 import org.springframework.batch.core.step.tasklet.Tasklet;
 import org.springframework.batch.repeat.RepeatStatus;
 
+import com.manning.sbia.ch11.batch.BatchService;
+
 /**
  * @author acogoluegnes
  *
  */
-public class GenerateReportTasklet implements Tasklet {
+public class DownloadTasklet implements Tasklet {
+	
+	private String targetFile;
 	
 	private BatchService batchService;
 
@@ -23,12 +26,16 @@ public class GenerateReportTasklet implements Tasklet {
 	@Override
 	public RepeatStatus execute(StepContribution contribution,
 			ChunkContext chunkContext) throws Exception {
-		batchService.generateReport(chunkContext.getStepContext().getStepExecution().getJobExecution());
+		batchService.download(targetFile);
 		return RepeatStatus.FINISHED;
 	}
-
+	
+	public void setTargetFile(String targetFile) {
+		this.targetFile = targetFile;
+	}
+	
 	public void setBatchService(BatchService batchService) {
 		this.batchService = batchService;
 	}
-	
+
 }
