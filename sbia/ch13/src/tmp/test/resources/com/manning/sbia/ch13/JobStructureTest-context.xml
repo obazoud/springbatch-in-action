@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:batch="http://www.springframework.org/schema/batch"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-3.0.xsd
+		http://www.springframework.org/schema/batch http://www.springframework.org/schema/batch/spring-batch-2.1.xsd">
+
+	<!-- Imports -->
+	
+	<!--import resource="classpath:/com/manning/sbia/ch13/root-database-context.xml"/>
+	<import resource="classpath:/com/manning/sbia/ch13/batch-infrastructure-context.xml"/>
+	<import resource="classpath:/com/manning/sbia/ch13/batch-monitoring-context.xml"/-->
+
+	<bean id="dataSource" class="org.springframework.jdbc.datasource.SingleConnectionDataSource">
+		<property name="driverClassName" value="org.h2.Driver" />
+		<property name="url" value="jdbc:h2:tcp://localhost:9092/ch13" />
+		<property name="username" value="sa" />
+		<property name="password" value="" />
+		<property name="suppressClose" value="true" />
+	</bean>
+
+	<!-- Batch structure -->
+
+ 	<job id="importProductsJob" xmlns="http://www.springframework.org/schema/batch">
+ 		<!--step id="decompress" next="readWrite">
+ 			<tasklet ref="decompressTasklet" />
+ 		</step-->
+ 		<step id="readWrite">
+ 			<tasklet>
+ 				<chunk reader="productItemReader" writer="productItemWriter" commit-interval="100"/>
+ 				<!--chunk reader="productItemReader" writer="productItemWriter" commit-interval="100" skip-limit="2">
+			        <skippable-exception-classes>
+          				<include class="org.springframework.batch.item.file.FlatFileParseException"/>
+          				<exclude class="java.io.FileNotFoundException"/>
+					</skippable-exception-classes>
+ 				</chunk-->
+ 			</tasklet>
+ 		</step>
+ 	</job>
+ 	
+ 	<!-- Decompress -->
+ 	
+ 	<!--bean id="decompressTasklet" class=""/-->
+ 	
+ 	<!-- Product Reader --> 
+ 	
+ 	<bean id="productItemReader"
+  		class="org.springframework.batch.item.file.FlatFileItemReader">
+ 		<property name="resource" value="classpath:/com/manning/sbia/ch13/input/products.txt"/>
+		<property name="linesToSkip" value="1"/>
+ 		<property name="lineMapper" ref="productLineMapper"/>
+ 	</bean>
+
+ 	<bean id="productLineMapper"
+ 		class="org.springframework.batch.item.file.mapping.DefaultLineMapper">
+ 		<property name="lineTokenizer" ref="productLineTokenizer"/>
+ 		<property name="fieldSetMapper" ref="productFieldSetMapper"/>
+ 	</bean>
+
+	<bean id=" productLineTokenizer"
+		class="org.springframework.batch.item.file.transform.DelimitedLineTokenizer">
+ 		<property name="delimiter" value=","/>
+ 		<property name="names" value="id,name,description,price"/>
+	</bean>
+
+	<bean id="productFieldSetMapper"
+		class="org.springframework.batch.item.file.mapping.BeanWrapperFieldSetMapper">
+		<property name="prototypeBeanName" value="product"/>
+	</bean>
+
+	<bean id="product" class="com.manning.sbia.ch13.Product" scope="prototype"/>
+
+	<!-- Product Writer -->
+
+	<bean id="productItemPreparedStatementSetter"
+			class="com.manning.sbia.ch13.ProductItemPreparedStatementSetter"/>
+	
+	<bean id="productItemWriter" class="org.springframework.batch.item.database.JdbcBatchItemWriter">
+		<property name="dataSource" ref="dataSource"/>
+		<property name="sql" value="insert into product (id,name,description,price) values(?,?,?,?)"/>
+		<property name="itemPreparedStatementSetter" ref="productItemPreparedStatementSetter"/>
+	</bean>
+
+	<!-- JMX -->
+	
+	<!-- bean id="clientConnector" class="org.springframework.jmx.support.MBeanServerConnectionFactoryBean">
+		<property name="serviceUrl" value="service:jmx:rmi://localhost/jndi/rmi://localhost:1099/myconnector"/>
+	</bean>
+
+	<bean id="applicationEventMonitoringNotifier" class="com.manning.sbia.ch13.ApplicationEventMonitoringNotifier"/>
+	<bean id="notificationPublisher" class="com.manning.sbia.ch13.JobExecutionNotificationPublisher" />
+
+	<bean class="org.springframework.jmx.export.MBeanExporter">
+		<property name="server" ref="clientConnector"/>
+		<property name="beans">
+			<map>
+				<entry key="spring:service=batch,bean=notificationPublisher" value-ref="notificationPublisher" />
+			</map>
+		</property>
+	</bean -->
+	
+</beans>
