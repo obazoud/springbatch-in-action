@@ -208,6 +208,12 @@
 			<name>SpringSource Enterprise Bundle Repository - External Bundle Releases</name>
 			<url>http://repository.springsource.com/maven/bundles/external</url>
 		</repository>
+
+		<repository>
+                        <id>jboss</id>
+                        <name>JBoss public Maven repo</name>
+                        <url>http://repository.jboss.org/nexus/content/groups/public-jboss/</url>
+                </repository>
 	</repositories>
 
 
