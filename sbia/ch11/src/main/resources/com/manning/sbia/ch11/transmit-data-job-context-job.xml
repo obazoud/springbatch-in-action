@@ -34,8 +34,8 @@
 			<tasklet ref="readWriteProductsTasklet" />
 		</step>
 		<decision id="skippedItemsDecision" decider="skippedItemsDecider">
-			<next on="SKIPPED ITEMS" to="generateReportStep" />
-			<next on="NO SKIPPED" to="indexStep" />
+			<next on="COMPLETED WITH SKIPS" to="generateReportStep" />
+			<next on="*" to="indexStep" />
 		</decision>
 		<step id="generateReportStep" next="indexStep">
 			<tasklet ref="generateReportTasklet" />

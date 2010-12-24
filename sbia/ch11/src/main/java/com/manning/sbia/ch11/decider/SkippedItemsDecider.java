@@ -3,6 +3,7 @@
  */
 package com.manning.sbia.ch11.decider;
 
+import org.springframework.batch.core.ExitStatus;
 import org.springframework.batch.core.JobExecution;
 import org.springframework.batch.core.StepExecution;
 import org.springframework.batch.core.job.flow.FlowExecutionStatus;
@@ -20,10 +21,11 @@ public class SkippedItemsDecider implements JobExecutionDecider {
 	@Override
 	public FlowExecutionStatus decide(JobExecution jobExecution,
 			StepExecution stepExecution) {
-		if(stepExecution.getSkipCount() > 0) {
-			return new FlowExecutionStatus("SKIPPED ITEMS");
+		if(!ExitStatus.FAILED.equals(stepExecution.getExitStatus()) &&
+				stepExecution.getSkipCount() > 0) {
+			return new FlowExecutionStatus("COMPLETED WITH SKIPS");
 		} else {
-			return new FlowExecutionStatus("NO SKIPPED");
+			return new FlowExecutionStatus(jobExecution.getExitStatus().toString());
 		}
 	}
 

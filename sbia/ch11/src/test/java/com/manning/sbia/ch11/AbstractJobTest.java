@@ -12,6 +12,8 @@ import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
+import javax.sql.DataSource;
+
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.invocation.InvocationOnMock;
@@ -27,6 +29,7 @@ import org.springframework.batch.core.scope.context.ChunkContext;
 import org.springframework.batch.core.step.tasklet.Tasklet;
 import org.springframework.batch.repeat.RepeatStatus;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.core.JdbcTemplate;
 
 import com.manning.sbia.ch11.batch.BatchService;
 import com.manning.sbia.ch11.batch.ImportMetadata;
@@ -177,11 +180,15 @@ public abstract class AbstractJobTest {
 			});
 	}
 	
+	@Autowired
+	private DataSource dataSource;
+	
 	private void assertPostConditionsDownloadFileOkSkippedItems(
 			JobExecution jobExecution) throws Exception {
 		assertEquals(BatchStatus.COMPLETED, jobExecution.getStatus());
 		assertEquals(getExpectedNbStepExecutionsDownloadedFileOkSkippedItems(),jobExecution.getStepExecutions().size());
-		
+		JdbcTemplate tpl = new JdbcTemplate(dataSource);
+		System.out.println(tpl.queryForList("select * from BATCH_STEP_EXECUTION"));
 		assertMetadataDownloadFileOkSkippedItems();
 		
 		verify(batchService,times(1)).download(archiveFile);

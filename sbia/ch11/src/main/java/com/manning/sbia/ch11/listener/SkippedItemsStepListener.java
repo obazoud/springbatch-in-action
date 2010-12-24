@@ -18,10 +18,11 @@ public class SkippedItemsStepListener implements StepExecutionListener {
 	
 	@Override
 	public ExitStatus afterStep(StepExecution stepExecution) {
-		if(stepExecution.getSkipCount() > 0) {
-			return new ExitStatus("SKIPPED ITEMS");
+		if(!ExitStatus.FAILED.equals(stepExecution.getExitStatus()) &&
+				stepExecution.getSkipCount() > 0) {
+			return new ExitStatus("COMPLETED WITH SKIPS");
 		} else {
-			return new ExitStatus("NO SKIPPED");
+			return stepExecution.getExitStatus();
 		}
 	}
 	

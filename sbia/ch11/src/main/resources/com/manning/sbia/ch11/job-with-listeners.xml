@@ -16,6 +16,7 @@
 			</tasklet>
 			<end on="NO FILE" />
 			<next on="FILE EXISTS" to="decompressStep"/>
+			<fail on="*" />
 		</step>
 		<step id="decompressStep" next="verifyStep">
 			<tasklet ref="decompressTasklet" />
@@ -29,8 +30,8 @@
 					<listener ref="skippedItemsStepListener" />
 				</listeners>
 			</tasklet>
-			<next on="SKIPPED ITEMS" to="generateReportStep" />
-			<next on="NO SKIPPED" to="indexStep" />
+			<next on="COMPLETED WITH SKIPS" to="generateReportStep" />
+			<next on="*" to="indexStep" />
 		</step>
 		<step id="generateReportStep" next="indexStep">
 			<tasklet ref="generateReportTasklet" />
