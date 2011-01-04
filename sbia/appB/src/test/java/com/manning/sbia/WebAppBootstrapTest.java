@@ -12,6 +12,7 @@ import org.mortbay.jetty.Connector;
 import org.mortbay.jetty.Server;
 import org.mortbay.jetty.nio.SelectChannelConnector;
 import org.mortbay.jetty.webapp.WebAppContext;
+import org.mortbay.xml.XmlConfiguration;
 import org.springframework.batch.core.BatchStatus;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.http.HttpStatus;
@@ -44,21 +45,24 @@ public class WebAppBootstrapTest {
 
 	@Test public void webAppBootstrap() throws Exception {
 		RestTemplate tpl = new RestTemplate();
-		ResponseEntity<String> resp = tpl.getForEntity(BASE_URL+"batch/home", String.class);
+		ResponseEntity<String> resp = tpl.getForEntity(BASE_URL, String.class);
 		Assert.assertEquals(HttpStatus.OK,resp.getStatusCode());
 		Assert.assertTrue(resp.getHeaders().getContentType().isCompatibleWith(MediaType.TEXT_HTML));
 		Assert.assertTrue(resp.getBody().contains("Spring Batch Admin"));
 		
-		resp = tpl.getForEntity(BASE_URL+"batch/jobs", String.class);
+//		System.out.println("passe");
+//		Thread.sleep(1000000000000L);
+		
+		resp = tpl.getForEntity(BASE_URL+"jobs", String.class);
 		Assert.assertEquals(HttpStatus.OK,resp.getStatusCode());
 		Assert.assertTrue(resp.getBody().contains(JOB_NAME));
 		
-		resp = tpl.getForEntity(BASE_URL+"batch/jobs/"+JOB_NAME, String.class);
+		resp = tpl.getForEntity(BASE_URL+"jobs/"+JOB_NAME, String.class);
 		Assert.assertEquals(HttpStatus.OK,resp.getStatusCode());
 		
-		tpl.postForLocation(BASE_URL+"batch/jobs/"+JOB_NAME,null);
+		tpl.postForLocation(BASE_URL+"jobs/"+JOB_NAME,null);
 		
-		resp = tpl.getForEntity(BASE_URL+"batch/jobs/executions", String.class);
+		resp = tpl.getForEntity(BASE_URL+"jobs/executions", String.class);
 		Assert.assertEquals(HttpStatus.OK,resp.getStatusCode());
 		Assert.assertTrue(resp.getBody().contains(JOB_NAME));
 		Assert.assertTrue(resp.getBody().contains(BatchStatus.COMPLETED.toString()));
@@ -77,17 +81,23 @@ public class WebAppBootstrapTest {
 
 
 	private void startWebContainer() throws Exception {
-		Server server = new Server();
-		Connector connector = new SelectChannelConnector();
-		connector.setPort(8081);
-		connector.setHost("127.0.0.1");
-		server.addConnector(connector);
-
-		WebAppContext wac = new WebAppContext();
-		wac.setContextPath("/springbatchadmin");
-		wac.setWar("./src/main/webapp");
-		server.setHandler(wac);
-		server.setStopAtShutdown(true);
+		XmlConfiguration configuration = new XmlConfiguration(
+				getClass().getResourceAsStream("/com/manning/sbia/jetty.xml")
+		);
+		server = new Server();
+		configuration.configure(server);
+		
+//		Server server = new Server();
+//		Connector connector = new SelectChannelConnector();
+//		connector.setPort(8081);
+//		connector.setHost("127.0.0.1");
+//		server.addConnector(connector);
+//
+//		WebAppContext wac = new WebAppContext();
+//		wac.setContextPath("/springbatchadmin");
+//		wac.setWar("./src/main/webapp");
+//		server.setHandler(wac);
+//		server.setStopAtShutdown(true);
 
 		server.start();
 	}
