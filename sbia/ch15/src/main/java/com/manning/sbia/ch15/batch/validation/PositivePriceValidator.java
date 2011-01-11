@@ -18,7 +18,7 @@ public class PositivePriceValidator implements Validator<Product> {
   @Override
   public void validate(Product product) throws ValidationException {
     if (BigDecimal.ZERO.compareTo(product.getPrice()) >= 0) {
-      throw new ValidationException("Product price cannot be negative!");
+      throw new ValidationException("Product price cannot be 0 or negative!");
     }
   }
 }
