@@ -45,7 +45,7 @@ public class ImportValidatorTest {
   }
 
   @Test
-  public void validate() throws JobParametersInvalidException {
+  public void testJobParameters() throws JobParametersInvalidException {
     JobParameters jobParameters = new JobParametersBuilder() //
         .addString(PARAM_INPUT_RESOURCE, PRODUCTS_PATH) //
         .addString(PARAM_REPORT_RESOURCE, STATISTIC_PATH) //
@@ -59,14 +59,14 @@ public class ImportValidatorTest {
   }
 
   @Test(expected = JobParametersInvalidException.class)
-  public void validateEmpty() throws JobParametersInvalidException {
+  public void testEmptyJobParameters() throws JobParametersInvalidException {
     JobParameters jobParameters = new JobParametersBuilder().toJobParameters();
     validator.setResourceLoader(resourceLoader);
     validator.validate(jobParameters);
   }
 
   @Test(expected = JobParametersInvalidException.class)
-  public void validateMissing() throws JobParametersInvalidException {
+  public void testMissingJobParameters() throws JobParametersInvalidException {
     JobParameters jobParameters = new JobParametersBuilder() //
         .addString(PARAM_INPUT_RESOURCE, PRODUCTS_PATH) //
         .toJobParameters();

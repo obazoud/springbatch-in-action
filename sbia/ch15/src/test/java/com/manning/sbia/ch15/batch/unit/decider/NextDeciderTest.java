@@ -3,6 +3,8 @@
  */
 package com.manning.sbia.ch15.batch.unit.decider;
 
+import static org.junit.Assert.assertEquals;
+
 import org.junit.Test;
 import org.springframework.batch.core.JobExecution;
 import org.springframework.batch.core.StepExecution;
@@ -10,8 +12,6 @@ import org.springframework.batch.core.job.flow.FlowExecutionStatus;
 import org.springframework.batch.test.MetaDataInstanceFactory;
 
 import com.manning.sbia.ch15.batch.NextDecider;
-
-import static org.junit.Assert.assertEquals;
 
 /**
  * Unit with mock Spring Batch.
@@ -21,7 +21,7 @@ import static org.junit.Assert.assertEquals;
  */
 public class NextDeciderTest {
   @Test
-  public void decideNext() {
+  public void testNextStatus() {
     StepExecution stepExecution = MetaDataInstanceFactory.createStepExecution();
     JobExecution jobExecution = MetaDataInstanceFactory.createJobExecution();
     stepExecution.setWriteCount(5);
@@ -33,7 +33,7 @@ public class NextDeciderTest {
   }
 
   @Test
-  public void decideCompleted() {
+  public void testCompletedStatus() {
     StepExecution stepExecution = MetaDataInstanceFactory.createStepExecution();
     JobExecution jobExecution = MetaDataInstanceFactory.createJobExecution();
     stepExecution.setWriteCount(0);

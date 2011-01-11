@@ -42,7 +42,7 @@ public class ProductStepTest {
 
   @Test
   @DirtiesContext
-  public void integration() throws Exception {
+  public void testIntegration() throws Exception {
     JobParameters jobParameters = new JobParametersBuilder() //
         .addString(PARAM_INPUT_RESOURCE, PRODUCTS_PATH) //
         .toJobParameters();

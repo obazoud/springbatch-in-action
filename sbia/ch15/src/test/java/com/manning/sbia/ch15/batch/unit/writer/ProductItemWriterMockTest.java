@@ -3,6 +3,16 @@
  */
 package com.manning.sbia.ch15.batch.unit.writer;
 
+import static com.manning.sbia.ch15.batch.ProductItemWriter.INSERT_SQL;
+import static com.manning.sbia.ch15.batch.ProductItemWriter.UPDATE_SQL;
+import static org.mockito.Matchers.any;
+import static org.mockito.Matchers.eq;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.verifyNoMoreInteractions;
+import static org.mockito.Mockito.when;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -15,16 +25,6 @@ import org.springframework.jdbc.core.simple.SimpleJdbcTemplate;
 
 import com.manning.sbia.ch15.batch.ProductItemWriter;
 import com.manning.sbia.ch15.domain.Product;
-
-import static com.manning.sbia.ch15.batch.ProductItemWriter.INSERT_SQL;
-import static com.manning.sbia.ch15.batch.ProductItemWriter.UPDATE_SQL;
-import static org.mockito.Matchers.any;
-import static org.mockito.Matchers.eq;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.verifyNoMoreInteractions;
-import static org.mockito.Mockito.when;
 
 /**
  * Unit with mock
@@ -55,7 +55,7 @@ public class ProductItemWriterMockTest {
     }
 
     @Test
-    public void writerUpdate() throws Exception {
+    public void testUpdateProduct() throws Exception {
         when(jdbcTemplate.update(eq(UPDATE_SQL), any(SqlParameterSource.class))).thenReturn(1);
         writer.write(items);
         verify(jdbcTemplate, times(1)).update(eq(UPDATE_SQL), any(SqlParameterSource.class));
@@ -64,7 +64,7 @@ public class ProductItemWriterMockTest {
     }
 
     @Test
-    public void writerInsert() throws Exception {
+    public void testInsertProduct() throws Exception {
         when(jdbcTemplate.update(eq(UPDATE_SQL), any(SqlParameterSource.class))).thenReturn(0);
         writer.write(items);
         verify(jdbcTemplate, times(1)).update(eq(UPDATE_SQL), any(SqlParameterSource.class));

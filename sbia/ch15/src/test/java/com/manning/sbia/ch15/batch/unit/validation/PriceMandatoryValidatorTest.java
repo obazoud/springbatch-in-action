@@ -29,13 +29,13 @@ public class PriceMandatoryValidatorTest {
   }
 
   @Test
-  public void validate() {
+  public void testValidProduct() {
     product.setPrice(new BigDecimal("100.0"));
     validator.validate(product);
   }
 
   @Test(expected = ValidationException.class)
-  public void notValidate() {
+  public void testInvalidProduct() {
     validator.validate(product);
   }
 }

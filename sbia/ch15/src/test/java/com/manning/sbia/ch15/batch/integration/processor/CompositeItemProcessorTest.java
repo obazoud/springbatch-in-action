@@ -49,7 +49,7 @@ public class CompositeItemProcessorTest {
 
   @Test
   @DirtiesContext
-  public void processor() throws Exception {
+  public void testProcessor() throws Exception {
     Product p1 = new Product();
     p1.setPrice(new BigDecimal(100.0f));
     Product p2 = processor.process(p1);
@@ -58,7 +58,7 @@ public class CompositeItemProcessorTest {
 
   @Test
   @DirtiesContext
-  public void processorFail() throws Exception {
+  public void testNegativePriceFailure() throws Exception {
     Product p1 = new Product();
     p1.setPrice(new BigDecimal(-800.0f));
     Product p2 = processor.process(p1);
@@ -67,7 +67,7 @@ public class CompositeItemProcessorTest {
 
   @Test
   @DirtiesContext
-  public void processorFailOrder() throws Exception {
+  public void testEmptyProductFailure() throws Exception {
     Product p1 = new Product();
     Product p2 = processor.process(p1);
     assertNull(p2);

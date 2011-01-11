@@ -3,6 +3,16 @@
  */
 package com.manning.sbia.ch15.batch.unit.reader;
 
+import static com.manning.sbia.ch15.batch.ProductFieldSetMapper.FIELD_DESCRIPTION;
+import static com.manning.sbia.ch15.batch.ProductFieldSetMapper.FIELD_ID;
+import static com.manning.sbia.ch15.batch.ProductFieldSetMapper.FIELD_NAME;
+import static com.manning.sbia.ch15.batch.ProductFieldSetMapper.FIELD_PRICE;
+import static org.junit.Assert.assertEquals;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.verifyNoMoreInteractions;
+
 import java.math.BigDecimal;
 
 import org.junit.Test;
@@ -12,18 +22,6 @@ import org.springframework.batch.item.file.transform.FieldSet;
 import com.manning.sbia.ch15.batch.ProductFieldSetMapper;
 import com.manning.sbia.ch15.domain.Product;
 
-import static com.manning.sbia.ch15.batch.ProductFieldSetMapper.FIELD_DESCRIPTION;
-import static com.manning.sbia.ch15.batch.ProductFieldSetMapper.FIELD_ID;
-import static com.manning.sbia.ch15.batch.ProductFieldSetMapper.FIELD_NAME;
-import static com.manning.sbia.ch15.batch.ProductFieldSetMapper.FIELD_PRICE;
-
-import static org.junit.Assert.assertEquals;
-
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.verifyNoMoreInteractions;
-
 /**
  * Unit with mock.
  *
@@ -32,7 +30,7 @@ import static org.mockito.Mockito.verifyNoMoreInteractions;
  */
 public class ProductFieldSetMapperTest {
   @Test
-  public void mapProduct() throws Exception {
+  public void testMapFieldMapClassic() throws Exception {
     DefaultFieldSet fieldSet = new DefaultFieldSet(//
         new String[] { "id", "name", "desc", "100.25" }, //
         new String[] { FIELD_ID, FIELD_NAME, FIELD_DESCRIPTION, FIELD_PRICE });
@@ -45,7 +43,7 @@ public class ProductFieldSetMapperTest {
   }
 
   @Test
-  public void mapFields() throws Exception {
+  public void testMapFieldSetMock() throws Exception {
     FieldSet fieldSet = mock(FieldSet.class);
     ProductFieldSetMapper mapper = new ProductFieldSetMapper();
     mapper.mapFieldSet(fieldSet);
