@@ -3,10 +3,6 @@
  */
 package com.manning.sbia.ch15.batch.integration.processor;
 
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
-import static org.springframework.batch.test.MetaDataInstanceFactory.createStepExecution;
-
 import java.math.BigDecimal;
 
 import org.junit.Test;
@@ -24,6 +20,11 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.support.DependencyInjectionTestExecutionListener;
 
 import com.manning.sbia.ch15.domain.Product;
+
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
+
+import static org.springframework.batch.test.MetaDataInstanceFactory.createStepExecution;
 
 /**
  * Unit with Spring Batch.
@@ -51,16 +52,25 @@ public class CompositeItemProcessorTest {
   @DirtiesContext
   public void testProcessor() throws Exception {
     Product p1 = new Product();
-    p1.setPrice(new BigDecimal(100.0f));
+    p1.setPrice(new BigDecimal("100.0"));
     Product p2 = processor.process(p1);
     assertNotNull(p2);
   }
 
   @Test
   @DirtiesContext
+  public void testZeorPriceFailure() throws Exception {
+    Product p1 = new Product();
+    p1.setPrice(new BigDecimal("0.0"));
+    Product p2 = processor.process(p1);
+    assertsNull(p2);
+  }
+
+  @Test
+  @DirtiesContext
   public void testNegativePriceFailure() throws Exception {
     Product p1 = new Product();
-    p1.setPrice(new BigDecimal(-800.0f));
+    p1.setPrice(new BigDecimal("-800.0"));
     Product p2 = processor.process(p1);
     assertNull(p2);
   }
