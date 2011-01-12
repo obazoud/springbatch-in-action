@@ -15,8 +15,8 @@ import org.mortbay.jetty.nio.SelectChannelConnector;
 import org.mortbay.jetty.webapp.WebAppContext;
 import org.springframework.batch.core.JobExecution;
 import org.springframework.context.ApplicationContext;
-import org.springframework.integration.channel.PollableChannel;
-import org.springframework.integration.core.Message;
+import org.springframework.integration.Message;
+import org.springframework.integration.core.PollableChannel;
 import org.springframework.web.context.support.WebApplicationContextUtils;
 import org.xml.sax.SAXException;
 

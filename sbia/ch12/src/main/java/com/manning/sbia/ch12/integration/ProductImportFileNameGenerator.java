@@ -3,7 +3,7 @@
  */
 package com.manning.sbia.ch12.integration;
 
-import org.springframework.integration.core.Message;
+import org.springframework.integration.Message;
 import org.springframework.integration.file.FileNameGenerator;
 import org.springframework.util.Assert;
 

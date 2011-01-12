@@ -17,9 +17,8 @@ import org.junit.Test;
 import org.springframework.batch.core.JobExecution;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
-import org.springframework.integration.channel.PollableChannel;
-import org.springframework.integration.core.Message;
-import org.springframework.integration.selector.MessageSelector;
+import org.springframework.integration.Message;
+import org.springframework.integration.core.PollableChannel;
 
 /**
  * @author acogoluegnes
@@ -38,6 +37,7 @@ public class FileLaunchingJobTest {
 	
 	@BeforeClass public static void setUpClass() throws Exception {
 		FileUtils.deleteDirectory(DROP_IN_DIRECTORY);
+		FileUtils.forceMkdir(DROP_IN_DIRECTORY);
 		ApplicationContext context = new ClassPathXmlApplicationContext(
 				FileLaunchingJobTest.class.getSimpleName()+"-context.xml", FileLaunchingJobTest.class);
 		jobExecutionsChannel = context.getBean("job-executions", PollableChannel.class);
@@ -45,16 +45,11 @@ public class FileLaunchingJobTest {
 	
 	@Before public void setUp() throws Exception {
 		FileUtils.cleanDirectory(DROP_IN_DIRECTORY);
-		jobExecutionsChannel.purge(new MessageSelector() {			
-			@Override
-			public boolean accept(Message<?> message) {
-				return true;
-			}
-		});
-		
+		while(jobExecutionsChannel.receive(1000L) != null) { }
 	}
 
 	@Test public void fileLaunchingJobEmptyParams() throws Exception {
+//		Thread.sleep(1000000000L);
 		sendFile("launch-job-with-params","simpleJob");
 		
 		JobExecution jobExecution = receiveMessage();

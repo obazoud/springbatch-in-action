@@ -5,7 +5,7 @@ package com.manning.sbia.ch12.integration;
 
 import org.junit.Assert;
 import org.junit.Test;
-import org.springframework.integration.message.MessageBuilder;
+import org.springframework.integration.support.MessageBuilder;
 
 /**
  * @author acogoluegnes
