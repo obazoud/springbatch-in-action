@@ -63,7 +63,7 @@ public class CompositeItemProcessorTest {
     Product p1 = new Product();
     p1.setPrice(new BigDecimal("0.0"));
     Product p2 = processor.process(p1);
-    assertsNull(p2);
+    assertNull(p2);
   }
 
   @Test
