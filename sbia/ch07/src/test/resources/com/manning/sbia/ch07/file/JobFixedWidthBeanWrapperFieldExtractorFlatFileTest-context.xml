@@ -25,7 +25,7 @@
             <property name="names" value="id,price,name" />
           </bean>
         </property>
-        <property name="format" value="%-9s%-3.2f%-25s" />
+        <property name="format" value="%-9s%6.2f%-30s" />
       </bean>
      </property>
  	</bean>

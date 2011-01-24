@@ -27,9 +27,9 @@ public class JobFixedWidthHeaderFooterFlatFileTest {
         Assert.assertEquals(BatchStatus.COMPLETED, exec.getStatus());
 
         Resource ouput= new FileSystemResource("./target/outputs/fixedwidth-headerfooter.txt");
-        AssertLine.assertLineFileEquals(ouput, 2, "PR....210124.60BlackBerry 8100 Pearl    ");
-        AssertLine.assertLineFileEquals(ouput, 8, "PR....216289.20AT&T 8525 PDA            ");
-        AssertLine.assertLineFileEquals(ouput, 9, "PR....21713.70Canon Digital Rebel XT 8MP");
+        AssertLine.assertLineFileEquals(ouput, 2, "PR....210124.60BlackBerry 8100 Pearl         ");
+        AssertLine.assertLineFileEquals(ouput, 8, "PR....216289.20AT&T 8525 PDA                 ");
+        AssertLine.assertLineFileEquals(ouput, 9, "PR....217 13.70Canon Digital Rebel XT 8MP    ");
     }
-    
+
 }

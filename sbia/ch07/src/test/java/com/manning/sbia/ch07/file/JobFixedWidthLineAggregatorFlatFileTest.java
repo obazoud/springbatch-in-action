@@ -27,9 +27,9 @@ public class JobFixedWidthLineAggregatorFlatFileTest {
         Assert.assertEquals(BatchStatus.COMPLETED, exec.getStatus());
 
         Resource ouput= new FileSystemResource("./target/outputs/fixedwidth-lineaggregator.txt");
-        AssertLine.assertLineFileEquals(ouput, 1, "PRM....210124.60BlackBerry 8100 Pearl    BlackBerry  ");
-        AssertLine.assertLineFileEquals(ouput, 3, "PRB....73434.95Spring Batch in action   Manning     ");
-        AssertLine.assertLineFileEquals(ouput, 8, "PRM....214145.50Nokia 2610 Phone         Nokia       ");
+        AssertLine.assertLineFileEquals(ouput, 1, "PRM....210124.60BlackBerry 8100 Pearl         BlackBerry  ");
+        AssertLine.assertLineFileEquals(ouput, 3, "PRB....734 34.95Spring Batch in action        Manning     ");
+        AssertLine.assertLineFileEquals(ouput, 8, "PRM....214145.50Nokia 2610 Phone              Nokia       ");
     }
-    
+
 }
