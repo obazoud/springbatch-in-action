@@ -16,12 +16,19 @@
  		</step>
  	</job>
 
- 	<bean id="productItemWriter"
-  		class="org.springframework.batch.item.file.FlatFileItemWriter">
- 		<property name="resource" value="file:target/outputs/passthrough.txt"/>
-		<property name="lineAggregator">
-            <bean class="org.springframework.batch.item.file.transform.PassThroughLineAggregator" />
+    <bean id="productItemWriter" class="org.springframework.batch.item.xml.StaxEventItemWriter">
+        <property name="resource" value="file:target/outputs/products.xml" />
+        <property name="marshaller" ref="productMarshaller" />
+        <property name="rootTagName" value="products" />
+        <property name="overwriteOutput" value="true" />
+    </bean>
+    
+    <bean id="productMarshaller" class="org.springframework.oxm.xstream.XStreamMarshaller">
+        <property name="aliases">
+          <map>
+            <entry key="product" value="com.manning.sbia.ch07.Product" />
+          </map>
         </property>
- 	</bean>
+    </bean>
 
 </beans>

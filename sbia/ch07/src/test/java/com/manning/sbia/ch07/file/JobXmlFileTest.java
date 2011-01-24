@@ -1,5 +1,6 @@
 package com.manning.sbia.ch07.file;
 
+import org.apache.commons.io.IOUtils;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -12,24 +13,25 @@ import org.springframework.core.io.Resource;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
+import static org.custommonkey.xmlunit.XMLAssert.assertXpathEvaluatesTo;
 /**
  * @author bazoud
  */
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration
-public class JobPassThroughFlatFileTest {
+public class JobXmlFileTest {
     @Autowired
     private JobLauncherTestUtils jobLauncherTestUtils;
 
     @Test
-    public void delimitedJob() throws Exception {
+    public void testXml() throws Exception {
         JobExecution exec = jobLauncherTestUtils.launchJob();
         Assert.assertEquals(BatchStatus.COMPLETED, exec.getStatus());
 
-        Resource ouput= new FileSystemResource("./target/outputs/passthrough.txt");
-        AssertLine.assertLineFileEquals(ouput, 1, "Product [id=PR....210, name=BlackBerry 8100 Pearl]");
-        AssertLine.assertLineFileEquals(ouput, 7, "Product [id=PR....216, name=AT&T 8525 PDA]");
-        AssertLine.assertLineFileEquals(ouput, 8, "Product [id=PR....217, name=Canon Digital Rebel XT 8MP]");
+        Resource ouput= new FileSystemResource("./target/outputs/products.xml");
+        String content = IOUtils.toString(ouput.getInputStream());
+        assertXpathEvaluatesTo("8", "count(//product)", content);
+        assertXpathEvaluatesTo("Sony Ericsson W810i", "//product[2]/name", content);
     }
 
 }

@@ -17,19 +17,19 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
  */
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration
-public class JobPassThroughFlatFileTest {
+public class JobFixedWidthLineAggregatorFlatFileTest {
     @Autowired
     private JobLauncherTestUtils jobLauncherTestUtils;
 
     @Test
-    public void delimitedJob() throws Exception {
+    public void testFixedWidthLineAggregator() throws Exception {
         JobExecution exec = jobLauncherTestUtils.launchJob();
         Assert.assertEquals(BatchStatus.COMPLETED, exec.getStatus());
 
-        Resource ouput= new FileSystemResource("./target/outputs/passthrough.txt");
-        AssertLine.assertLineFileEquals(ouput, 1, "Product [id=PR....210, name=BlackBerry 8100 Pearl]");
-        AssertLine.assertLineFileEquals(ouput, 7, "Product [id=PR....216, name=AT&T 8525 PDA]");
-        AssertLine.assertLineFileEquals(ouput, 8, "Product [id=PR....217, name=Canon Digital Rebel XT 8MP]");
+        Resource ouput= new FileSystemResource("./target/outputs/fixedwidth-lineaggregator.txt");
+        AssertLine.assertLineFileEquals(ouput, 1, "PRM....210124.60BlackBerry 8100 Pearl    BlackBerry  ");
+        AssertLine.assertLineFileEquals(ouput, 3, "PRB....73434.95Spring Batch in action   Manning     ");
+        AssertLine.assertLineFileEquals(ouput, 8, "PRM....214145.50Nokia 2610 Phone         Nokia       ");
     }
-
+    
 }

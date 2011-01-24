@@ -16,12 +16,15 @@
  		</step>
  	</job>
 
- 	<bean id="productItemWriter"
-  		class="org.springframework.batch.item.file.FlatFileItemWriter">
- 		<property name="resource" value="file:target/outputs/passthrough.txt"/>
+ 	<bean id="productItemWriter" class="org.springframework.batch.item.file.FlatFileItemWriter">
+ 		<property name="resource" value="file:target/outputs/delimited-productextractor.txt"/>
 		<property name="lineAggregator">
-            <bean class="org.springframework.batch.item.file.transform.PassThroughLineAggregator" />
+      <bean class="org.springframework.batch.item.file.transform.DelimitedLineAggregator">
+        <property name="fieldExtractor">
+          <bean class="com.manning.sbia.ch07.file.ProductFieldExtractor" />
         </property>
+      </bean>
+     </property>
  	</bean>
 
 </beans>

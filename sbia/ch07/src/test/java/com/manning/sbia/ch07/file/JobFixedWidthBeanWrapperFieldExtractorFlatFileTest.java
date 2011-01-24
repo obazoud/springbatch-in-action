@@ -17,19 +17,19 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
  */
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration
-public class JobPassThroughFlatFileTest {
+public class JobFixedWidthBeanWrapperFieldExtractorFlatFileTest {
     @Autowired
     private JobLauncherTestUtils jobLauncherTestUtils;
 
     @Test
-    public void delimitedJob() throws Exception {
+    public void testFixedWidthBeanWrapperFieldExtractor() throws Exception {
         JobExecution exec = jobLauncherTestUtils.launchJob();
         Assert.assertEquals(BatchStatus.COMPLETED, exec.getStatus());
 
-        Resource ouput= new FileSystemResource("./target/outputs/passthrough.txt");
-        AssertLine.assertLineFileEquals(ouput, 1, "Product [id=PR....210, name=BlackBerry 8100 Pearl]");
-        AssertLine.assertLineFileEquals(ouput, 7, "Product [id=PR....216, name=AT&T 8525 PDA]");
-        AssertLine.assertLineFileEquals(ouput, 8, "Product [id=PR....217, name=Canon Digital Rebel XT 8MP]");
+        Resource ouput= new FileSystemResource("./target/outputs/fixedwidth-beanwrapperextractor.txt");
+        AssertLine.assertLineFileEquals(ouput, 1, "PR....210124.60BlackBerry 8100 Pearl    ");
+        AssertLine.assertLineFileEquals(ouput, 7, "PR....216289.20AT&T 8525 PDA            ");
+        AssertLine.assertLineFileEquals(ouput, 8, "PR....21713.70Canon Digital Rebel XT 8MP");
     }
-
+    
 }

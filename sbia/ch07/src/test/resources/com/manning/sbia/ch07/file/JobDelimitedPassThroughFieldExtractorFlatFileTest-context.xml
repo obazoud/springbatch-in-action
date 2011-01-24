@@ -18,10 +18,14 @@
 
  	<bean id="productItemWriter"
   		class="org.springframework.batch.item.file.FlatFileItemWriter">
- 		<property name="resource" value="file:target/outputs/passthrough.txt"/>
+ 		<property name="resource" value="file:target/outputs/delimited-passthroughextractor.txt"/>
 		<property name="lineAggregator">
-            <bean class="org.springframework.batch.item.file.transform.PassThroughLineAggregator" />
+      <bean class="org.springframework.batch.item.file.transform.DelimitedLineAggregator">
+        <property name="fieldExtractor">
+          <bean class="org.springframework.batch.item.file.transform.PassThroughFieldExtractor" />
         </property>
+      </bean>
+     </property>
  	</bean>
 
 </beans>

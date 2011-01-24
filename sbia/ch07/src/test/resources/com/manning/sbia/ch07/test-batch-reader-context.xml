@@ -21,7 +21,7 @@
     <bean id=" productLineTokenizer"
         class="org.springframework.batch.item.file.transform.DelimitedLineTokenizer">
         <property name="delimiter" value=","/>
-        <property name="names" value="id,name,description,price"/>
+        <property name="names" value="id,name,description,price,operation"/>
     </bean>
 
     <bean id="productFieldSetMapper"

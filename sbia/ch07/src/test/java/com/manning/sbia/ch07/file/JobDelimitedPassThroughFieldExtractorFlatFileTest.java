@@ -17,16 +17,16 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
  */
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration
-public class JobPassThroughFlatFileTest {
+public class JobDelimitedPassThroughFieldExtractorFlatFileTest {
     @Autowired
     private JobLauncherTestUtils jobLauncherTestUtils;
 
     @Test
-    public void delimitedJob() throws Exception {
+    public void testDelimitedPassThroughFieldExtractor() throws Exception {
         JobExecution exec = jobLauncherTestUtils.launchJob();
         Assert.assertEquals(BatchStatus.COMPLETED, exec.getStatus());
 
-        Resource ouput= new FileSystemResource("./target/outputs/passthrough.txt");
+        Resource ouput = new FileSystemResource("./target/outputs/delimited-passthroughextractor.txt");
         AssertLine.assertLineFileEquals(ouput, 1, "Product [id=PR....210, name=BlackBerry 8100 Pearl]");
         AssertLine.assertLineFileEquals(ouput, 7, "Product [id=PR....216, name=AT&T 8525 PDA]");
         AssertLine.assertLineFileEquals(ouput, 8, "Product [id=PR....217, name=Canon Digital Rebel XT 8MP]");

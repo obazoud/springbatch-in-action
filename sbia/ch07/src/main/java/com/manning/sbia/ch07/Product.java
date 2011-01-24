@@ -1,17 +1,17 @@
 package com.manning.sbia.ch07;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 
 /**
  * @author bazoud
- * @version $Id$
  */
 public class Product implements Serializable {
     private String id;
     private String name;
     private String description;
-    private float price;
-    private String transactionType;
+    private BigDecimal price;
+    private String operation;
 
     public String getId() {
         return id;
@@ -37,20 +37,20 @@ public class Product implements Serializable {
         this.description = description;
     }
 
-    public float getPrice() {
+    public BigDecimal getPrice() {
         return price;
     }
 
-    public void setPrice(float price) {
+    public void setPrice(BigDecimal price) {
         this.price = price;
     }
 
-    public String getTransactionType() {
-        return transactionType;
+    public String getOperation() {
+        return operation;
     }
-
-    public void setTransactionType(String transactionType) {
-        this.transactionType = transactionType;
+    
+    public void setOperation(String operation) {
+        this.operation = operation;
     }
 
     @Override

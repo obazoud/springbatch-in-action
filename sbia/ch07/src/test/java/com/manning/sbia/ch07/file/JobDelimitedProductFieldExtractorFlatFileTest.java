@@ -17,19 +17,19 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
  */
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration
-public class JobPassThroughFlatFileTest {
+public class JobDelimitedProductFieldExtractorFlatFileTest {
     @Autowired
     private JobLauncherTestUtils jobLauncherTestUtils;
 
     @Test
-    public void delimitedJob() throws Exception {
+    public void testDelimitedProductFieldExtractor() throws Exception {
         JobExecution exec = jobLauncherTestUtils.launchJob();
         Assert.assertEquals(BatchStatus.COMPLETED, exec.getStatus());
 
-        Resource ouput= new FileSystemResource("./target/outputs/passthrough.txt");
-        AssertLine.assertLineFileEquals(ouput, 1, "Product [id=PR....210, name=BlackBerry 8100 Pearl]");
-        AssertLine.assertLineFileEquals(ouput, 7, "Product [id=PR....216, name=AT&T 8525 PDA]");
-        AssertLine.assertLineFileEquals(ouput, 8, "Product [id=PR....217, name=Canon Digital Rebel XT 8MP]");
+        Resource ouput= new FileSystemResource("./target/outputs/delimited-productextractor.txt");
+        AssertLine.assertLineFileEquals(ouput, 1, "BEGIN,PR....210,124.60,18.6900,BlackBerry 8100 Pearl,END");
+        AssertLine.assertLineFileEquals(ouput, 7, "BEGIN,PR....216,289.20,43.3800,AT&T 8525 PDA,END");
+        AssertLine.assertLineFileEquals(ouput, 8, "BEGIN,PR....217,13.70,2.0550,Canon Digital Rebel XT 8MP,END");
     }
 
 }
