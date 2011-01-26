@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:batch="http://www.springframework.org/schema/batch"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+		http://www.springframework.org/schema/batch http://www.springframework.org/schema/batch/spring-batch-2.1.xsd">
+
+    <import resource="classpath:com/manning/sbia/ch07/test-batch-infrastructure-context.xml" />
+    <import resource="classpath:com/manning/sbia/ch07/test-batch-reader-context.xml" />
+
+    <bean id="productItemReader"
+        class="org.springframework.batch.item.file.FlatFileItemReader">
+        <property name="resource" value="classpath:/com/manning/sbia/ch07/input/products-delimited.txt"/>
+        <property name="linesToSkip" value="1"/>
+        <property name="lineMapper" ref="productLineMapper"/>
+    </bean>
+
+  <job id="writeProductsJob" xmlns="http://www.springframework.org/schema/batch">
+    <step id="readWrite">
+      <tasklet>
+        <chunk reader="productItemReader" writer="productItemWriter" commit-interval="3" />
+      </tasklet>
+    </step>
+  </job>
+
+  <bean id="productItemWriter" class="org.springframework.batch.item.support.ClassifierCompositeItemWriter">
+    <property name="classifier">
+      <bean class="org.springframework.batch.classify.BackToBackPatternClassifier">
+        <property name="routerDelegate">
+          <bean class="com.manning.sbia.ch07.advanced.ProductRouterClassifier" />
+        </property>
+        <property name="matcherMap">
+          <map>
+            <entry key="C" value-ref="insertJdbcBatchItemWriter" />
+            <entry key="U" value-ref="updateJdbcBatchItemWriter" />
+            <entry key="D" value-ref="deleteJdbcBatchItemWriter" />
+          </map>
+        </property>
+      </bean>
+    </property>
+  </bean>
+
+  <bean id="abstractJdbcBatchItemWriter" abstract="true">
+      <property name="dataSource" ref="dataSource" />
+      <property name="itemSqlParameterSourceProvider">
+          <bean class="org.springframework.batch.item.database.BeanPropertyItemSqlParameterSourceProvider" />
+      </property>
+  </bean>
+  <bean id="insertJdbcBatchItemWriter" class="org.springframework.batch.item.database.JdbcBatchItemWriter" parent="abstractJdbcBatchItemWriter">
+    <property name="sql" value="INSERT INTO PRODUCT (ID, NAME, PRICE, OPERATION) VALUES(:id, :name, :price, :operation)" />
+  </bean>
+  <bean id="updateJdbcBatchItemWriter" class="org.springframework.batch.item.database.JdbcBatchItemWriter" parent="abstractJdbcBatchItemWriter">
+    <property name="sql" value="UPDATE PRODUCT SET ID=:ID, NAME:=NAME, PRICE:=PRICE, OPERATION:=OPERATION WHERE ID=:id" />
+  </bean>
+
+  <bean id="deleteJdbcBatchItemWriter" class="org.springframework.batch.item.database.JdbcBatchItemWriter" parent="abstractJdbcBatchItemWriter">
+    <property name="sql" value="DELETE PRODUCT WHERE ID=:id" />
+  </bean>
+</beans>

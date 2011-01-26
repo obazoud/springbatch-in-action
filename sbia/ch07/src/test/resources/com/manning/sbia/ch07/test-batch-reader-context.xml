@@ -7,7 +7,7 @@
 
     <bean id="productItemReader"
         class="org.springframework.batch.item.file.FlatFileItemReader">
-        <property name="resource" value="classpath:/com/manning/sbia/ch07/input/products-delimited.txt"/>
+        <property name="resource" value="classpath:/com/manning/sbia/ch07/advanced/products-delimited.txt"/>
         <property name="linesToSkip" value="1"/>
         <property name="lineMapper" ref="productLineMapper"/>
     </bean>
