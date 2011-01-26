@@ -7,14 +7,7 @@
 
     <import resource="classpath:com/manning/sbia/ch07/test-batch-infrastructure-context.xml" />
     <import resource="classpath:com/manning/sbia/ch07/test-batch-reader-context.xml" />
-
-    <bean id="productItemReader"
-        class="org.springframework.batch.item.file.FlatFileItemReader">
-        <property name="resource" value="classpath:/com/manning/sbia/ch07/input/products-delimited.txt"/>
-        <property name="linesToSkip" value="1"/>
-        <property name="lineMapper" ref="productLineMapper"/>
-    </bean>
-
+    
   <job id="writeProductsJob" xmlns="http://www.springframework.org/schema/batch">
     <step id="readWrite">
       <tasklet>
