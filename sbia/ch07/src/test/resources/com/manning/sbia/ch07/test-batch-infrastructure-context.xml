@@ -19,13 +19,16 @@
     <property name="suppressClose" value="true" />
   </bean>
 
+  <jdbc:initialize-database data-source="dataSource">
+    <jdbc:script location="classpath:com/manning/sbia/ch07/create-tables.sql" />
+  </jdbc:initialize-database>
+
   <bean id="transactionManager"
     class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
     <property name="dataSource" ref="dataSource" />
   </bean>
 
-  <bean id="jobRepository"
-    class="org.springframework.batch.core.repository.support.MapJobRepositoryFactoryBean">
+  <bean id="jobRepository" class="org.springframework.batch.core.repository.support.MapJobRepositoryFactoryBean">
     <property name="transactionManager" ref="transactionManager" />
   </bean>
 

@@ -3,14 +3,24 @@ package com.manning.sbia.ch07;
 import java.io.Serializable;
 import java.math.BigDecimal;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+
 /**
  * @author bazoud
  */
+@Entity
 public class Product implements Serializable {
+    @Id
     private String id;
+    @Column(nullable = false)
     private String name;
+    @Column(nullable = false)
     private String description;
+    @Column(nullable = false)
     private BigDecimal price;
+    @Column(nullable = false)
     private String operation;
 
     public String getId() {
