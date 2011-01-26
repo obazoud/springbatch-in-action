@@ -38,20 +38,20 @@
     </property>
   </bean>
 
-  <bean id="abstractJdbcBatchItemWriter" abstract="true">
+  <bean id="abstractJdbcBatchItemWriter" class="org.springframework.batch.item.database.JdbcBatchItemWriter" abstract="true">
     <property name="dataSource" ref="dataSource" />
     <property name="itemSqlParameterSourceProvider">
       <bean class="org.springframework.batch.item.database.BeanPropertyItemSqlParameterSourceProvider" />
     </property>
   </bean>
-  <bean id="insertJdbcBatchItemWriter" class="org.springframework.batch.item.database.JdbcBatchItemWriter" parent="abstractJdbcBatchItemWriter">
+  <bean id="insertJdbcBatchItemWriter" parent="abstractJdbcBatchItemWriter">
     <property name="sql" value="INSERT INTO PRODUCT (ID, NAME, PRICE) VALUES(:id, :name, :price)" />
   </bean>
-  <bean id="updateJdbcBatchItemWriter" class="org.springframework.batch.item.database.JdbcBatchItemWriter" parent="abstractJdbcBatchItemWriter">
+  <bean id="updateJdbcBatchItemWriter" parent="abstractJdbcBatchItemWriter">
     <property name="sql" value="UPDATE PRODUCT SET NAME=:name, PRICE=:price WHERE ID=:id" />
   </bean>
 
-  <bean id="deleteJdbcBatchItemWriter" class="org.springframework.batch.item.database.JdbcBatchItemWriter" parent="abstractJdbcBatchItemWriter">
+  <bean id="deleteJdbcBatchItemWriter" parent="abstractJdbcBatchItemWriter">
     <property name="sql" value="DELETE PRODUCT WHERE ID=:id" />
   </bean>
 </beans>
