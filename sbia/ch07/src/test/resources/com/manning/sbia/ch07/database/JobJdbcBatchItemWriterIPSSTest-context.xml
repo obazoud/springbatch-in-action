@@ -21,7 +21,7 @@
     <property name="itemSqlParameterSourceProvider">
       <bean class="org.springframework.batch.item.database.BeanPropertyItemSqlParameterSourceProvider" />
     </property>
-    <property name="sql" value="INSERT INTO PRODUCT (ID, NAME, PRICE, OPERATION) VALUES(:id, :name, :price, :operation)" />
+    <property name="sql" value="INSERT INTO PRODUCT(ID, NAME, PRICE) VALUES(:id, :name, :price)" />
     <property name="dataSource" ref="dataSource" />
   </bean>
 

@@ -6,7 +6,6 @@ create table product
   name character varying(50),
   description character varying(255),
   price float not null,
-  operation char(1) not null,
   constraint product_pkey primary key (id)
 );
 

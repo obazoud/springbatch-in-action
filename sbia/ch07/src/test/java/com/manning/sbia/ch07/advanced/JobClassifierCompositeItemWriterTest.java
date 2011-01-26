@@ -26,7 +26,7 @@ public class JobClassifierCompositeItemWriterTest {
     public void testClassifier() throws Exception {
         JobExecution exec = jobLauncherTestUtils.launchJob();
         Assert.assertEquals(BatchStatus.COMPLETED, exec.getStatus());
-        Assert.assertEquals(8, jdbcTemplate.queryForInt("SELECT count(*) FROM PRODUCT"));
+        Assert.assertEquals(7, jdbcTemplate.queryForInt("SELECT count(*) FROM PRODUCT"));
     }
 
 }

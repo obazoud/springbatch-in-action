@@ -1,5 +1,5 @@
 /**
- * 
+ *
  */
 package com.manning.sbia.ch07.database;
 
@@ -12,7 +12,7 @@ import com.manning.sbia.ch07.Product;
 
 /**
  * @author bazoud
- * 
+ *
  */
 public class ProductItemPreparedStatementSetter implements ItemPreparedStatementSetter<Product> {
     @Override
@@ -20,6 +20,5 @@ public class ProductItemPreparedStatementSetter implements ItemPreparedStatement
         ps.setString(1, item.getId());
         ps.setString(2, item.getName());
         ps.setBigDecimal(3, item.getPrice());
-        ps.setString(4, item.getOperation());
     }
 }

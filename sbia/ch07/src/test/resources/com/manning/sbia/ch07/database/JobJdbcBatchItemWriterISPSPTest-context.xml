@@ -21,7 +21,7 @@
     <property name="itemPreparedStatementSetter">
       <bean class="com.manning.sbia.ch07.database.ProductItemPreparedStatementSetter" />
     </property>
-    <property name="sql" value="INSERT INTO PRODUCT (ID, NAME, PRICE, OPERATION) VALUES(?, ?, ?, ?)" />
+    <property name="sql" value="INSERT INTO PRODUCT(ID, NAME, PRICE) VALUES(?, ?, ?)" />
     <property name="dataSource" ref="dataSource" />
   </bean>
 

@@ -6,6 +6,7 @@ import java.math.BigDecimal;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.Transient;
 
 /**
  * @author bazoud
@@ -20,7 +21,7 @@ public class Product implements Serializable {
     private String description;
     @Column(nullable = false)
     private BigDecimal price;
-    @Column(nullable = false)
+    @Transient
     private String operation;
 
     public String getId() {
@@ -58,7 +59,7 @@ public class Product implements Serializable {
     public String getOperation() {
         return operation;
     }
-    
+
     public void setOperation(String operation) {
         this.operation = operation;
     }
@@ -67,6 +68,5 @@ public class Product implements Serializable {
     public String toString() {
         return "Product [id=" + id + ", name=" + name + "]";
     }
-
 
 }
