@@ -10,9 +10,6 @@
   <import resource="classpath:com/manning/sbia/ch07/test-batch-reader-context.xml" />
 
   <amq:broker useJmx="false" persistent="false">
-    <amq:plugins>
-      <amq:statisticsBrokerPlugin/>
-    </amq:plugins>
     <amq:transportConnectors>
       <amq:transportConnector uri="tcp://localhost:61616" />
     </amq:transportConnectors>
