@@ -52,7 +52,8 @@ public class ProductMD5ItemWriter implements ItemWriter<Product>, ItemStream, Fl
     @Override
     public void writeFooter(Writer writer) throws IOException {
         for (int i = 0; i < chunkMD5.size(); i++) {
-            writer.append(String.format("%s -> %s", i, chunkMD5.get(i)));
+            writer.append(String.format("Chunk %03d> %s", i, chunkMD5.get(i)));
+            writer.append(System.getProperty("line.separator"));
         }
     }
     
