@@ -1,9 +1,11 @@
 /**
- * 
+ *
  */
 package com.manning.sbia.ch07.file;
 
 import java.io.IOException;
+import java.text.DateFormat;
+import java.util.Date;
 
 import javax.xml.stream.XMLEventFactory;
 import javax.xml.stream.XMLEventWriter;
@@ -14,7 +16,7 @@ import org.springframework.batch.item.xml.StaxWriterCallback;
 
 /**
  * @author bazoud
- * 
+ *
  */
 public class ProductHeaderStaxCallback implements StaxWriterCallback {
 
@@ -25,7 +27,7 @@ public class ProductHeaderStaxCallback implements StaxWriterCallback {
 
             XMLEvent event = eventFactory.createStartElement("", "", "header");
             writer.add(event);
-            event = eventFactory.createAttribute("generated", "StaxWriterCallback");
+            event = eventFactory.createAttribute("generated", DateFormat.getDateTimeInstance().format(new Date()));
             writer.add(event);
             event = eventFactory.createEndElement("", "", "header");
             writer.add(event);
