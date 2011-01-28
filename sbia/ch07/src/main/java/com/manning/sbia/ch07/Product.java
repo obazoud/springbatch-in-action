@@ -22,7 +22,7 @@ public class Product implements Serializable {
     @Column(nullable = false)
     private BigDecimal price;
     @Transient
-    private String operation;
+    private transient String operation;
 
     public String getId() {
         return id;
