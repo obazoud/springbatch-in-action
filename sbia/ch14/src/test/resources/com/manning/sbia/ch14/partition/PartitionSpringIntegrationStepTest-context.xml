@@ -98,6 +98,12 @@
 		</property>
 	</bean>
 
+	<!-- int:aggregator ref="partitionHandler" send-timeout="10000" input-channel="requests" output-channel="replies">
+		<int:poller>
+			<int:interval-trigger interval="10" />
+		</int:poller>
+	</int:aggregator -->
+	
 	<int:channel id="replies" scope="thread">
 		<int:queue />
 		<int:interceptors>
@@ -128,7 +134,7 @@
 
 	<jms:listener-container connection-factory="connectionFactory" transaction-manager="transactionManager"
 		acknowledge="transacted" concurrency="1">
-		<jms:listener destination="requests" response-destination="replies" ref="stepExecutionRequestHandler"/><!-- method="handle" / -->
+		<jms:listener destination="requests" response-destination="replies" ref="stepExecutionRequestHandler" method="handle" />
 	</jms:listener-container>
 
 	<bean id="stepExecutionRequestHandler" class="org.springframework.batch.integration.partition.StepExecutionRequestHandler">
