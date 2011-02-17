@@ -8,7 +8,7 @@ import java.util.List;
 import javax.sql.DataSource;
 
 import org.springframework.batch.item.ItemWriter;
-import org.springframework.jdbc.core.simple.SimpleJdbcTemplate;
+import org.springframework.jdbc.core.JdbcTemplate;
 
 import com.manning.sbia.ch02.domain.Product;
 
@@ -22,10 +22,10 @@ public class ProductJdbcItemWriter implements ItemWriter<Product> {
 	
 	private static final String UPDATE_PRODUCT = "update product set name=?, description=?, price=? where id = ?";
 	
-	private SimpleJdbcTemplate jdbcTemplate;
+	private JdbcTemplate jdbcTemplate;
 	
 	public ProductJdbcItemWriter(DataSource dataSource) {
-		this.jdbcTemplate = new SimpleJdbcTemplate(dataSource);
+		this.jdbcTemplate = new JdbcTemplate(dataSource);
 	}
 
 	/* (non-Javadoc)
