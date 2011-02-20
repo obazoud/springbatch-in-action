@@ -22,6 +22,7 @@
     <property name="connectionFactory" ref="jmsFactory" />
     <property name="defaultDestination" ref="productDestination" />
     <property name="receiveTimeout" value="500" />
+    <property name="sessionTransacted" value="true" /> 
   </bean>
 
   <job id="importProductsJob" xmlns="http://www.springframework.org/schema/batch">
