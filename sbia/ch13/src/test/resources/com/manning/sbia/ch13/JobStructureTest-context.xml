@@ -70,12 +70,12 @@
 		<property name="prototypeBeanName" value="product"/>
 	</bean>
 
-	<bean id="product" class="com.manning.sbia.ch13.Product" scope="prototype"/>
+	<bean id="product" class="com.manning.sbia.ch13.domain.Product" scope="prototype"/>
 
 	<!-- Product Writer -->
 
 	<bean id="productItemPreparedStatementSetter"
-			class="com.manning.sbia.ch13.ProductItemPreparedStatementSetter"/>
+			class="com.manning.sbia.ch13.batch.ProductItemPreparedStatementSetter"/>
 	
 	<bean id="productItemWriter" class="org.springframework.batch.item.database.JdbcBatchItemWriter">
 		<property name="dataSource" ref="dataSource"/>
@@ -89,8 +89,8 @@
 		<property name="serviceUrl" value="service:jmx:rmi://localhost/jndi/rmi://localhost:1099/myconnector"/>
 	</bean>
 
-	<bean id="applicationEventMonitoringNotifier" class="com.manning.sbia.ch13.ApplicationEventMonitoringNotifier"/>
-	<bean id="notificationPublisher" class="com.manning.sbia.ch13.JobExecutionNotificationPublisher" />
+	<bean id="applicationEventMonitoringNotifier" class="com.manning.sbia.ch13.batch.ApplicationEventMonitoringNotifier"/>
+	<bean id="notificationPublisher" class="com.manning.sbia.ch13.batch.JobExecutionNotificationPublisher" />
 
 	<bean class="org.springframework.jmx.export.MBeanExporter">
 		<property name="server" ref="clientConnector"/>

@@ -1,4 +1,4 @@
-package com.manning.sbia.ch13;
+package com.manning.sbia.ch13.batch;
 
 import javax.management.Notification;
 import javax.management.NotificationListener;

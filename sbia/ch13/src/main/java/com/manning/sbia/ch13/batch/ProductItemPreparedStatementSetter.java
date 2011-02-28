@@ -1,9 +1,11 @@
-package com.manning.sbia.ch13;
+package com.manning.sbia.ch13.batch;
 
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
 import org.springframework.batch.item.database.ItemPreparedStatementSetter;
+
+import com.manning.sbia.ch13.domain.Product;
 
 public class ProductItemPreparedStatementSetter implements ItemPreparedStatementSetter<Product> {
 

@@ -1,7 +1,7 @@
 /**
  * 
  */
-package com.manning.sbia.ch13;
+package com.manning.sbia.ch13.batch;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;

@@ -18,6 +18,7 @@
 	<jdbc:initialize-database data-source="dataSource">
 		<jdbc:script location="classpath:/org/springframework/batch/core/schema-drop-h2.sql"/>
 		<jdbc:script location="classpath:/org/springframework/batch/core/schema-h2.sql"/>
+		<jdbc:script location="classpath:/drop-tables.sql" />
 		<jdbc:script location="classpath:/create-tables.sql" />
 	</jdbc:initialize-database>
 

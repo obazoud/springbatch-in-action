@@ -1,4 +1,4 @@
-package com.manning.sbia.ch13;
+package com.manning.sbia.ch13.domain;
 
 public class Product {
 	private String id;

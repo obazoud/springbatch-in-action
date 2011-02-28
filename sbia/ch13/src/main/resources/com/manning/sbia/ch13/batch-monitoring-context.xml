@@ -40,7 +40,7 @@
 						<entry key="spring:service=batch,bean=jobOperator"
 							value="org.springframework.batch.core.launch.JobOperator" />
 						<entry key="spring:service=batch,bean=jobLoader"
-							value="com.manning.sbia.ch13.JobLoader" />
+							value="com.manning.sbia.ch13.batch.JobLoader" />
 					</map>
 				</property>
 			</bean>
@@ -52,10 +52,10 @@
 		</property>
 	</bean>
 
-	<!-- bean id="applicationEventMonitoringNotifier" class="com.manning.sbia.ch13.ApplicationEventMonitoringNotifier"/>
+	<!-- bean id="applicationEventMonitoringNotifier" class="com.manning.sbia.ch13.batch.ApplicationEventMonitoringNotifier"/>
 
-	<bean id="notificationPublisher" class="com.manning.sbia.ch13.JobExecutionNotificationPublisher" / -->
-	<bean id="notificationListener" class="com.manning.sbia.ch13.JobExecutionNotificationListener" />
+	<bean id="notificationPublisher" class="com.manning.sbia.ch13.batch.JobExecutionNotificationPublisher" / -->
+	<bean id="notificationListener" class="com.manning.sbia.ch13.batch.JobExecutionNotificationListener" />
 
 	<bean id="jobRegistry" class="org.springframework.batch.core.configuration.support.MapJobRegistry" />
 	<bean id="jobOperator" class="org.springframework.batch.core.launch.support.SimpleJobOperator">
@@ -77,7 +77,7 @@
 
 	<bean id="exceptionTranslator" class="org.springframework.batch.core.launch.support.RuntimeExceptionTranslator" />
 
-	<bean id="loader" class="com.manning.sbia.ch13.DefaultJobLoader">
+	<bean id="loader" class="com.manning.sbia.ch13.batch.DefaultJobLoader">
 		<property name="registry" ref="jobRegistry" />
 	</bean>
 

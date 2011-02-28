@@ -1,7 +1,7 @@
 /**
  * 
  */
-package com.manning.sbia.ch13;
+package com.manning.sbia.ch13.batch;
 
 import org.mortbay.jetty.Connector;
 import org.mortbay.jetty.Server;
