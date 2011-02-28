@@ -2,15 +2,10 @@ package com.manning.sbia.ch14;
 
 import java.util.List;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import com.manning.sbia.ch14.domain.Product;
 import com.manning.sbia.ch14.domain.ProductForColumnRange;
 
 public abstract class ThreadUtils {
-	
-	private static final Logger LOG = LoggerFactory.getLogger(ThreadUtils.class);
 
 	public static void writeThreadExecutionMessage(String readWrite, Product product) {
 		if (product!=null) {
@@ -50,6 +45,5 @@ public abstract class ThreadUtils {
 		message.append(readWrite);
 		message.append(" product(s) with id(s)");
 		message.append(productIdMessage);
-		LOG.debug(message.toString());
 	}
 }
