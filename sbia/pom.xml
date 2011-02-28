@@ -150,11 +150,12 @@
 		<module>ch06</module>
 		<module>ch07</module>
 		<module>ch08</module>
-    	<module>ch09</module>
-    	<module>ch10</module>
+    		<module>ch09</module>
+    		<module>ch10</module>
 		<module>ch11</module>
 		<module>ch12</module>
 		<module>ch13</module>
+		<module>ch14</module>
 		<module>ch15</module>
     	<module>appB</module>
   </modules>
