@@ -4,6 +4,8 @@
 package com.manning.sbia.ch13.batch;
 
 import java.io.BufferedReader;
+import java.io.File;
+import java.io.FilenameFilter;
 import java.io.InputStreamReader;
 import java.sql.SQLException;
 
@@ -19,6 +21,17 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
 public class LaunchMonitoring {
 
 	private static Server startH2Server() throws SQLException {
+		// removed all db files
+		
+		File[] files = (new File(".")).listFiles(new FilenameFilter() {
+			public boolean accept(File file, String name) {
+				return (name.startsWith("ch13."));
+			}
+		});
+		for (File file : files) {
+			file.delete();
+		}
+		
 		// start the TCP Server
 		Server server = Server.createTcpServer(new String[0]).start();
 		
