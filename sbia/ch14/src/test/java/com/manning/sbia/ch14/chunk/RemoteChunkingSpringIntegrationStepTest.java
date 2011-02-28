@@ -46,5 +46,7 @@ public class RemoteChunkingSpringIntegrationStepTest {
 			new JobParametersBuilder()
 				.toJobParameters()
 		);
+		
+		Thread.sleep(1000);
 	}
 }
