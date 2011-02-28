@@ -8,10 +8,7 @@ import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
-import org.mortbay.jetty.Connector;
 import org.mortbay.jetty.Server;
-import org.mortbay.jetty.nio.SelectChannelConnector;
-import org.mortbay.jetty.webapp.WebAppContext;
 import org.mortbay.xml.XmlConfiguration;
 import org.springframework.batch.core.BatchStatus;
 import org.springframework.core.io.ClassPathResource;
@@ -50,9 +47,6 @@ public class WebAppBootstrapTest {
 		Assert.assertTrue(resp.getHeaders().getContentType().isCompatibleWith(MediaType.TEXT_HTML));
 		Assert.assertTrue(resp.getBody().contains("Spring Batch Admin"));
 		
-//		System.out.println("passe");
-//		Thread.sleep(1000000000000L);
-		
 		resp = tpl.getForEntity(BASE_URL+"jobs", String.class);
 		Assert.assertEquals(HttpStatus.OK,resp.getStatusCode());
 		Assert.assertTrue(resp.getBody().contains(JOB_NAME));
@@ -65,8 +59,15 @@ public class WebAppBootstrapTest {
 		resp = tpl.getForEntity(BASE_URL+"jobs/executions", String.class);
 		Assert.assertEquals(HttpStatus.OK,resp.getStatusCode());
 		Assert.assertTrue(resp.getBody().contains(JOB_NAME));
+		int currentWait = 0;
+		int wait = 1000;
+		int maxWait = 5000;
+		while(!resp.getBody().contains(BatchStatus.COMPLETED.toString()) && 
+				currentWait < maxWait) {
+			Thread.sleep(wait);
+			currentWait =+ wait;
+		}
 		Assert.assertTrue(resp.getBody().contains(BatchStatus.COMPLETED.toString()));
-		
 	}
 	
 	@After
@@ -86,18 +87,6 @@ public class WebAppBootstrapTest {
 		);
 		server = new Server();
 		configuration.configure(server);
-		
-//		Server server = new Server();
-//		Connector connector = new SelectChannelConnector();
-//		connector.setPort(8081);
-//		connector.setHost("127.0.0.1");
-//		server.addConnector(connector);
-//
-//		WebAppContext wac = new WebAppContext();
-//		wac.setContextPath("/springbatchadmin");
-//		wac.setWar("./src/main/webapp");
-//		server.setHandler(wac);
-//		server.setStopAtShutdown(true);
 
 		server.start();
 	}
