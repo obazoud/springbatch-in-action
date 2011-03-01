@@ -3,13 +3,12 @@
  */
 package com.manning.sbia.ch13;
 
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
+import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.springframework.batch.core.ExitStatus;
 import org.springframework.batch.core.JobExecution;
 import org.springframework.batch.core.JobInstance;
 import org.springframework.batch.core.StepExecution;
@@ -23,155 +22,84 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
  *
  */
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration("classpath:/com/manning/sbia/ch13/batch-explorer-context.xml")
-public class JobExplorerTest {
+@ContextConfiguration
+public class JobExplorerTest extends AbstractJobStructureTest {
 	@Autowired
 	private JobExplorer jobExplorer;
+
+	//launch h2 with spring conf
+	//execute successfully batch 
+	//execute batch with failures
 	
-	@Test public void jobExplorer() throws Exception {
-		List<JobInstance> jobInstances = jobExplorer.getJobInstances("importProductsJob", 0, 30);
-		for (JobInstance jobInstance : jobInstances) {
-			System.out.println(jobInstance.getId() + " - "+jobInstance.getJobName());
-			List<JobExecution> jobExecutions = jobExplorer.getJobExecutions(jobInstance);
-			for (JobExecution jobExecution : jobExecutions) {
-				System.out.println("JobExecutions:");
-				System.out.println(" - "+jobExecution.getId()+" - "+jobExecution.getExitStatus());
-				
-				Collection<StepExecution> stepExecutions = jobExecution.getStepExecutions();
-				System.out.println("    StepExecutions:");
-				for (StepExecution stepExecution : stepExecutions) {
-					System.out.println("     - "+stepExecution.getStepName()+" - "+stepExecution.getSummary());
-				}
-			}
-		}
-	}
-	
-	private List<JobExecution> getFailedJobExecutions(String jobName) {
-		List<JobExecution> failedJobExecutions = new ArrayList<JobExecution>();
+	@Test public void jobExplorerWithSuccess() throws Exception {
+		launchSuccessJob();
 
-		int pageSize = 10;
-		int currentPageSize = 10;
-		int currentPage = 0;
+		List<JobInstance> jobInstances = jobExplorer.getJobInstances("importProductsJobSuccess", 0, 30);
+		Assert.assertEquals(1, jobInstances.size());
 
-		while (currentPageSize==pageSize) {
-			List<JobInstance> jobInstances = jobExplorer.getJobInstances(jobName, currentPage*pageSize, pageSize);
-			currentPageSize = jobInstances.size();
-			for (JobInstance jobInstance : jobInstances) {
-				List<JobExecution> jobExecutions = jobExplorer.getJobExecutions(jobInstance);
-				for (JobExecution jobExecution : jobExecutions) {
-					System.out.println("tests on object = "+jobExecution.getExitStatus().equals(ExitStatus.FAILED));
-					System.out.println("tests on code = "+jobExecution.getExitStatus().getExitCode().equals(ExitStatus.FAILED.getExitCode()));
-					if (jobExecution.getExitStatus().equals(ExitStatus.FAILED)) {
-						List<Throwable> errors = jobExecution.getFailureExceptions();
-						System.out.println("[jobExecution] errors = "+errors.size());
-						for (Throwable error : errors) {
-							error.printStackTrace();
-						}
-						//jobExecution.get
-						
-						Collection<StepExecution> stepExecutions = jobExecution.getStepExecutions();
-						for (StepExecution stepExecution : stepExecutions) {
-							errors = stepExecution.getFailureExceptions();
-							System.out.println("[stepExecution] errors = "+errors.size());
-							for (Throwable error : errors) {
-								error.printStackTrace();
-							}
-							System.out.println("exit description = "+stepExecution.getExitStatus().getExitDescription());
-						}
-						
-						failedJobExecutions.add(jobExecution);
-					}
-				}
-			}
-		}
-		return failedJobExecutions;
-	}
-	
-	private List<Throwable> getFailureExceptions(JobExecution jobExecution) {
-		List<Throwable> failureExceptions = new ArrayList<Throwable>();
-		  
-		if (!jobExecution.getExitStatus().equals(ExitStatus.FAILED)) {
-			return failureExceptions;
-		}
-
-		List<Throwable> jobFailureExceptions
-				= jobExecution.getFailureExceptions();
-		if (jobFailureExceptions.size()>0) {
-			failureExceptions.addAll(jobFailureExceptions);
-		}
-
-		for (StepExecution stepExecution : jobExecution.getStepExecutions()) {
-			List<Throwable> stepFailureExceptions
-					= stepExecution.getFailureExceptions();
-			if (stepFailureExceptions.size()>0) {
-				failureExceptions.addAll(stepFailureExceptions);
-			}
-		}
+		JobInstance jobInstance = jobInstances.get(0);
+		Assert.assertEquals("importProductsJobSuccess", jobInstance.getJobName());
 		
-		return failureExceptions;
-	}
-
-	private List<String> getFailureExitDescriptions(JobExecution jobExecution) {
-		List<String> exitDescriptions = new ArrayList<String>();
-		  
-		if (!jobExecution.getExitStatus().equals(ExitStatus.FAILED)) {
-			return exitDescriptions;
-		}
-
-		String exitDescription = jobExecution.getExitStatus().getExitDescription();
-		if (!"".equals(exitDescription)) {
-			exitDescriptions.add(exitDescription);
-		}
-
-		for (StepExecution stepExecution : jobExecution.getStepExecutions()) {
-			ExitStatus exitStatus = stepExecution.getExitStatus();
-			if (exitStatus.equals(ExitStatus.FAILED) && !"".equals(exitStatus.getExitDescription())) {
-				exitDescriptions.add(exitStatus.getExitDescription());
-			}
-		}
+		List<JobExecution> jobExecutions = jobExplorer.getJobExecutions(jobInstance);
+		Assert.assertEquals(1, jobExecutions.size());
 		
-		return exitDescriptions;
+		JobExecution jobExecution = jobExecutions.get(0);
+		//Assert.assertEquals(new Long(1), jobExecution.getId());
+		Assert.assertEquals("exitCode=COMPLETED;exitDescription=",
+							jobExecution.getExitStatus().toString());
+
+		Collection<StepExecution> stepExecutions = jobExecution.getStepExecutions();
+		Assert.assertEquals(1, stepExecutions.size());
+		StepExecution stepExecution = stepExecutions.iterator().next();
+
+		Assert.assertEquals("readWriteSuccess", stepExecution.getStepName());
+		Assert.assertEquals("StepExecution: id=1, version=3, name=readWriteSuccess, status=COMPLETED," +
+							" exitStatus=COMPLETED, readCount=8, filterCount=0, writeCount=8 readSkipCount=0," +
+							" writeSkipCount=0, processSkipCount=0, commitCount=1, rollbackCount=0",
+							stepExecution.getSummary());
+		Assert.assertEquals(8, stepExecution.getReadCount());
+		Assert.assertEquals(8, stepExecution.getWriteCount());
+		Assert.assertEquals(0, stepExecution.getFilterCount());
+		Assert.assertEquals(0, stepExecution.getReadSkipCount());
+		Assert.assertEquals(0, stepExecution.getWriteSkipCount());
+		Assert.assertEquals(0, stepExecution.getProcessSkipCount());
+		Assert.assertEquals(1, stepExecution.getCommitCount());
+		Assert.assertEquals(0, stepExecution.getRollbackCount());
 	}
 	
-	@Test public void findFailedJobExecutions() throws Exception {
-		System.out.println("#######################");
-		List<String> jobNames = jobExplorer.getJobNames();
-		for (String jobName : jobNames) {
-			System.out.println(jobName+" - "+getFailedJobExecutions(jobName).size());
-			List<JobExecution> failedJobExecutions = getFailedJobExecutions(jobName);
-			for (JobExecution jobExecution : failedJobExecutions) {
-				List<String> details = getFailureExitDescriptions(jobExecution);
-				for (String detail : details) {
-					System.out.println(" - "+detail);
-				}
-			}
-		}
-		System.out.println("#######################");
+	@Test public void jobExplorerWithFailure() throws Exception {
+		launchFailureJob();
+
+		List<JobInstance> jobInstances = jobExplorer.getJobInstances("importProductsJobFailure", 0, 30);
+		Assert.assertEquals(1, jobInstances.size());
+
+		JobInstance jobInstance = jobInstances.get(0);
+		Assert.assertEquals("importProductsJobFailure", jobInstance.getJobName());
+		
+		List<JobExecution> jobExecutions = jobExplorer.getJobExecutions(jobInstance);
+		Assert.assertEquals(1, jobExecutions.size());
+		
+		JobExecution jobExecution = jobExecutions.get(0);
+		Assert.assertEquals("exitCode=FAILED;exitDescription=",
+							jobExecution.getExitStatus().toString());
+
+		Collection<StepExecution> stepExecutions = jobExecution.getStepExecutions();
+		Assert.assertEquals(1, stepExecutions.size());
+		StepExecution stepExecution = stepExecutions.iterator().next();
+
+		Assert.assertEquals("readWriteFailure", stepExecution.getStepName());
+		Assert.assertEquals("FAILED", stepExecution.getStatus().toString());
+		Assert.assertTrue(stepExecution.getExitStatus().toString().startsWith("exitCode=FAILED;exitDescription=org.springframework.batch.item.file.FlatFileParseException: Parsing error at line: 2 in resource=[class path resource [com/manning/sbia/ch13/input/products_errors.txt]], input=[PR....210,BlackBerry 8100 Pearl,,124.60dd]"));
+		Assert.assertEquals(0, stepExecution.getReadCount());
+		Assert.assertEquals(0, stepExecution.getWriteCount());
+		Assert.assertEquals(0, stepExecution.getFilterCount());
+		Assert.assertEquals(0, stepExecution.getReadSkipCount());
+		Assert.assertEquals(0, stepExecution.getWriteSkipCount());
+		Assert.assertEquals(0, stepExecution.getProcessSkipCount());
+		Assert.assertEquals(0, stepExecution.getCommitCount());
+		Assert.assertEquals(1, stepExecution.getRollbackCount());
 	}
 	
-	private boolean hasSkipsDuringExecution(JobExecution jobExecution) {
-		for (StepExecution stepExecution : jobExecution.getStepExecutions()) {
-			if (stepExecution.getSkipCount()>0) {
-				return true;
-			}
-		}
-		return false;
-	}
-
-	@Test public void findSkipsDuringJobExecutions() throws Exception {
-		System.out.println("#######################");
-		List<String> jobNames = jobExplorer.getJobNames();
-		for (String jobName : jobNames) {
-			System.out.println(jobName+" - "+getFailedJobExecutions(jobName).size());
-			List<JobExecution> failedJobExecutions = getFailedJobExecutions(jobName);
-			for (JobExecution jobExecution : failedJobExecutions) {
-				boolean skips = hasSkipsDuringExecution(jobExecution);
-				System.out.println(" - "+skips);
-			}
-		}
-		System.out.println("#######################");
-	}
-
 	public JobExplorer getJobExplorer() {
 		return jobExplorer;
 	}

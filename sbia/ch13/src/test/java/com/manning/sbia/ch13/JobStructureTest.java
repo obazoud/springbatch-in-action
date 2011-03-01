@@ -27,7 +27,7 @@ public class JobStructureTest extends AbstractJobStructureTest {
 	@Test public void delimitedJob() throws Exception {
 		JobParametersBuilder parametersBuilder = new JobParametersBuilder();
 		parametersBuilder.addDate("date", new Date());
-		jobLauncher.run(job, parametersBuilder.toJobParameters());
+		jobLauncher.run(jobSuccess, parametersBuilder.toJobParameters());
 	}
 	
 	

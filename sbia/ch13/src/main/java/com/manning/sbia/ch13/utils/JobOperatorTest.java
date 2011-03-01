@@ -1,27 +1,17 @@
 /**
  * 
  */
-package com.manning.sbia.ch13;
+package com.manning.sbia.ch13.utils;
 
 import java.util.Set;
 
-import org.junit.Test;
-import org.junit.runner.RunWith;
 import org.springframework.batch.core.launch.JobOperator;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 /**
  * @author templth
  *
  */
-@RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration("classpath:/com/manning/sbia/ch13/batch-operator-context.xml")
 public class JobOperatorTest {
-	@Autowired
-	private JobOperator jobOperator;
-	
 	/*@Test public void jobExplorer() throws Exception {
 		List<Long> jobInstances = jobOperator.getJobInstances("importProductsJob", 0, 30);
 		for (JobInstance jobInstance : jobInstances) {
@@ -143,19 +133,11 @@ public class JobOperatorTest {
 		System.out.println("#######################");
 	}*/
 	
-	@Test public void findJobNames() throws Exception {
+	public void findJobNames(JobOperator jobOperator) throws Exception {
 		Set<String> names = jobOperator.getJobNames();
 		for (String name : names) {
 			System.out.println("- name = "+name);
 		}
-	}
-	
-	public JobOperator getJobOperator() {
-		return jobOperator;
-	}
-
-	public void setJobOperator(JobOperator jobOperator) {
-		this.jobOperator = jobOperator;
 	}
 
 }
