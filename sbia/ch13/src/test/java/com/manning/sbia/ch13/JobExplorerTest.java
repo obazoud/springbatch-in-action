@@ -85,7 +85,8 @@ public class JobExplorerTest extends AbstractJobStructureTest {
 
 		Assert.assertEquals("readWriteFailure", stepExecution.getStepName());
 		Assert.assertEquals("FAILED", stepExecution.getStatus().toString());
-		Assert.assertTrue(stepExecution.getExitStatus().toString().startsWith("exitCode=FAILED;exitDescription=org.springframework.batch.item.file.FlatFileParseException: Parsing error at line: 2 in resource=[class path resource [com/manning/sbia/ch13/input/products_errors.txt]], input=[PR....210,BlackBerry 8100 Pearl,,124.60dd]"));
+		Assert.assertTrue(stepExecution.getExitStatus().toString().contains("exitCode=FAILED;exitDescription=org.springframework.batch.item.file.FlatFileParseException"));
+		Assert.assertTrue(stepExecution.getExitStatus().toString().contains("input=[PR....210,BlackBerry 8100 Pearl,,124.60dd]"));
 		Assert.assertEquals(0, stepExecution.getReadCount());
 		Assert.assertEquals(0, stepExecution.getWriteCount());
 		Assert.assertEquals(0, stepExecution.getFilterCount());

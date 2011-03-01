@@ -61,7 +61,8 @@ public class JobJmxTest extends AbstractJobStructureTest {
 		Assert.assertEquals(1, stepExecutionSummaries.size());
 		String stepExecutionSummary = stepExecutionSummaries.values().iterator().next();
 
-		Assert.assertTrue(stepExecutionSummary.contains("status=COMPLETED, exitStatus=COMPLETED"));
+		Assert.assertTrue(stepExecutionSummary.contains("status=COMPLETED"));
+		Assert.assertTrue(stepExecutionSummary.contains("exitStatus=COMPLETED"));
 		Assert.assertTrue(stepExecutionSummary.contains("exitDescription="));
 		Assert.assertTrue(stepExecutionSummary.contains("name=readWriteSuccess"));
 		Assert.assertTrue(stepExecutionSummary.contains("readCount=8"));
@@ -108,7 +109,8 @@ public class JobJmxTest extends AbstractJobStructureTest {
 		String stepExecutionSummary = stepExecutionSummaries.values().iterator().next();
 
 		Assert.assertTrue(stepExecutionSummary.contains("status=FAILED, exitStatus=FAILED"));
-		Assert.assertTrue(stepExecutionSummary.contains("exitDescription=org.springframework.batch.item.file.FlatFileParseException: Parsing error at line: 2 in resource=[class path resource [com/manning/sbia/ch13/input/products_errors.txt]], input=[PR....210,BlackBerry 8100 Pearl,,124.60dd]"));
+		Assert.assertTrue(stepExecutionSummary.contains("exitDescription=org.springframework.batch.item.file.FlatFileParseException"));
+		Assert.assertTrue(stepExecutionSummary.contains("input=[PR....210,BlackBerry 8100 Pearl,,124.60dd]"));
 		Assert.assertTrue(stepExecutionSummary.contains("name=readWriteFailure"));
 		Assert.assertTrue(stepExecutionSummary.contains("readCount=0"));
 		Assert.assertTrue(stepExecutionSummary.contains("writeCount=0"));
