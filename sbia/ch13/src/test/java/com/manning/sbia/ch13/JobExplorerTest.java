@@ -27,10 +27,6 @@ public class JobExplorerTest extends AbstractJobStructureTest {
 	@Autowired
 	private JobExplorer jobExplorer;
 
-	//launch h2 with spring conf
-	//execute successfully batch 
-	//execute batch with failures
-	
 	@Test public void jobExplorerWithSuccess() throws Exception {
 		launchSuccessJob();
 

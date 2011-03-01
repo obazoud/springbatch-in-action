@@ -15,7 +15,6 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.mortbay.xml.XmlConfiguration;
-import org.springframework.batch.core.BatchStatus;
 import org.springframework.batch.core.Job;
 import org.springframework.batch.core.launch.JobLauncher;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
@@ -147,8 +146,8 @@ public class SpringBatchAdminTest extends AbstractJobStructureTest {
 		Assert.assertEquals(HttpStatus.OK,resp.getStatusCode());
 		
 		JSONObject jsonObject = JSONObject.fromObject(resp.getBody());
-		JSONObject job = (JSONObject) jsonObject.get("job");
-		JSONObject jobInstances = (JSONObject) job.get("jobInstances");
+		JSONObject job = jsonObject.getJSONObject("job");
+		JSONObject jobInstances = job.getJSONObject("jobInstances");
 		Assert.assertEquals(1, jobInstances.size());
 		
 		JSONObject jobInstance = (JSONObject) jobInstances.values().iterator().next();
@@ -158,7 +157,7 @@ public class SpringBatchAdminTest extends AbstractJobStructureTest {
 		Assert.assertEquals(HttpStatus.OK,resp.getStatusCode());
 
 		JSONObject executions = JSONObject.fromObject(resp.getBody());
-		JSONObject jobExecutions = (JSONObject) executions.get("jobExecutions");
+		JSONObject jobExecutions = executions.getJSONObject("jobExecutions");
 		Assert.assertEquals(1, jobExecutions.size());
 
 		JSONObject execution = (JSONObject) jobExecutions.values().iterator().next();
@@ -168,7 +167,7 @@ public class SpringBatchAdminTest extends AbstractJobStructureTest {
 		Assert.assertEquals(HttpStatus.OK,resp.getStatusCode());
 
 		execution = JSONObject.fromObject(resp.getBody());
-		execution = (JSONObject) execution.get("jobExecution");
+		execution = execution.getJSONObject("jobExecution");
 		Assert.assertEquals("COMPLETED", execution.getString("exitCode"));
 		JSONObject stepExecutions = (JSONObject) execution.get("stepExecutions");
 		Assert.assertEquals(1, stepExecutions.size());
@@ -197,8 +196,8 @@ public class SpringBatchAdminTest extends AbstractJobStructureTest {
 		Assert.assertEquals(HttpStatus.OK,resp.getStatusCode());
 		
 		JSONObject jsonObject = JSONObject.fromObject(resp.getBody());
-		JSONObject job = (JSONObject) jsonObject.get("job");
-		JSONObject jobInstances = (JSONObject) job.get("jobInstances");
+		JSONObject job = jsonObject.getJSONObject("job");
+		JSONObject jobInstances = job.getJSONObject("jobInstances");
 		Assert.assertEquals(1, jobInstances.size());
 		
 		JSONObject jobInstance = (JSONObject) jobInstances.values().iterator().next();
@@ -208,7 +207,7 @@ public class SpringBatchAdminTest extends AbstractJobStructureTest {
 		Assert.assertEquals(HttpStatus.OK,resp.getStatusCode());
 
 		JSONObject executions = JSONObject.fromObject(resp.getBody());
-		JSONObject jobExecutions = (JSONObject) executions.get("jobExecutions");
+		JSONObject jobExecutions = executions.getJSONObject("jobExecutions");
 		Assert.assertEquals(1, jobExecutions.size());
 
 		JSONObject execution = (JSONObject) jobExecutions.values().iterator().next();
@@ -218,13 +217,13 @@ public class SpringBatchAdminTest extends AbstractJobStructureTest {
 		Assert.assertEquals(HttpStatus.OK,resp.getStatusCode());
 
 		execution = JSONObject.fromObject(resp.getBody());
-		execution = (JSONObject) execution.get("jobExecution");
+		execution = execution.getJSONObject("jobExecution");
 		Assert.assertEquals("FAILED", execution.getString("exitCode"));
-		JSONObject stepExecutions = (JSONObject) execution.get("stepExecutions");
+		JSONObject stepExecutions = execution.getJSONObject("stepExecutions");
 		Assert.assertEquals(1, stepExecutions.size());
 		String stepName = (String) stepExecutions.keys().next();
 		Assert.assertEquals("readWriteFailure", stepName);
-		JSONObject stepExecution = (JSONObject) stepExecutions.get(stepName);
+		JSONObject stepExecution = stepExecutions.getJSONObject(stepName);
 		Assert.assertEquals("FAILED", stepExecution.getString("status"));
 		Assert.assertEquals("FAILED", stepExecution.getString("exitCode"));
 		Assert.assertEquals(0, stepExecution.getInt("readCount"));
