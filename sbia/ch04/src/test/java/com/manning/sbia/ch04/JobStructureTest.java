@@ -11,7 +11,7 @@ import org.springframework.test.context.ContextConfiguration;
  * @author templth
  *
  */
-@ContextConfiguration
+@ContextConfiguration()
 public class JobStructureTest extends AbstractJobStructureTest {
 
 	@Test public void delimitedJob() throws Exception {
