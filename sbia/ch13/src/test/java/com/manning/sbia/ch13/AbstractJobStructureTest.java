@@ -60,6 +60,7 @@ public abstract class AbstractJobStructureTest {
 			JobParametersBuilder parametersBuilder = new JobParametersBuilder();
 			parametersBuilder.addDate("date", new Date());
 			jobLauncher.run(jobSuccess, parametersBuilder.toJobParameters());
+			Thread.sleep(2000);
 		} catch (Exception ex) {}
 	}
 	
@@ -68,9 +69,8 @@ public abstract class AbstractJobStructureTest {
 			JobParametersBuilder parametersBuilder = new JobParametersBuilder();
 			parametersBuilder.addDate("date", new Date());
 			jobLauncher.run(jobFailure, parametersBuilder.toJobParameters());
-		} catch (Throwable ex) {
-			ex.printStackTrace();
-		}
+			Thread.sleep(2000);
+		} catch (Throwable ex) {}
 	}
 	
 }
