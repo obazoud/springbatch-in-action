@@ -38,7 +38,6 @@ public class JobJmxTest extends AbstractJobStructureTest {
         JMXConnector jmxc = JMXConnectorFactory.connect(url, null);
         MBeanServerConnection mbsc = jmxc.getMBeanServerConnection();
 
-        // Get the MBeanInfo for the JNDIView MBean
         ObjectName mbeanName = new ObjectName("spring:service=batch,bean=jobOperator");
 
         JobOperator jobOperator =
@@ -85,7 +84,6 @@ public class JobJmxTest extends AbstractJobStructureTest {
         JMXConnector jmxc = JMXConnectorFactory.connect(url, null);
         MBeanServerConnection mbsc = jmxc.getMBeanServerConnection();
 
-        // Get the MBeanInfo for the JNDIView MBean
         ObjectName mbeanName = new ObjectName("spring:service=batch,bean=jobOperator");
 
         JobOperator jobOperator =

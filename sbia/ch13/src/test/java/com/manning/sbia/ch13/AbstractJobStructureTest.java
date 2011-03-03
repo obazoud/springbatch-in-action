@@ -9,13 +9,11 @@ import java.sql.SQLException;
 import java.util.Date;
 
 import org.h2.tools.Server;
-import org.junit.runner.RunWith;
 import org.springframework.batch.core.Job;
 import org.springframework.batch.core.JobParametersBuilder;
 import org.springframework.batch.core.launch.JobLauncher;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 /**
  * @author templth

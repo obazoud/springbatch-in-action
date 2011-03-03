@@ -14,7 +14,9 @@ import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
-import org.mortbay.xml.XmlConfiguration;
+import org.mortbay.jetty.Connector;
+import org.mortbay.jetty.nio.SelectChannelConnector;
+import org.mortbay.jetty.webapp.WebAppContext;
 import org.springframework.batch.core.Job;
 import org.springframework.batch.core.launch.JobLauncher;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
@@ -37,10 +39,6 @@ public class SpringBatchAdminTest extends AbstractJobStructureTest {
 	
 	private static final String BASE_URL = "http://localhost:8081/springbatchadmin/";
 	
-	//launch h2 with spring conf
-	//execute successfully batch 
-	//execute batch with failures
-
 	@Before
 	public void setUp() throws Exception {
 		startDatabase();
@@ -78,23 +76,17 @@ public class SpringBatchAdminTest extends AbstractJobStructureTest {
 	}
 
 	private void startWebContainer() throws Exception {
-		XmlConfiguration configuration = new XmlConfiguration(
-				getClass().getResourceAsStream("/com/manning/sbia/ch13/jetty.xml")
-		);
 		server = new org.mortbay.jetty.Server();
-		configuration.configure(server);
-		
-//		Server server = new Server();
-//		Connector connector = new SelectChannelConnector();
-//		connector.setPort(8081);
-//		connector.setHost("127.0.0.1");
-//		server.addConnector(connector);
-//
-//		WebAppContext wac = new WebAppContext();
-//		wac.setContextPath("/springbatchadmin");
-//		wac.setWar("./src/main/webapp");
-//		server.setHandler(wac);
-//		server.setStopAtShutdown(true);
+		Connector connector = new SelectChannelConnector();
+		connector.setPort(8081);
+		connector.setHost("127.0.0.1");
+		server.addConnector(connector);
+
+		WebAppContext wac = new WebAppContext();
+		wac.setContextPath("/springbatchadmin");
+		wac.setWar("./src/main/webapp");
+		server.setHandler(wac);
+		server.setStopAtShutdown(true);
 
 		server.start();
 	}
@@ -127,12 +119,12 @@ public class SpringBatchAdminTest extends AbstractJobStructureTest {
 	}
 	
 	private void stopWebContainer() throws Exception {
-		if (server != null /*&& server.isRunning(true)*/) {
+		if (server != null && server.isRunning()) {
 			server.stop();
 		}
 	}
 	
-	@Test public void jobExplorerWithSuccess() throws Exception {
+	@Test public void springBatchAdminWithSuccess() throws Exception {
 		launchSuccessJob();
 
 		String jobName = "importProductsJobSuccess";
@@ -182,7 +174,7 @@ public class SpringBatchAdminTest extends AbstractJobStructureTest {
 		Assert.assertEquals(0, stepExecution.getInt("rollbackCount"));
 	}
 	
-	@Test public void jobExplorerWithFailure() throws Exception {
+	@Test public void springBatchAdminWithFailure() throws Exception {
 		launchFailureJob();
 
 		String jobName = "importProductsJobFailure";

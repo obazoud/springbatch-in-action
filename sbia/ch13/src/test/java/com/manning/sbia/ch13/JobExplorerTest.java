@@ -40,7 +40,6 @@ public class JobExplorerTest extends AbstractJobStructureTest {
 		Assert.assertEquals(1, jobExecutions.size());
 		
 		JobExecution jobExecution = jobExecutions.get(0);
-		//Assert.assertEquals(new Long(1), jobExecution.getId());
 		Assert.assertEquals("exitCode=COMPLETED;exitDescription=",
 							jobExecution.getExitStatus().toString());
 
