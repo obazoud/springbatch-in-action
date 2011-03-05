@@ -1,19 +1,21 @@
 package com.manning.sbia.ch14.partition;
 
+import org.junit.After;
+import org.junit.Before;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 import org.springframework.batch.core.Job;
-import org.springframework.batch.core.JobExecution;
-import org.springframework.batch.core.JobParametersBuilder;
 import org.springframework.batch.core.launch.JobLauncher;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.beans.factory.config.AutowireCapableBeanFactory;
+import org.springframework.context.ConfigurableApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
 
-@RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration
 public class PartitionSpringIntegrationStepTest {
+	
+	private ConfigurableApplicationContext ctx = new ClassPathXmlApplicationContext(
+		this.getClass().getSimpleName()+"-context.xml",PartitionSpringIntegrationStepTest.class
+	);
 
 	@Autowired
 	private JobLauncher launcher;
@@ -21,6 +23,14 @@ public class PartitionSpringIntegrationStepTest {
 	@Autowired
 	@Qualifier("partitionImportProductsJob")
 	private Job partitionImportProductsJob;
+	
+	@Before public void setUp() {
+		injectDependenciesIntoTest();
+	}
+	
+	@After public void tearDown() {
+		ctx.close();
+	}
 
 	@Test
 	public void testMultithreadedStep() throws Exception {
@@ -29,5 +39,11 @@ public class PartitionSpringIntegrationStepTest {
 			new JobParametersBuilder()
 				.toJobParameters()
 		);*/
+	}
+	
+	private void injectDependenciesIntoTest() {
+		// annotation support must be enabled in the application context
+		AutowireCapableBeanFactory beanFactory = ctx.getAutowireCapableBeanFactory();
+		beanFactory.autowireBeanProperties(this, AutowireCapableBeanFactory.AUTOWIRE_NO, false);
 	}
 }
