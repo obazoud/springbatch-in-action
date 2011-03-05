@@ -1,10 +1,13 @@
 package com.manning.sbia.ch14.chunk;
 
+import static org.junit.Assert.assertEquals;
+
 import javax.sql.DataSource;
 
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.springframework.batch.core.ExitStatus;
 import org.springframework.batch.core.Job;
 import org.springframework.batch.core.JobExecution;
 import org.springframework.batch.core.JobParametersBuilder;
@@ -46,7 +49,7 @@ public class RemoteChunkingSpringIntegrationStepTest {
 			new JobParametersBuilder()
 				.toJobParameters()
 		);
-		
+		assertEquals(ExitStatus.COMPLETED, remoteChunkingImportProductsJobExec.getExitStatus());
 		Thread.sleep(1000);
 	}
 }
