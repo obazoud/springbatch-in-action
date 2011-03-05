@@ -188,7 +188,6 @@ public abstract class AbstractJobTest {
 		assertEquals(BatchStatus.COMPLETED, jobExecution.getStatus());
 		assertEquals(getExpectedNbStepExecutionsDownloadedFileOkSkippedItems(),jobExecution.getStepExecutions().size());
 		JdbcTemplate tpl = new JdbcTemplate(dataSource);
-		System.out.println(tpl.queryForList("select * from BATCH_STEP_EXECUTION"));
 		assertMetadataDownloadFileOkSkippedItems();
 		
 		verify(batchService,times(1)).download(archiveFile);
