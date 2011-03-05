@@ -56,17 +56,12 @@ public class WebAppBootstrapTest {
 		
 		tpl.postForLocation(BASE_URL+"jobs/"+JOB_NAME,null);
 		
+		// need to wait a little
+		Thread.sleep(5000L);
+		
 		resp = tpl.getForEntity(BASE_URL+"jobs/executions", String.class);
 		Assert.assertEquals(HttpStatus.OK,resp.getStatusCode());
 		Assert.assertTrue(resp.getBody().contains(JOB_NAME));
-		int currentWait = 0;
-		int wait = 1000;
-		int maxWait = 5000;
-		while(!resp.getBody().contains(BatchStatus.COMPLETED.toString()) && 
-				currentWait < maxWait) {
-			Thread.sleep(wait);
-			currentWait =+ wait;
-		}
 		Assert.assertTrue(resp.getBody().contains(BatchStatus.COMPLETED.toString()));
 	}
 	
