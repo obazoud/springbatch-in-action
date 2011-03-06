@@ -12,7 +12,7 @@
     <bean id="greenMailBean" class="com.icegreen.greenmail.util.GreenMail"
         init-method="start" destroy-method="stop">
         <constructor-arg>
-            <util:constant static-field="com.icegreen.greenmail.util.ServerSetupTest.ALL" />
+            <util:constant static-field="com.icegreen.greenmail.util.ServerSetupTest.SMTP" />
         </constructor-arg>
     </bean>
 
