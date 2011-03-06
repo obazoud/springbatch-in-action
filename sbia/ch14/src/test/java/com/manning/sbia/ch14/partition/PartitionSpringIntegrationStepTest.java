@@ -1,5 +1,7 @@
 package com.manning.sbia.ch14.partition;
 
+import static org.junit.Assert.assertNotNull;
+
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -8,23 +10,23 @@ import org.springframework.batch.core.launch.JobLauncher;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.config.AutowireCapableBeanFactory;
-import org.springframework.context.ConfigurableApplicationContext;
-import org.springframework.context.support.ClassPathXmlApplicationContext;
+import org.springframework.context.annotation.AnnotationConfigUtils;
+import org.springframework.context.support.GenericXmlApplicationContext;
+
+import com.manning.sbia.ch14.chunk.RemoteChunkingSpringIntegrationStepTest;
 
 public class PartitionSpringIntegrationStepTest {
 	
-	private ConfigurableApplicationContext ctx = new ClassPathXmlApplicationContext(
-		this.getClass().getSimpleName()+"-context.xml",PartitionSpringIntegrationStepTest.class
-	);
+	private GenericXmlApplicationContext ctx = new GenericXmlApplicationContext();
 
 	@Autowired
 	private JobLauncher launcher;
 	
 	@Autowired
-	@Qualifier("partitionImportProductsJob")
 	private Job partitionImportProductsJob;
 	
 	@Before public void setUp() {
+		createApplicationContext();
 		injectDependenciesIntoTest();
 	}
 	
@@ -34,6 +36,7 @@ public class PartitionSpringIntegrationStepTest {
 
 	@Test
 	public void testMultithreadedStep() throws Exception {
+		assertNotNull(partitionImportProductsJob);
 		/*JobExecution partitionImportProductsJobExec = launcher.run(
 				partitionImportProductsJob,
 			new JobParametersBuilder()
@@ -41,9 +44,15 @@ public class PartitionSpringIntegrationStepTest {
 		);*/
 	}
 	
+	private void createApplicationContext() {
+		ctx.load(PartitionSpringIntegrationStepTest.class,this.getClass().getSimpleName()+"-context.xml");
+		AnnotationConfigUtils.registerAnnotationConfigProcessors(ctx);
+		ctx.refresh();
+	}
+	
 	private void injectDependenciesIntoTest() {
-		// annotation support must be enabled in the application context
 		AutowireCapableBeanFactory beanFactory = ctx.getAutowireCapableBeanFactory();
 		beanFactory.autowireBeanProperties(this, AutowireCapableBeanFactory.AUTOWIRE_NO, false);
 	}
+
 }

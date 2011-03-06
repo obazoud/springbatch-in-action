@@ -11,25 +11,21 @@ import org.springframework.batch.core.JobExecution;
 import org.springframework.batch.core.JobParametersBuilder;
 import org.springframework.batch.core.launch.JobLauncher;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.config.AutowireCapableBeanFactory;
-import org.springframework.context.ConfigurableApplicationContext;
-import org.springframework.context.support.ClassPathXmlApplicationContext;
+import org.springframework.context.annotation.AnnotationConfigUtils;
+import org.springframework.context.support.GenericXmlApplicationContext;
 import org.springframework.jdbc.core.JdbcTemplate;
 
 import com.manning.sbia.ch14.DummyProductWriter;
 
 public class RemoteChunkingSpringIntegrationStepTest {
 	
-	private ConfigurableApplicationContext ctx = new ClassPathXmlApplicationContext(
-		this.getClass().getSimpleName()+"-context.xml",RemoteChunkingSpringIntegrationStepTest.class
-	);
+	private GenericXmlApplicationContext ctx = new GenericXmlApplicationContext();
 
 	@Autowired
 	private JobLauncher launcher;
 	
 	@Autowired
-	@Qualifier("remoteChunkingImportProductsJob")
 	private Job remoteChunkingImportProductsJob;
 
 	@Autowired
@@ -40,6 +36,7 @@ public class RemoteChunkingSpringIntegrationStepTest {
 	
 	@Before
 	public void setUp() throws Exception {
+		createApplicationContext();
 		injectDependenciesIntoTest();
 		int count = 55;
 		for (int i = 0; i < count; i++) {
@@ -67,8 +64,13 @@ public class RemoteChunkingSpringIntegrationStepTest {
 		assertEquals(jdbcTemplate.queryForInt("select count(1) from product"),itemWriter.getProducts().size());
 	}
 	
+	private void createApplicationContext() {
+		ctx.load(RemoteChunkingSpringIntegrationStepTest.class,this.getClass().getSimpleName()+"-context.xml");
+		AnnotationConfigUtils.registerAnnotationConfigProcessors(ctx);
+		ctx.refresh();
+	}
+	
 	private void injectDependenciesIntoTest() {
-		// annotation support must be enabled in the application context
 		AutowireCapableBeanFactory beanFactory = ctx.getAutowireCapableBeanFactory();
 		beanFactory.autowireBeanProperties(this, AutowireCapableBeanFactory.AUTOWIRE_NO, false);
 	}
