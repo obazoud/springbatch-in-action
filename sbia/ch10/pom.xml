@@ -9,6 +9,7 @@
 		<version>1.0.0</version>
 	</parent>
 	<artifactId>ch10</artifactId>
+	<name>ch10</name>
 	
 	<properties>
 		<btm.version>2.1.0</btm.version>
