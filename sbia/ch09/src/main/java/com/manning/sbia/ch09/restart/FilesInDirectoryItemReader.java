@@ -5,7 +5,10 @@ package com.manning.sbia.ch09.restart;
 
 import java.io.File;
 import java.io.FileFilter;
+import java.util.Arrays;
+import java.util.Collections;
 
+import org.apache.commons.io.comparator.NameFileComparator;
 import org.apache.commons.io.filefilter.FileFilterUtils;
 import org.springframework.batch.item.ExecutionContext;
 import org.springframework.batch.item.ItemReader;
@@ -68,6 +71,7 @@ public class FilesInDirectoryItemReader implements ItemReader<File>, ItemStream 
 		this.files = new File(directory).listFiles(
 			(FileFilter) FileFilterUtils.fileFileFilter()
 		);
+		Arrays.sort(files, new NameFileComparator());
 	}
 
 }
