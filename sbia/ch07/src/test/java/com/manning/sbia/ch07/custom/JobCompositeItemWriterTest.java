@@ -1,5 +1,7 @@
 package com.manning.sbia.ch07.custom;
 
+import java.text.DecimalFormatSymbols;
+
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -22,7 +24,8 @@ import com.manning.sbia.ch07.file.AssertLine;
 public class JobCompositeItemWriterTest {
     @Autowired
     private JobLauncherTestUtils jobLauncherTestUtils;
-
+    char decimalSeparator = DecimalFormatSymbols.getInstance().getDecimalSeparator();
+    
     @Test
     public void testFixedWidthBeanWrapperFieldExtractor() throws Exception {
         JobExecution exec = jobLauncherTestUtils.launchJob();
@@ -34,9 +37,9 @@ public class JobCompositeItemWriterTest {
         AssertLine.assertLineFileEquals(ouput, 8, "PR....217|13.70|Canon Digital Rebel XT 8MP");
 
         ouput= new FileSystemResource("./target/outputs/composite-beanwrapperextractor.txt");
-        AssertLine.assertLineFileEquals(ouput, 1, "PR....210124.60BlackBerry 8100 Pearl         ");
-        AssertLine.assertLineFileEquals(ouput, 7, "PR....216289.20AT&T 8525 PDA                 ");
-        AssertLine.assertLineFileEquals(ouput, 8, "PR....217 13.70Canon Digital Rebel XT 8MP    ");
+        AssertLine.assertLineFileEquals(ouput, 1, "PR....210124" + decimalSeparator + "60BlackBerry 8100 Pearl         ");
+        AssertLine.assertLineFileEquals(ouput, 7, "PR....216289" + decimalSeparator + "20AT&T 8525 PDA                 ");
+        AssertLine.assertLineFileEquals(ouput, 8, "PR....217 13" + decimalSeparator + "70Canon Digital Rebel XT 8MP    ");
     }
 
 }

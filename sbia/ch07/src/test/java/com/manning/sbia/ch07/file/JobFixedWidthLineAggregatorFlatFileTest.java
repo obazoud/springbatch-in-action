@@ -1,5 +1,7 @@
 package com.manning.sbia.ch07.file;
 
+import java.text.DecimalFormatSymbols;
+
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -20,6 +22,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 public class JobFixedWidthLineAggregatorFlatFileTest {
     @Autowired
     private JobLauncherTestUtils jobLauncherTestUtils;
+    char decimalSeparator = DecimalFormatSymbols.getInstance().getDecimalSeparator();
 
     @Test
     public void testFixedWidthLineAggregator() throws Exception {
@@ -27,9 +30,9 @@ public class JobFixedWidthLineAggregatorFlatFileTest {
         Assert.assertEquals(BatchStatus.COMPLETED, exec.getStatus());
 
         Resource ouput= new FileSystemResource("./target/outputs/fixedwidth-lineaggregator.txt");
-        AssertLine.assertLineFileEquals(ouput, 1, "PRM....210124.60BlackBerry 8100 Pearl         BlackBerry  ");
-        AssertLine.assertLineFileEquals(ouput, 3, "PRB....734 34.95Spring Batch in action        Manning     ");
-        AssertLine.assertLineFileEquals(ouput, 8, "PRM....214145.50Nokia 2610 Phone              Nokia       ");
+        AssertLine.assertLineFileEquals(ouput, 1, "PRM....210124" + decimalSeparator + "60BlackBerry 8100 Pearl         BlackBerry  ");
+        AssertLine.assertLineFileEquals(ouput, 3, "PRB....734 34" + decimalSeparator + "95Spring Batch in action        Manning     ");
+        AssertLine.assertLineFileEquals(ouput, 8, "PRM....214145" + decimalSeparator + "50Nokia 2610 Phone              Nokia       ");
     }
 
 }
