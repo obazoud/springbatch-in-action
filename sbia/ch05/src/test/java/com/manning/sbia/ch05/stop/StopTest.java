@@ -92,6 +92,11 @@ public class StopTest {
 			Thread.sleep(100);
 			current += 100;
 		}
+		if(jobOperator.getRunningExecutions(job.getName()).size() > 0) {
+			throw new IllegalStateException("the execution hasn't stopped " +
+					"in the expected period (timeout = "+timeout+" ms)." +
+					"Consider increasing the timeout before checking if it's a bug.");
+		}
 	}
 
 }
