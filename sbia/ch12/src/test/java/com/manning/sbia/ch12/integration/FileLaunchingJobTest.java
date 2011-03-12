@@ -70,6 +70,7 @@ public class FileLaunchingJobTest {
 		Writer writer = new FileWriter(new File(DROP_IN_DIRECTORY,filename+".tmp"));
 		IOUtils.write(launchingString,writer);
 		writer.flush();
+		writer.close();
 		FileUtils.moveFile(new File(DROP_IN_DIRECTORY,filename+".tmp"), 
 				new File(DROP_IN_DIRECTORY,filename+".txt"));
 	}
