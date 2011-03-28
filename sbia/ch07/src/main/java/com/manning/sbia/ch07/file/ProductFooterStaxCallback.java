@@ -1,5 +1,5 @@
 /**
- * 
+ *
  */
 package com.manning.sbia.ch07.file;
 
@@ -16,7 +16,7 @@ import org.springframework.batch.item.xml.StaxWriterCallback;
 
 /**
  * @author bazoud
- * 
+ *
  */
 public class ProductFooterStaxCallback extends StepExecutionListenerSupport implements StaxWriterCallback {
     private StepExecution stepExecution;
@@ -31,13 +31,13 @@ public class ProductFooterStaxCallback extends StepExecutionListenerSupport impl
 
             event = eventFactory.createStartElement("", "", "writeCount");
             writer.add(event);
-            
-            event = eventFactory.createCData(String.valueOf(stepExecution.getWriteCount()));
+
+            event = eventFactory.createCharacters(String.valueOf(stepExecution.getWriteCount()));
             writer.add(event);
-            
+
             event = eventFactory.createEndElement("", "", "writeCount");
             writer.add(event);
-            
+
             event = eventFactory.createEndElement("", "", "footer");
             writer.add(event);
         } catch (XMLStreamException e) {
