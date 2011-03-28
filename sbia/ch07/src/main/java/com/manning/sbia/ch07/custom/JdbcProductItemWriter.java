@@ -1,5 +1,5 @@
 /**
- * 
+ *
  */
 package com.manning.sbia.ch07.custom;
 
@@ -12,9 +12,9 @@ import com.manning.sbia.ch07.Product;
 
 /**
  * @author bazoud
- * 
+ *
  */
-public class ProductJdbcItemWriter implements ItemWriter<Product> {
+public class JdbcProductItemWriter implements ItemWriter<Product> {
     private static final String INSERT_PRODUCT = "INSERT INTO PRODUCT (ID,NAME,DESCRIPTION,PRICE) VALUES(?,?,?,?)";
     private static final String UPDATE_PRODUCT = "UPDATE PRODUCT SET NAME=?, DESCRIPTION=?, PRICE=? WHERE ID = ?";
 
@@ -23,7 +23,7 @@ public class ProductJdbcItemWriter implements ItemWriter<Product> {
     public void setJdbcTemplate(JdbcTemplate jdbcTemplate) {
         this.jdbcTemplate = jdbcTemplate;
     }
-    
+
     @Override
     public void write(List<? extends Product> items) throws Exception {
         for (Product item : items) {

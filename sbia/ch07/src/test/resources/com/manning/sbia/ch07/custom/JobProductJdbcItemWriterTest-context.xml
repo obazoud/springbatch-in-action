@@ -16,7 +16,7 @@
     </step>
   </job>
 
-  <bean id="productItemWriter" class="com.manning.sbia.ch07.custom.ProductJdbcItemWriter">
+  <bean id="productItemWriter" class="com.manning.sbia.ch07.custom.JdbcProductItemWriter">
     <property name="jdbcTemplate" ref="jdbcTemplate" />
   </bean>
 
