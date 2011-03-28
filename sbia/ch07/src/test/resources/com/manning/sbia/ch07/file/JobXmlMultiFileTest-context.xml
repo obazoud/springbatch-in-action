@@ -8,17 +8,24 @@
     <import resource="classpath:com/manning/sbia/ch07/test-batch-infrastructure-context.xml" />
     <import resource="classpath:com/manning/sbia/ch07/test-batch-reader-context.xml" />
 
+    <bean id="productItemReader"
+        class="org.springframework.batch.item.file.FlatFileItemReader">
+        <property name="resource" value="classpath:/com/manning/sbia/ch07/input/products-delimited-big.txt"/>
+        <property name="linesToSkip" value="1"/>
+        <property name="lineMapper" ref="productLineMapper"/>
+    </bean>
+
  	<job id="writeProductsJob" xmlns="http://www.springframework.org/schema/batch">
  		<step id="readWrite">
  			<tasklet>
- 				<chunk reader="productItemReader" writer="productItemWriter" commit-interval="1" />
+ 				<chunk reader="productItemReader" writer="productItemWriter" commit-interval="2000" />
  			</tasklet>
  		</step>
  	</job>
 
   <bean id="productItemWriter" class="org.springframework.batch.item.file.MultiResourceItemWriter" scope="step">
     <property name="resource" value="file:target/outputs/products-multi.xml" />
-    <property name="itemCountLimitPerResource" value="3" />
+    <property name="itemCountLimitPerResource" value="10000" />
     <property name="delegate" ref="delegateWriter" />
   </bean>
 

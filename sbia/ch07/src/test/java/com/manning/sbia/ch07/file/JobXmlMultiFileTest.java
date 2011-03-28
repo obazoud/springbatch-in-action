@@ -1,5 +1,7 @@
 package com.manning.sbia.ch07.file;
 
+import static org.custommonkey.xmlunit.XMLAssert.assertXpathEvaluatesTo;
+
 import org.apache.commons.io.IOUtils;
 import org.junit.Assert;
 import org.junit.Test;
@@ -12,8 +14,6 @@ import org.springframework.core.io.FileSystemResource;
 import org.springframework.core.io.Resource;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-
-import static org.custommonkey.xmlunit.XMLAssert.assertXpathEvaluatesTo;
 /**
  * @author bazoud
  */
@@ -30,15 +30,23 @@ public class JobXmlMultiFileTest {
 
         Resource ouput= new FileSystemResource("./target/outputs/products-multi.xml.1");
         String content = IOUtils.toString(ouput.getInputStream());
-        assertXpathEvaluatesTo("3", "count(//product)", content);
+        assertXpathEvaluatesTo("10000", "count(//product)", content);
 
         ouput= new FileSystemResource("./target/outputs/products-multi.xml.2");
         content = IOUtils.toString(ouput.getInputStream());
-        assertXpathEvaluatesTo("3", "count(//product)", content);
+        assertXpathEvaluatesTo("10000", "count(//product)", content);
 
         ouput= new FileSystemResource("./target/outputs/products-multi.xml.3");
         content = IOUtils.toString(ouput.getInputStream());
-        assertXpathEvaluatesTo("2", "count(//product)", content);
+        assertXpathEvaluatesTo("10000", "count(//product)", content);
+
+        ouput= new FileSystemResource("./target/outputs/products-multi.xml.4");
+        content = IOUtils.toString(ouput.getInputStream());
+        assertXpathEvaluatesTo("10000", "count(//product)", content);
+
+        ouput= new FileSystemResource("./target/outputs/products-multi.xml.5");
+        content = IOUtils.toString(ouput.getInputStream());
+        assertXpathEvaluatesTo("9104", "count(//product)", content);
 
     }
 
