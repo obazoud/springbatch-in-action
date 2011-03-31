@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:batch="http://www.springframework.org/schema/batch"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/batch http://www.springframework.org/schema/batch/spring-batch-2.1.xsd">
+
+	<batch:job id="readWriteJob">
+		<batch:step id="readWriteStep">
+			<batch:tasklet>
+				<batch:chunk reader="reader" writer="writer" commit-interval="2" />
+			</batch:tasklet>
+		</batch:step>
+	</batch:job>
+	
+	<bean id="reader" class="org.springframework.batch.item.database.JdbcCursorItemReader">
+	    <property name="dataSource" ref="dataSource"/>
+	    <property name="sql" value="select * from product order by id" />
+	    <property name="rowMapper">
+	    	<bean class="org.springframework.jdbc.core.ColumnMapRowMapper" />
+	    </property>
+	</bean>
+	
+	<bean id="writer" class="org.springframework.batch.item.file.FlatFileItemWriter">
+    	<property name="resource" value="file:target/output.txt" />
+    	<property name="lineAggregator">
+        	<bean class="org.springframework.batch.item.file.transform.DelimitedLineAggregator"/>
+    	</property>
+	</bean>
+
+</beans>

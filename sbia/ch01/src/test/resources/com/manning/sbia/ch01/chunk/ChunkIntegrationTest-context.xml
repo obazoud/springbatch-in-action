@@ -29,8 +29,8 @@
 	</batch:job>
 	
 	<jdbc:embedded-database id="dataSource" type="H2">
-		<jdbc:script location="classpath:/com/manning/sbia/ch01/chunk/create-tables.sql"/>
-		<jdbc:script location="classpath:/com/manning/sbia/ch01/chunk/insert-data.sql"/>
+		<jdbc:script location="classpath:/create-tables.sql"/>
+		<jdbc:script location="classpath:/insert-data.sql"/>
 	</jdbc:embedded-database>
 	
 	<bean id="reader" class="org.springframework.batch.item.database.JdbcPagingItemReader">
