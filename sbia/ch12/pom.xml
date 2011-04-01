@@ -98,7 +98,7 @@
 
 		<dependency>
 			<groupId>org.springframework</groupId>
-			<artifactId>org.springframework.web.servlet</artifactId>
+			<artifactId>spring-webmvc</artifactId>
 			<version>${spring.version}</version>
 		</dependency>
 
@@ -110,12 +110,12 @@
 
 		<dependency>
 			<groupId>org.springframework</groupId>
-			<artifactId>org.springframework.oxm</artifactId>
+			<artifactId>spring-oxm</artifactId>
 			<version>${spring.version}</version>
 			<exclusions>
 				<exclusion>
 					<groupId>org.springframework</groupId>
-					<artifactId>org.springframework.context</artifactId>
+					<artifactId>spring-context</artifactId>
 				</exclusion>
 			</exclusions>
 		</dependency>

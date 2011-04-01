@@ -11,75 +11,81 @@
 
 		<dependency>
 			<groupId>org.springframework.batch</groupId>
-			<artifactId>org.springframework.batch.core</artifactId>
+			<artifactId>spring-batch-core</artifactId>
 			<version>${spring.batch.version}</version>
 			<exclusions>
 				<exclusion>
-					<artifactId>org.springframework.core</artifactId>
+					<artifactId>spring-core</artifactId>
 					<groupId>org.springframework</groupId>
 				</exclusion>
 				<exclusion>
-					<artifactId>org.springframework.aop</artifactId>
+					<artifactId>spring-aop</artifactId>
 					<groupId>org.springframework</groupId>
 				</exclusion>
 				<exclusion>
-					<artifactId>org.springframework.beans</artifactId>
+					<artifactId>spring-beans</artifactId>
 					<groupId>org.springframework</groupId>
 				</exclusion>
 				<exclusion>
-					<artifactId>org.springframework.context</artifactId>
+					<artifactId>spring-context</artifactId>
 					<groupId>org.springframework</groupId>
 				</exclusion>
 				<exclusion>
-					<artifactId>org.springframework.transaction</artifactId>
+					<artifactId>spring-tx</artifactId>
 					<groupId>org.springframework</groupId>
 				</exclusion>
 				<exclusion>
-					<artifactId>com.springsource.org.apache.commons.logging</artifactId>
-					<groupId>org.apache.commons</groupId>
+					<artifactId>commons-logging</artifactId>
+					<groupId>commons-logging</groupId>
 				</exclusion>
 			</exclusions>
 		</dependency>
 
 		<dependency>
 			<groupId>org.springframework.batch</groupId>
-			<artifactId>org.springframework.batch.infrastructure</artifactId>
+			<artifactId>spring-batch-infrastructure</artifactId>
 			<version>${spring.batch.version}</version>
 			<exclusions>
 				<exclusion>
+					<artifactId>spring-core</artifactId>
 					<groupId>org.springframework</groupId>
-					<artifactId>org.springframework.core</artifactId>
 				</exclusion>
 			</exclusions>
 		</dependency>
 
 		<dependency>
 			<groupId>org.springframework</groupId>
-			<artifactId>org.springframework.core</artifactId>
+			<artifactId>spring-core</artifactId>
+			<version>${spring.version}</version>
+			<exclusions>
+				<exclusion>
+					<artifactId>commons-logging</artifactId>
+					<groupId>commons-logging</groupId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-beans</artifactId>
 			<version>${spring.version}</version>
 		</dependency>
 
 		<dependency>
 			<groupId>org.springframework</groupId>
-			<artifactId>org.springframework.beans</artifactId>
+			<artifactId>spring-context</artifactId>
 			<version>${spring.version}</version>
 		</dependency>
 
 		<dependency>
 			<groupId>org.springframework</groupId>
-			<artifactId>org.springframework.context</artifactId>
+			<artifactId>spring-jdbc</artifactId>
 			<version>${spring.version}</version>
 		</dependency>
 
 		<dependency>
 			<groupId>org.springframework</groupId>
-			<artifactId>org.springframework.jdbc</artifactId>
-			<version>${spring.version}</version>
-		</dependency>
-
-		<dependency>
-			<groupId>org.springframework</groupId>
-			<artifactId>org.springframework.transaction</artifactId>
+			<artifactId>spring-tx</artifactId>
 			<version>${spring.version}</version>
 		</dependency>
 
@@ -123,11 +129,17 @@
 			<groupId>org.hibernate</groupId>
 			<artifactId>hibernate-validator</artifactId>
 			<version>4.1.0.Final</version>
+			<exclusions>
+				<exclusion>
+					<groupId>org.slf4j</groupId>
+    				<artifactId>slf4j-api</artifactId>
+				</exclusion>
+			</exclusions>
 		</dependency>
 
 		<dependency>
 			<groupId>org.springframework</groupId>
-			<artifactId>org.springframework.test</artifactId>
+			<artifactId>spring-test</artifactId>
 			<version>${spring.version}</version>
 			<scope>test</scope>
 		</dependency>

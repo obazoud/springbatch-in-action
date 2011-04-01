@@ -16,25 +16,25 @@
 	<dependencies>
 		<dependency>
 			<groupId>org.springframework.ws</groupId>
-			<artifactId>org.springframework.xml</artifactId>
-			<version>1.5.9.A</version>
+			<artifactId>spring-xml</artifactId>
+			<version>1.5.9</version>
 		</dependency>
 
 		<dependency>
 			<groupId>org.springframework</groupId>
-			<artifactId>org.springframework.oxm</artifactId>
+			<artifactId>spring-oxm</artifactId>
 			<version>${spring.version}</version>
 		</dependency>
 
 		<dependency>
 			<groupId>org.springframework</groupId>
-			<artifactId>org.springframework.orm</artifactId>
+			<artifactId>spring-orm</artifactId>
 			<version>${spring.version}</version>
 		</dependency>
 
 		<dependency>
 			<groupId>org.springframework</groupId>
-			<artifactId>org.springframework.jms</artifactId>
+			<artifactId>spring-jms</artifactId>
 			<version>${spring.version}</version>
 		</dependency>
 
@@ -60,6 +60,12 @@
 			<groupId>org.codehaus.castor</groupId>
 			<artifactId>com.springsource.org.castor</artifactId>
 			<version>1.2.0</version>
+			<exclusions>
+				<exclusion>
+					<groupId>org.apache.commons</groupId>
+					<artifactId>com.springsource.org.apache.commons.logging</artifactId>
+				</exclusion>
+			</exclusions>
 		</dependency>
 
 		<dependency>
@@ -83,6 +89,10 @@
 					<groupId>org.slf4j</groupId>
 					<artifactId>com.springsource.slf4j.api</artifactId>
 				</exclusion>
+				<exclusion>
+					<groupId>org.apache.commons</groupId>
+					<artifactId>com.springsource.org.apache.commons.logging</artifactId>
+				</exclusion>
 			</exclusions>
 		</dependency>
 
@@ -94,6 +104,10 @@
 				<exclusion>
 					<groupId>org.slf4j</groupId>
 					<artifactId>com.springsource.slf4j.api</artifactId>
+				</exclusion>
+				<exclusion>
+					<groupId>org.apache.commons</groupId>
+					<artifactId>com.springsource.org.apache.commons.logging</artifactId>
 				</exclusion>
 			</exclusions>
 		</dependency>
@@ -138,12 +152,36 @@
 			<groupId>org.apache.activemq</groupId>
 			<artifactId>com.springsource.org.apache.activemq</artifactId>
 			<version>5.3.0</version>
+			<exclusions>
+				<exclusion>
+					<groupId>org.apache.commons</groupId>
+					<artifactId>com.springsource.org.apache.commons.logging</artifactId>
+				</exclusion>
+			</exclusions>
 		</dependency>
 
 		<dependency>
 			<groupId>org.apache.xbean</groupId>
 			<artifactId>com.springsource.org.apache.xbean.spring</artifactId>
 			<version>3.6.0</version>
+			<exclusions>
+				<exclusion>
+					<groupId>org.apache.commons</groupId>
+					<artifactId>com.springsource.org.apache.commons.logging</artifactId>
+				</exclusion>
+				<exclusion>
+					<groupId>org.springframework</groupId>
+					<artifactId>org.springframework.core</artifactId>
+				</exclusion>
+				<exclusion>
+					<groupId>org.springframework</groupId>
+					<artifactId>org.springframework.beans</artifactId>
+				</exclusion>
+				<exclusion>
+					<groupId>org.springframework</groupId>
+					<artifactId>org.springframework.context</artifactId>
+				</exclusion>
+			</exclusions>
 		</dependency>
 
 	</dependencies>
