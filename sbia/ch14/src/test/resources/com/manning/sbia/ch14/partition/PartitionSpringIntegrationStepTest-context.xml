@@ -25,10 +25,8 @@
 
 	<batch:job id="partitionImportProductsJob">
 		<batch:step id="readWriteProducts">
-			<batch:partition step="remoteStep"
-				partitioner="partitioner" handler="partitionHandler">
-				<batch:handler grid-size="2" task-executor="taskExecutor" />
-			</batch:partition>
+			<batch:partition
+				partitioner="partitioner" handler="partitionHandler" />
 		</batch:step>
 	</batch:job>
 
