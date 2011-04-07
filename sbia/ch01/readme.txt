@@ -1,4 +1,4 @@
-Code source for chapter 01 of Spring Batch in Action
+Code source for chapter 2 of Spring Batch in Action
 
-Contains the Spring Batch Hello World! sample.
+You can browse the code as well as the unit/integration tests.
 

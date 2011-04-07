@@ -1,15 +1,32 @@
 /**
  * 
  */
-package com.manning.sbia.ch01.chunk;
+package com.manning.sbia.ch01.domain;
 
+import java.io.Serializable;
 import java.math.BigDecimal;
+
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
 
 /**
  * @author acogoluegnes
  *
  */
-public class Product {
+public class Product implements Serializable {
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 6648416741847674063L;
+
+	public Product(String id) {
+		super();
+		this.id = id;
+	}
+	
+	public Product() {
+	}
 
 	private String id;	
 	private String name;	
@@ -40,6 +57,8 @@ public class Product {
 		this.description = description;
 	}
 
+	@NotNull
+	@Min(0)
 	public BigDecimal getPrice() {
 		return price;
 	}
@@ -47,12 +66,10 @@ public class Product {
 	public void setPrice(BigDecimal price) {
 		this.price = price;
 	}
-
+	
 	@Override
 	public String toString() {
 		return id + "," + name + "," + description + "," + price; 		
 	}
-	
-	
 	
 }
