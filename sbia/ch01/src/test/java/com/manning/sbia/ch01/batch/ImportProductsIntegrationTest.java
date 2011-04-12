@@ -3,8 +3,6 @@
  */
 package com.manning.sbia.ch01.batch;
 
-import javax.sql.DataSource;
-
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -14,7 +12,7 @@ import org.springframework.batch.core.JobParametersBuilder;
 import org.springframework.batch.core.JobParametersInvalidException;
 import org.springframework.batch.core.launch.JobLauncher;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.jdbc.core.simple.SimpleJdbcTemplate;
+import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
@@ -32,12 +30,8 @@ public class ImportProductsIntegrationTest {
 	@Autowired
 	private Job job;
 	
-	private SimpleJdbcTemplate jdbcTemplate;
-	
 	@Autowired
-	public void setDataSource(DataSource dataSource) {
-		jdbcTemplate = new SimpleJdbcTemplate(dataSource);
-	}
+	private JdbcTemplate jdbcTemplate;
 	
 	@Before
 	public void setUp() throws Exception {
@@ -58,8 +52,8 @@ public class ImportProductsIntegrationTest {
 			.addLong("timestamp", System.currentTimeMillis())
 			.toJobParameters()
 		);
-		
-		Assert.assertEquals(initial+7,jdbcTemplate.queryForInt("select count(1) from product"));
+		int nbOfNewProducts = 7;
+		Assert.assertEquals(initial+nbOfNewProducts,jdbcTemplate.queryForInt("select count(1) from product"));
 	}
 	
 	@Test public void importProductsWithErrors() throws Exception {
@@ -72,8 +66,8 @@ public class ImportProductsIntegrationTest {
 			.addLong("timestamp", System.currentTimeMillis())
 			.toJobParameters()
 		);
-		
-		Assert.assertEquals(initial+6,jdbcTemplate.queryForInt("select count(1) from product"));
+		int nbOfNewProducts = 6;
+		Assert.assertEquals(initial+nbOfNewProducts,jdbcTemplate.queryForInt("select count(1) from product"));
 	}
 	
 	@Test public void missingParameters() throws Exception {		
