@@ -8,7 +8,6 @@
 	http://www.springframework.org/schema/batch/spring-batch-2.1.xsd">
 
 	<job id="importProducts" xmlns="http://www.springframework.org/schema/batch">
-		<validator ref="jobParametersValidator" />
 		<step id="decompress" next="readWriteProducts">
 			<tasklet ref="decompressTasklet" />
 		</step>
@@ -22,8 +21,6 @@
 			</tasklet>			
 		</step>
 	</job>
-	
-	<bean id="jobParametersValidator" class="com.manning.sbia.ch01.batch.ImportProductsJobParametersValidator" />
 	
 	<bean id="decompressTasklet" class="com.manning.sbia.ch01.batch.DecompressTasklet" scope="step">
 		<property name="inputResource" value="#{jobParameters['inputResource']}" />
