@@ -7,7 +7,6 @@
 	</appender>
 	
 	<logger name="org.springframework.batch" level="warn" />
-	<logger name="org.springframework.batch.item.jms" level="debug" />
 
 	<root level="error">
 		<appender-ref ref="STDOUT" />

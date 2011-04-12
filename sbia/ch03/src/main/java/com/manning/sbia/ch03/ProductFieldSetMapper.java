@@ -1,7 +1,7 @@
 /**
  * 
  */
-package com.manning.sbia.ch04;
+package com.manning.sbia.ch03;
 
 import org.springframework.batch.item.file.mapping.FieldSetMapper;
 import org.springframework.batch.item.file.transform.FieldSet;

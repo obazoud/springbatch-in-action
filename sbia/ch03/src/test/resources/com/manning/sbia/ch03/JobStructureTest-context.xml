@@ -50,12 +50,12 @@
  		</step>
  	</job>
  	
- 	<bean id="importProductsJobListener" class="com.manning.sbia.ch04.listener.ImportProductsJobListener"/>
- 	<bean id="readWriteStepListener" class="com.manning.sbia.ch04.listener.ImportProductsExecutionListener"/>
+ 	<bean id="importProductsJobListener" class="com.manning.sbia.ch03.listener.ImportProductsJobListener"/>
+ 	<bean id="readWriteStepListener" class="com.manning.sbia.ch03.listener.ImportProductsExecutionListener"/>
  	
  	<bean id="productItemReader"
   		class="org.springframework.batch.item.file.FlatFileItemReader">
- 		<property name="resource" value="classpath:/com/manning/sbia/ch04/input/products-delimited.txt"/>
+ 		<property name="resource" value="classpath:/com/manning/sbia/ch03/input/products-delimited.txt"/>
 		<property name="linesToSkip" value="1"/>
  		<property name="lineMapper" ref="productLineMapper"/>
  	</bean>
@@ -77,9 +77,9 @@
 		<property name="prototypeBeanName" value="product"/>
 	</bean>
 
-	<bean id="product" class="com.manning.sbia.ch04.Product" scope="prototype"/>
+	<bean id="product" class="com.manning.sbia.ch03.Product" scope="prototype"/>
 
-	<bean id="productPreparedStatementSetter" class="com.manning.sbia.ch04.ProductPreparedStatementSetter"/>
+	<bean id="productPreparedStatementSetter" class="com.manning.sbia.ch03.ProductPreparedStatementSetter"/>
 
 	<bean id="productItemWriter" class="org.springframework.batch.item.database.JdbcBatchItemWriter">
 		<property name="dataSource" ref="dataSource"/>

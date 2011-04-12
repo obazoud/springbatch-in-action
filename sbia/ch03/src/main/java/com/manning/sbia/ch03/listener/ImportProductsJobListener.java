@@ -1,4 +1,4 @@
-package com.manning.sbia.ch04.listener;
+package com.manning.sbia.ch03.listener;
 
 import org.springframework.batch.core.BatchStatus;
 import org.springframework.batch.core.JobExecution;

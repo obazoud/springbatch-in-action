@@ -1,4 +1,4 @@
-package com.manning.sbia.ch04;
+package com.manning.sbia.ch03;
 
 import java.sql.PreparedStatement;
 import java.sql.SQLException;

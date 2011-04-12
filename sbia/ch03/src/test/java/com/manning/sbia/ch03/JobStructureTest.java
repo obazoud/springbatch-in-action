@@ -1,7 +1,7 @@
 /**
  * 
  */
-package com.manning.sbia.ch04;
+package com.manning.sbia.ch03;
 
 import org.junit.Test;
 import org.springframework.batch.core.JobParameters;
