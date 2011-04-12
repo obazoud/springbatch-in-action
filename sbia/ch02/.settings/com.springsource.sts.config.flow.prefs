@@ -1,4 +1,0 @@
-#Wed Mar 24 15:17:06 CET 2010
-//com.springsource.sts.config.flow.coordinates\:http\://www.springframework.org/schema/batch\:/ch02/src/main/resources/batch-application-context.xml=<?xml version\="1.0" encoding\="UTF-8"?>\n<graph>\n<element type\="job">\n<structure end\="1015" endstart\="1009" start\="457" startend\="534"/>\n<bounds height\="168" width\="171" x\="15" y\="17"/>\n</element>\n</graph>
-//com.springsource.sts.config.flow.coordinates\:http\://www.springframework.org/schema/batch\:/ch02/src/test/resources/test-batch-infrastructure.xml=<?xml version\="1.0" encoding\="UTF-8"?>\n<graph/>
-eclipse.preferences.version=1
