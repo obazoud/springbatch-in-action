@@ -14,7 +14,9 @@
     <spring.batch.version>                                             
       2.1.7.RELEASE                                                    
     </spring.batch.version>  
-    <spring.version>3.0.5.RELEASE</spring.version>                                          
+    <spring.version>3.0.5.RELEASE</spring.version>       
+    <maven.compiler.source>1.6</maven.compiler.source>                                        
+    <maven.compiler.target>1.6</maven.compiler.target>                                   
   </properties>
 
   <dependencies>
