@@ -20,12 +20,10 @@
   </properties>
 
   <dependencies>
-                                                                       
-    <dependency>                                                       
+  
+  	<dependency>                                                       
       <groupId>org.springframework.batch</groupId>                     
-      <artifactId>                                                     
-        spring-batch-infrastructure                                    
-      </artifactId>                                                    
+      <artifactId>spring-batch-core</artifactId>                                                    
       <version>${spring.batch.version}</version>   
       <exclusions>                                                     
         <exclusion>                                                    
@@ -33,6 +31,14 @@
           <artifactId>commons-logging</artifactId>                     
         </exclusion>                                                   
       </exclusions>                            
+    </dependency>  
+    
+    <dependency>                                                       
+      <groupId>org.springframework.batch</groupId>                     
+      <artifactId>                                                     
+        spring-batch-infrastructure                                    
+      </artifactId>                                                    
+      <version>${spring.batch.version}</version>   
     </dependency>  
     
     <dependency>                                                       
