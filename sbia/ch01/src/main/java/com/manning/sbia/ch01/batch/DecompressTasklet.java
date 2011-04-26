@@ -10,6 +10,7 @@ import java.io.FileOutputStream;
 import java.util.zip.ZipInputStream;
 
 import org.apache.commons.io.FileUtils;
+import org.apache.commons.io.IOUtils;
 import org.springframework.batch.core.StepContribution;
 import org.springframework.batch.core.scope.context.ChunkContext;
 import org.springframework.batch.core.step.tasklet.Tasklet;
@@ -28,8 +29,6 @@ public class DecompressTasklet implements Tasklet {
 	
 	private String targetFile;
 	
-	private final int BUFFER = 2048;
-
 	public RepeatStatus execute(StepContribution contribution,
 			ChunkContext chunkContext) throws Exception {
 		ZipInputStream zis = new ZipInputStream(new BufferedInputStream(inputResource.getInputStream()));
@@ -44,16 +43,12 @@ public class DecompressTasklet implements Tasklet {
 		
 		BufferedOutputStream dest = null;
         while(zis.getNextEntry() != null) {
-           int count;
-           byte data[] = new byte[BUFFER];
            if(!target.exists()) {
         	   target.createNewFile();
            }
            FileOutputStream fos = new FileOutputStream(target);
-           dest = new BufferedOutputStream(fos, BUFFER);
-           while ((count = zis.read(data, 0, BUFFER)) != -1) {
-              dest.write(data, 0, count);
-           }
+           dest = new BufferedOutputStream(fos);
+           IOUtils.copy(zis,dest);
            dest.flush();
            dest.close();
         }
