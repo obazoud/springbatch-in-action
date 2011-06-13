@@ -22,7 +22,7 @@
 		<property name="productImportRepository" ref="productImportRepository" />
 	</bean>
 	
-	<bean id="productsReader" class="com.manning.sbia.ch11.batch.CustomStaxEventItemReader"
+	<bean id="productsReader" class="org.springframework.batch.item.xml.StaxEventItemReader"
 		scope="step">
 		<property name="unmarshaller" ref="marshaller" />
 		<property name="fragmentRootElementName" value="product" />
