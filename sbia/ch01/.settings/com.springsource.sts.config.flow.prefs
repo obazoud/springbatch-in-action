@@ -1,3 +1,0 @@
-#Fri Mar 19 16:10:35 CET 2010
-//com.springsource.sts.config.flow.coordinates\:http\://www.springframework.org/schema/batch\:/ch01/src/main/resources/com/manning/sbia/ch01/hello-applicationContext.xml=<?xml version\="1.0" encoding\="UTF-8"?>\n<graph>\n<element type\="job">\n<structure end\="1068" endstart\="1056" start\="943" startend\="968"/>\n<bounds height\="118" width\="115" x\="15" y\="17"/>\n</element>\n</graph>
-eclipse.preferences.version=1
