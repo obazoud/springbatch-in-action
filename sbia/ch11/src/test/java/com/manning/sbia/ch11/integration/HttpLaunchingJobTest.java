@@ -32,12 +32,13 @@ public class HttpLaunchingJobTest {
 	
 	private static final String JOB_NAME = "simpleJob";
 	private static final long RECEIVING_TIMEOUT = 1000;
+	private static final int PORT = 8085;
 
 	@Test
 	public void httpLaunch() throws Exception {
 		Server server = new Server();
 		Connector connector = new SelectChannelConnector();
-		connector.setPort(8080);
+		connector.setPort(PORT);
 		connector.setHost("127.0.0.1");
 		server.addConnector(connector);
 
@@ -85,7 +86,7 @@ public class HttpLaunchingJobTest {
 			SAXException {
 		WebConversation wc = new WebConversation();
 		WebRequest req = new PostMethodWebRequest(
-			"http://localhost:8080/sbiahttplaunch/job-requests",
+			"http://localhost:"+PORT+"/sbiahttplaunch/job-requests",
 			new ByteArrayInputStream(jobString.getBytes()),
 			"text/plain"
 		);		
